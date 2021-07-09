@@ -2,4 +2,26 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+@media(max-width : 1366px){
+  html{
+    font-size: 93.75%;
+  }
+}
+@media(max-width : 720px){
+ html{
+   font-size: 87.5%;
+ }
+}
+:root{
+  --white: #FFFFFF;
+
+  --blue-300: #616BC5;
+
+  --green-300 : #5DB075;
 }
