@@ -1,17 +1,23 @@
-import styles from '../styles/styles.module.scss'
+import { FormEvent, useEffect, useState } from 'react'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+
+import { LoginInput } from '../components/LoginInput'
+
 import enter from '../images/enter.svg'
 import logo from '../images/logo.svg'
-import Image from 'next/image'
-import { LoginInput } from '../components/LoginInput'
-import { FormEvent, useEffect, useState } from 'react'
+import styles from '../styles/styles.module.scss'
 
-export default function Home() {
+export default function Login() {
   const [ email, setEmail ] = useState<string>('')
   const [ password, setPassword ] = useState<string>('')
   const [ isFilled, setIsFilled ] = useState<boolean>(false)
+  const { push, prefetch } = useRouter()
 
   function handleSetEmail(value: string){ setEmail(value) }
   function handleSetPassword(value: string){ setPassword(value) }
+
+  useEffect(() => { prefetch('/Activities') },[prefetch])
 
   useEffect(() => {
     email && password ? setIsFilled(true) : setIsFilled(false)
@@ -19,6 +25,7 @@ export default function Home() {
 
   function handleSubmit(event: FormEvent){
     event.preventDefault()
+    push('/Activities')
   }
 
   return (
