@@ -7,7 +7,7 @@ import UsersSVG from '../../images/users_bar.svg'
 import LogOutSVG from '../../images/logout_bar.svg'
 
 interface SideBarProps {
-  active: 'activities' | 'archives' | 'users';
+  active: string;
 }
 
 export function SideBar({ active }: SideBarProps){
@@ -15,7 +15,7 @@ export function SideBar({ active }: SideBarProps){
     <aside className={styles.container}>
       <div/>
       <nav className={styles.buttons_container}>
-        <button type="button" className={active == "activities" ? styles.active : ''}>
+        <button type="button" className={active == "Activities" ? styles.active : ''}>
           <Image src={ActivitiesSVG} alt="icone de atividades"/>
 
           <div className={styles.button_hover}> 
@@ -23,7 +23,7 @@ export function SideBar({ active }: SideBarProps){
           </div>
         </button>
 
-        <button type="button" className={active == "archives" ? styles.active : ''}>
+        <button type="button" className={active == "Archives" ? styles.active : ''}>
           <Image src={ArchivesSVG} alt="icone de arquivos"/>
 
           <div className={styles.button_hover}> 
@@ -31,7 +31,7 @@ export function SideBar({ active }: SideBarProps){
           </div>
         </button>
 
-        <button type="button" className={active == "users" ? styles.active : ''}>
+        <button type="button" className={active == "Users" ? styles.active : ''}>
           <Image src={UsersSVG} alt="icone de usuários"/>
 
           <div className={styles.button_hover}> 
