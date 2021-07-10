@@ -17,9 +17,10 @@
     user-select: none;
   }
 
-  > button{
+  > a{
     background-color: var(--green-300);
     color: var(--white);
+    transition: filter 0.2s ease;
     
     display: flex;
     align-items: center;
@@ -28,5 +29,10 @@
     font-size: 1.1rem;
     padding: 0.7rem 1rem;
     user-select: none;
+    border-radius: 7px;
+
+    &:hover{
+      filter: brightness(0.9);
+    }
   }
 }

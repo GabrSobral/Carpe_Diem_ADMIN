@@ -2,6 +2,8 @@ import Image from 'next/image'
 
 import plusSVG from '../../images/plus.svg'
 
+import Link from 'next/link'
+
 import styles from './styles.module.scss'
 
 interface HeaderContentProps {
@@ -18,10 +20,12 @@ export function HeaderContent({title}: HeaderContentProps){
       {
       title ? <h1 className={styles.title}>{title}</h1>
       : (
-        <button type="button">
-          Criar atividade
-          <Image src={plusSVG} alt="Icone de adicionar"/>
-        </button>
+        <Link href="/Activities/CreateActivity">
+          <a>
+            Criar atividade
+            <Image src={plusSVG} alt="Icone de adicionar"/>
+          </a>
+        </Link>
       )
       }
     </header>
