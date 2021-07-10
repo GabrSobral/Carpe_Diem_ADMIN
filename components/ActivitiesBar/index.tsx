@@ -30,14 +30,6 @@ export function ActivitiesBar(){
       <main>
         <ActivityItem/>
         <ActivityItem/>
-        <ActivityItem/>
-        <ActivityItem/>
-        <ActivityItem/>
-        <ActivityItem/>
-        <ActivityItem/>
-        <ActivityItem/>
-        <ActivityItem/>
-        <ActivityItem/>
       </main>
     </aside>
   )
