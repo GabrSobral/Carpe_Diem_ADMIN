@@ -17,7 +17,7 @@ export default function Login() {
   function handleSetEmail(value: string){ setEmail(value) }
   function handleSetPassword(value: string){ setPassword(value) }
 
-  useEffect(() => { prefetch('/Activities') },[prefetch])
+  useEffect(() => { prefetch('/Activities/Home') },[prefetch])
 
   useEffect(() => {
     email && password ? setIsFilled(true) : setIsFilled(false)
@@ -25,7 +25,7 @@ export default function Login() {
 
   function handleSubmit(event: FormEvent){
     event.preventDefault()
-    push('/Activities')
+    push('/Activities/Home')
   }
 
   return (
