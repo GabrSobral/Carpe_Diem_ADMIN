@@ -1,5 +1,5 @@
 .container{
-  width: 5rem;
+  width: 6rem;
   height: 100vh;
   background-color: var(--blue-300);
 
@@ -20,8 +20,8 @@
 
   button {
     position: relative;
-    width: 3rem;
-    height: 3rem;
+    width: 3.5rem;
+    height: 3.5rem;
     background-color: var(--blue-350);
 
     display: flex;
@@ -47,7 +47,7 @@
 
       box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.289);
       border-radius: 7px;
-      left: 3.5rem;
+      left: 4rem;
       pointer-events: none;
       padding: 0.5rem;
 
