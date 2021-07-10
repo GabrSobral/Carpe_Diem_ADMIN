@@ -1,0 +1,78 @@
+.container{
+  position: fixed;
+  z-index: 5;
+  
+  bottom: 1rem;
+  right: 30.5%;
+
+  .relative{ 
+    position: relative; 
+
+    &:focus-within{
+      .config_menu{
+        display: flex;
+        height: auto;
+        transition: 0.2s ease;
+      }
+    }
+  }
+
+  .config_menu{
+    display: none;
+    flex-direction: column;
+    
+    position: absolute;
+    z-index: 10;
+    top: 10px;
+    height: 0;
+    width: fit-content;
+    background-color: var(--gray-50);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.267);
+    border-radius: 7px;
+    transform: translate(-80%, -93%);
+    transition: 0.2s ease;
+    overflow: hidden;
+
+    button{
+      width: 9rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 0;
+
+      &.delete_button{
+        &:hover{
+          background-color: var(--red-300);
+          color: var(--white);
+
+          img{
+            filter: brightness(0) invert(1);
+          }
+        }
+      }
+    }
+  }
+
+  .config_button{
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 2rem;
+
+    font-size: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--gray-50);
+    
+    img{
+      width: 2.7rem;
+      height: 2.7rem;
+    }
+
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.342);
+  }
+}

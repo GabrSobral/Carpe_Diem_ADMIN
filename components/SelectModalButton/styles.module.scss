@@ -1,0 +1,48 @@
+.container{
+  width: 100%;
+  height: 3.5rem;
+  border: 2px solid var(--blue-300);
+  background-color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+
+  &:focus-within{
+    .select_name{
+      background-color: var(--blue-300);
+      color: var(--white);
+    }
+  }
+
+  .select_icon{
+    min-height: 100%;
+    background-color: var(--blue-300);
+    min-width: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .select_name{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: auto;
+    padding: 0 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+.active {
+  border: 2px solid var(--blue-300);
+
+  .select_icon{
+    background-color: var(--blue-300);
+  }
+}

@@ -6,6 +6,26 @@
   color: var(--text-gray);
 }
 
+:root{
+  --white: #FFFFFF;
+  --gray-50: #F8F7F7;
+  --gray-150: #E4E4E4;
+  --gray-200: #C4C4C4;
+  --gray-250: #B6B3B3;
+  --gray-350: #979696;
+  --gray-700: #808080;
+
+  --blue-300: #616BC5;
+  --blue-350: #5A63B1;
+
+
+  --red-300: #E96057;
+
+  --green-300 : #5DB075;
+
+  --text-gray: #5F5F5F;
+}
+
 html{
   scroll-behavior: smooth;
 }
@@ -42,17 +62,24 @@ button {
     opacity: 0.5;
   }
 }
-
-input{
+input, textarea{
   outline: 0;
 }
 
-:root{
-  --white: #FFFFFF;
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--gray-150)
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--gray-250)
 
-  --blue-300: #616BC5;
-
-  --green-300 : #5DB075;
-
-  --text-gray: #5F5F5F;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-700)
 }
