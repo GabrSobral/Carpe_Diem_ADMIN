@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <div className={styles.pages}>
-      <SideBar active={url[1]}/>
+      {url[1] && <SideBar active={url[1]}/>}
 
       <main className={styles.main}>
         <ModalProvider>

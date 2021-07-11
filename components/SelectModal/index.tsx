@@ -40,6 +40,14 @@ export function SelectModal({ type }: ModalProps){
         <main>
           <SelectModalButton title="Música"/>
           <SelectModalButton title="Esporte"/>
+          <SelectModalButton title="Esporte"/>
+          <SelectModalButton title="Esporte"/>
+          <SelectModalButton title="Esporte"/>
+          <SelectModalButton title="Esporte"/>
+          <SelectModalButton title="Esporte"/>
+          <SelectModalButton title="Esporte"/>
+          <SelectModalButton title="Esporte"/>
+          <SelectModalButton title="Esporte"/>
         </main>
 
         <nav className={styles.button_container} onClick={handleModalClose}>

@@ -20,40 +20,12 @@ export function ActivityContent(){
           <p>Ouça músicas relaxantes, para ezvaziar a sua mente e acalmar o seu subconsciente.</p>
           <p>Esse tipo de exercício é muito útil para se livrar do estresse e dos pensamentos corriqueiros do dia a dia.</p>
           <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
-          <p>Você pode tentar meditar enquanto escuta as músicas, isso fará você ter um maior proveito do exercícío.</p>
         </div>
 
          <div className={styles.files}>
           <span>Arquivos: 1</span>
 
           <div className={styles.audio_files}>
-            <Player/>
             <Player/>
           </div>
         </div>      
