@@ -1,16 +1,22 @@
 import { FormEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import Loading from 'react-loading'
 
 import { LoginInput } from '../components/LoginInput'
 
 import enter from '../images/enter.svg'
 import logo from '../images/logo.svg'
+import { api } from '../services/api'
+import { setToken } from '../utils/Token'
+
 import styles from '../styles/styles.module.scss'
 
 export default function Login() {
   const [ email, setEmail ] = useState<string>('')
   const [ password, setPassword ] = useState<string>('')
+  const [ message, setMessage ] = useState<string>('')
+  const [ isLoading, setIsLoading ] = useState<boolean>(false)
   const [ isFilled, setIsFilled ] = useState<boolean>(false)
   const { push, prefetch } = useRouter()
 
@@ -23,9 +29,19 @@ export default function Login() {
     email && password ? setIsFilled(true) : setIsFilled(false)
   },[ email, password ])
 
-  function handleSubmit(event: FormEvent){
+  async function handleSubmit(event: FormEvent){    
     event.preventDefault()
-    push('/Activities/Home')
+    setIsLoading(true)
+    await api.post('/login', { email, password }).then(({ data }) => {
+      setToken(data.token)
+      setIsLoading(false)
+      push('/Activities/Home')
+    }).catch((error) => {
+      setMessage(error.response.data.error)
+      setPassword('')
+      setIsLoading(false)
+    })
+
   }
 
   return (
@@ -55,7 +71,9 @@ export default function Login() {
                 value={password}
               />
             </div>
-
+            {
+              message && ( <span className={styles.error_message}>{message}</span> )
+            }
             <div className={styles.remember_forgot_password}>
               <div>
                 <input type="checkbox" name="remember" value="remember" />
@@ -64,9 +82,18 @@ export default function Login() {
               <a href="#">Esqueci minha senha</a>
             </div>
 
-            <button type='submit' disabled={!isFilled}>
-              <Image src={enter} alt="Icone de login" />
-              Entrar
+            <button type='submit' disabled={isLoading || !isFilled}>
+              {
+                isLoading ? (
+                  <Loading type="spin" width={26} height={26}/>
+                ) : (
+                  <>
+                  <Image src={enter} alt="Icone de login" />
+                  Entrar
+                  </>
+                )
+              }
+              
             </button>
           </form>
 

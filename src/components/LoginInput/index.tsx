@@ -23,6 +23,7 @@ export function LoginInput({ title, type, setValue, value }: LoginInputProps){
         type={type} 
         onChange={event => setValue(event.target.value)}
         className={value ? styles.filled : ''}
+        value={value}
       />
       <div className={styles.icon}>
         {icons[type]}
