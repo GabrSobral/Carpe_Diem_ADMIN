@@ -6,6 +6,7 @@
   border-radius: 7px;
   cursor: pointer;
   overflow: hidden;
+  transition: 0.2s ease;
 
   display: flex;
 
@@ -58,6 +59,19 @@
       overflow: hidden;
       text-overflow: ellipsis;
       height: 2.3rem;
+    }
+  }
+}
+.active{
+  transition: 0.2s ease;
+  cursor: default;
+  pointer-events: none;
+
+  .icon_container{
+    background-color: var(--blue-300);
+
+    .image_container{
+      background-color: var(--blue-350);
     }
   }
 }

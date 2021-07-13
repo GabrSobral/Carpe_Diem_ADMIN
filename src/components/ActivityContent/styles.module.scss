@@ -46,6 +46,12 @@
       gap: 0.8rem;
       margin-top: 5rem;
 
+      .video{
+        width: 32rem;
+        height: 18rem;
+        border-radius: 7px;
+      }
+
       > span{
         font-weight: 600;
         pointer-events: none;

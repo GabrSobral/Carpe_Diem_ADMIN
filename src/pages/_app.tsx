@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import '../styles/globals.scss'
 import styles from '../styles/app.module.scss'
 import { ModalProvider } from '../contexts/modal'
+import { ActivityProvider } from '../contexts/ActivityContext'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter()
@@ -17,7 +18,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       <main className={styles.main}>
         <ModalProvider>
-          <Component {...pageProps} />
+          <ActivityProvider>
+            <Component {...pageProps} />
+          </ActivityProvider>
         </ModalProvider>
       </main>
     </div>
