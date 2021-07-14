@@ -9,17 +9,20 @@ import reloadSVG from '../../images/reload.svg'
 import styles from './styles.module.scss'
 import { useActivity } from '../../hooks/useActivity'
 import { api } from '../../services/api'
+import { usePage } from '../../hooks/usePage'
 
 export function ActivitiesBar(){
   const [ search, setSearch ] = useState<string>('')
   const { activities, handleSelectActivity, handleSetActivities } = useActivity()
   const [ reload, setReload] = useState(false)
-  
+  const { handleSetPage } = usePage()
+
   useEffect(() => {
     api.get('/activity/list').then(({ data }) => {
       handleSetActivities(data)
     })
-  },[reload, handleSetActivities])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[reload])
 
   return(
     <aside className={styles.container}>
@@ -58,7 +61,11 @@ export function ActivitiesBar(){
               description={item.description}
               body={item.body}
               category={item.category}
-              onClick={() => {handleSelectActivity(item); setSearch('')}}
+              onClick={() => {
+                handleSelectActivity(item); 
+                setSearch('');
+                handleSetPage("ActivityDetails")
+              }}
             />
           ))
         }
