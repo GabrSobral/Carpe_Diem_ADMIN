@@ -4,9 +4,12 @@ import { SideBar } from '../components/SideBar'
 import { useRouter } from 'next/router'
 
 import '../styles/globals.scss'
-import styles from '../styles/app.module.scss'
+
 import { ModalProvider } from '../contexts/modal'
 import { ActivityProvider } from '../contexts/ActivityContext'
+import { PageProvider } from '../contexts/PageContext'
+
+import styles from '../styles/app.module.scss'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter()
@@ -19,7 +22,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <main className={styles.main}>
         <ModalProvider>
           <ActivityProvider>
-            <Component {...pageProps} />
+            <PageProvider>
+              <Component {...pageProps} />
+            </PageProvider>
           </ActivityProvider>
         </ModalProvider>
       </main>
