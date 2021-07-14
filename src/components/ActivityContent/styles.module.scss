@@ -1,0 +1,68 @@
+.container{
+  position: relative;
+  z-index: 15;
+  width: 100%;
+  background-color: var(--white);
+
+  padding: 2rem;
+
+  main{
+    display: flex;
+    flex-direction: column;
+
+    .title_subtitle{
+      position: relative;
+      margin: 2rem 0;
+      padding-bottom: 1rem;
+
+      h1{
+        font-weight: 600;
+        font-size: 2.3rem;
+      }
+
+      .subtitle{
+        line-height: 1.5rem;
+        color: var(--gray-700);
+      }
+      .created_at{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        font-size: 0.8rem;
+        pointer-events: none;
+        user-select: none;
+      }
+    }
+
+    .description{
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .files{
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-top: 5rem;
+
+      .video{
+        width: 32rem;
+        height: 18rem;
+        border-radius: 7px;
+      }
+
+      > span{
+        font-weight: 600;
+        pointer-events: none;
+        user-select: none;
+      }
+      .audio_files{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+    }
+  }
+}

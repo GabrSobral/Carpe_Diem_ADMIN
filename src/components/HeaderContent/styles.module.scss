@@ -1,0 +1,43 @@
+.container{
+  position: sticky;
+  top: 0.5rem;
+  padding: 0.5rem 0;
+  z-index: 100;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--white);
+
+  > div {
+    background-color: var(--gray-150);
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border-radius: 1.5rem;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.288);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  > button{
+    background-color: var(--green-300);
+    color: var(--white);
+    transition: filter 0.2s ease;
+    
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.7rem 1rem;
+    user-select: none;
+    border-radius: 7px;
+
+    &:hover{
+      filter: brightness(0.9);
+    }
+  }
+}
