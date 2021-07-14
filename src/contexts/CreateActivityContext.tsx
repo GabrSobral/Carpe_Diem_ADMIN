@@ -30,6 +30,7 @@ interface CreateActivityProps {
   handleSetDescription: (value: string) => void;
   handleSetArchive: (files: File) => void;
   handleRemoveArchive: (index: number) => void;
+  handleClearInputs: () => void;
 }
 
 export const CreateActivityContext = createContext({} as CreateActivityProps)
@@ -57,8 +58,15 @@ export function CreateActivityProvider({ children }: CreateActivityProvider){
     setArchives(prevState => [ ...prevState, file ]) 
   }
   function handleRemoveArchive(index: number){
-    archives.splice(index, 1)
+    archives?.splice(index, 1)
     setArchives(archives)
+  }
+  function handleClearInputs(){
+    setTitle('')
+    setSubTitle('')
+    setDescription('')
+    setCategory(undefined)
+    setCategory(undefined)
   }
 
   return(
@@ -74,7 +82,8 @@ export function CreateActivityProvider({ children }: CreateActivityProvider){
         handleSetTitle,
         handleSetSubTitle,
         handleSetDescription,
-        handleRemoveArchive
+        handleRemoveArchive,
+        handleClearInputs
       }}
     >
       {children}
