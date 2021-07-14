@@ -1,3 +1,5 @@
+import { format } from 'date-fns'
+
 import { useActivity } from '../../hooks/useActivity'
 import { ConfigButton } from '../ConfigButton'
 import { HeaderContent } from '../HeaderContent'
@@ -7,6 +9,9 @@ import styles from './styles.module.scss'
 
 export function ActivityContent(){
   const { activity } = useActivity()
+
+  const date = Date.parse(String(activity?.created_at))
+  const formattedDate = format(date, "dd/MM/yyyy 'às' HH:mm")
 
   return(
     <div className={styles.container}>
@@ -18,7 +23,7 @@ export function ActivityContent(){
           <div className={styles.title_subtitle}>
             <h1>{activity?.title}</h1>
             <span className={styles.subtitle}>{activity?.description}</span>
-            <span className={styles.created_at}>Criado em: 08/07/2021 ás 15: 32</span>
+            <span className={styles.created_at}>Criado em: {formattedDate}</span>
           </div>
   
           <div className={styles.description} dangerouslySetInnerHTML={{ __html: activity?.body as string}}>
