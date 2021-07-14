@@ -29,7 +29,9 @@ interface ActivityContextProps {
   activities: Activity[] | undefined;
   activity: Activity | undefined;
   handleSelectActivity: (activity_data: Activity) => void;
-  handleSetActivities: (activitiesData: Activity[]) => void
+  handleSetActivities: (activitiesData: Activity[]) => void;
+  handleClearSelectActivity: () => void
+  handleAddActivity: (activity_data: Activity) => void
 }
 
 export const ActivityContext = createContext({} as ActivityContextProps)
@@ -45,6 +47,11 @@ export function ActivityProvider({ children }: ActivityProviderProps){
   function handleSelectActivity(activity_data: Activity){
     setActivity(activity_data)
   }
+  function handleClearSelectActivity(){ setActivity(undefined) }
+
+  function handleAddActivity(activity_data: Activity){
+    setActivities(prevState => [...prevState, activity_data])
+  }
 
   return (
     <ActivityContext.Provider
@@ -52,7 +59,9 @@ export function ActivityProvider({ children }: ActivityProviderProps){
         activities,
         handleSelectActivity,
         activity,
-        handleSetActivities
+        handleSetActivities,
+        handleClearSelectActivity,
+        handleAddActivity
       }}
     >
       {children}
