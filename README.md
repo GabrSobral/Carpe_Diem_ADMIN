@@ -1,11 +1,11 @@
 # Carpe Diem Admin Page
 
-![ProjectImage](https://github.com/GabrSobral/Carpe_Diem_ADMIN/blob/master/Home.png?raw=true)
+![ProjectImage](https://github.com/GabrSobral/Carpe_Diem_ADMIN/blob/master/.github/Home.png?raw=true)
 
 ## About
 
 <p>This is a NEXTJS project, and it is an admin page that serves to manage the data from an API of the same app.</p>
-You can access the `Figma design`: <a href="https://www.figma.com/file/c2MLFNjqO7OqE0h5fCNyWb/Carpe_Diem_ADMIN?node-id=0%3A1">clicking here</a>
+You can access the Figma design: <a href="https://www.figma.com/file/c2MLFNjqO7OqE0h5fCNyWb/Carpe_Diem_ADMIN?node-id=0%3A1">clicking here</a>
 
 ## Technologies
 
