@@ -15,7 +15,6 @@ interface ActivityItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement
 
 export function ActivityItem({ title, category, description, id, ...rest }: ActivityItemProps){
   const { activity } = useActivity()
-
   return(
     <button 
       type="button" 
