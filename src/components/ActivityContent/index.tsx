@@ -43,10 +43,8 @@ export function ActivityContent(){
                   <div className={styles.audio_files} key={item.id}>
                     <Player 
                       name={item.name || ''}
-                      format={item.format || ''}
                       url={item.url || ''}
                       duration={item.duration || 0}
-                      category={item.category || ''}
                     />
                   </div>
                 )
