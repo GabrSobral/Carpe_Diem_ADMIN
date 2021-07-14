@@ -11,13 +11,11 @@ import styles from './styles.module.scss'
 
 interface FileProps{
   name: string;
-  format: string;
   duration: number;
-  category: string;
   url: string 
 }
 
-export function Player({ name, format, category, duration, url }: FileProps){
+export function Player({ name,  duration, url }: FileProps){
   const [ isPlaying, setIsPlaying ] = useState<boolean>(false)
   const [ progress, setProgress ] = useState<number>(0)
   const audioRef = useRef<HTMLAudioElement>(null)
