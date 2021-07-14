@@ -1,8 +1,13 @@
 .container{
+  position: sticky;
+  top: 0.5rem;
+  padding: 0.5rem 0;
+  z-index: 100;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: var(--white);
 
   > div {
     background-color: var(--gray-150);
@@ -17,7 +22,7 @@
     user-select: none;
   }
 
-  > a{
+  > button{
     background-color: var(--green-300);
     color: var(--white);
     transition: filter 0.2s ease;
