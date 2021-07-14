@@ -50,6 +50,12 @@
     flex-direction: column;
     gap: 0.5rem;
     margin: 0.7rem 0;
+    transition: 0.2s ease;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .button_container{
