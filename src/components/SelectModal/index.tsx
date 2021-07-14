@@ -52,6 +52,8 @@ export function SelectModal({ type }: ModalProps){
         setData(data)
       })
     }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[type])
 
   function handleModalClose(){
@@ -97,14 +99,15 @@ export function SelectModal({ type }: ModalProps){
                   <SelectModalButton 
                     title={item.title || item.name} 
                     key={item.id}
+                    isActive={selectData?.id === item.id ? true : false}
                     onClick={() => setSelectData(item)}
                   />
               ))
             }
           </main>
 
-          <nav className={styles.button_container} onClick={handleModalClose}>
-            <button type="button">
+          <nav className={styles.button_container}>
+            <button type="button" onClick={handleModalClose}>
               <Image src={xSVG} alt="Cancelar"/>
               Cancelar
             </button>

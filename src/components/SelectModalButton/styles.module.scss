@@ -9,13 +9,6 @@
   user-select: none;
   overflow: hidden;
 
-  &:focus-within{
-    .select_name{
-      background-color: var(--blue-300);
-      color: var(--white);
-    }
-  }
-
   .select_icon{
     min-height: 3.4rem;
     overflow: hidden;
@@ -43,8 +36,13 @@
 }
 .active {
   border: 2px solid var(--blue-300);
+  background-color: var(--blue-300);
 
   .select_icon{
     background-color: var(--blue-300);
+  }
+
+  .select_name{
+    color: var(--white);
   }
 }

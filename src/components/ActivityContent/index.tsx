@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import { useState } from 'react'
 
 import { useActivity } from '../../hooks/useActivity'
 import { ConfigButton } from '../ConfigButton'
@@ -10,7 +11,7 @@ import styles from './styles.module.scss'
 export function ActivityContent(){
   const { activity } = useActivity()
 
-  const date = Date.parse(String(activity?.created_at))
+  const date = Date.parse(String(activity?.created_at)) || new Date()
   const formattedDate = format(date, "dd/MM/yyyy 'às' HH:mm")
 
   return(
