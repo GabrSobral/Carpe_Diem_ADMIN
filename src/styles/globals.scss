@@ -26,6 +26,11 @@
   --text-gray: #5F5F5F;
 }
 
+hr{
+  clear: both;
+  visibility: hidden;
+}
+
 html{
   scroll-behavior: smooth;
 }

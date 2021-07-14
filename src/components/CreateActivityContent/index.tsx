@@ -22,7 +22,8 @@ interface FileProps{
   format: string;
   duration: number;
   url: string;
-  author: string;
+  author: string
+  category: string;
 }
 interface ArchiveSelected{
   file: FileProps;
@@ -52,6 +53,7 @@ export function CreateActivityContent(){
     description,
     handleSetDescription,
     handleSetSubTitle,
+    handleClearInputs,
     handleSetTitle,
     subTitle,
     handleRemoveArchive
@@ -75,10 +77,16 @@ export function CreateActivityContent(){
     subTitle.trim()
     description.trim()
 
+    function breakLines(string: string){
+      return string.replace(/(?:\r\n|\r|\n)/g, '<hr>');
+    }
+
+    const descriptionFormatted = breakLines(description) 
+
     const newActivity = await api.post('/activity/new', {
       title,
       description: subTitle,
-      body: description,
+      body: descriptionFormatted,
       category: category?.id
     })
 
@@ -89,18 +97,10 @@ export function CreateActivityContent(){
       })
     })
 
-    // const Activity = {
-    //   id: newActivity.data.id,
-    //   title: newActivity.data.title,
-    //   created_at: newActivity.data.created_at,
-    //   updated_at: newActivity.data.updated_at,
-    //   description: newActivity.data.description,
-    //   body: newActivity.data.body,
-    //   category: newActivity.data.body,
-    //   files: 
-    // } as Activity
+    const { data } = await api.get(`/activity/show/${newActivity.data.id}`)
 
-    // handleAddActivity(Activity)
+    handleClearInputs()
+    handleAddActivity(data)
   }
 
   return(
