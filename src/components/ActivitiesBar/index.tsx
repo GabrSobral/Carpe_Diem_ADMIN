@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import Loading from 'react-loading'
 
 import { ActivityItem } from '../ActivityItem'
 
@@ -15,11 +16,14 @@ export function ActivitiesBar(){
   const [ search, setSearch ] = useState<string>('')
   const { activities, handleSelectActivity, handleSetActivities } = useActivity()
   const [ reload, setReload] = useState(false)
+  const [ isLoading, setIsLoading ] = useState(false)
   const { handleSetPage } = usePage()
 
   useEffect(() => {
+    setIsLoading(true)
     api.get('/activity/list').then(({ data }) => {
       handleSetActivities(data)
+      setIsLoading(false)
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[reload])
@@ -47,27 +51,35 @@ export function ActivitiesBar(){
       </header>
 
       <main>
-        { activities?.filter(value => {
-          if(search === ''){
-            return value
-          }else if(value.title.toLowerCase().includes(search.toLowerCase())){
+        { 
+        !isLoading ? 
+    
+          activities?.filter(value => {
+            if(search === ''){
               return value
-          }
-        }).map(item => (
-            <ActivityItem 
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              description={item.description}
-              body={item.body}
-              category={item.category}
-              onClick={() => {
-                handleSelectActivity(item); 
-                setSearch('');
-                handleSetPage("ActivityDetails")
-              }}
-            />
-          ))
+            }else if(value.title.toLowerCase().includes(search.toLowerCase())){
+                return value
+            }
+          }).map((item, index) => (
+              <ActivityItem 
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                description={item.description}
+                body={item.body}
+                category={item.category.name}
+                onClick={() => {
+                  handleSelectActivity(item, index); 
+                  setSearch('');
+                  handleSetPage("ActivityDetails")
+                }}
+              />
+            ))
+            : (
+              <div className={styles.loading}>
+                <Loading type='spin' width={52} height={52} color="#616BC5"/>
+              </div>
+            )
         }
       </main>
     </aside>
