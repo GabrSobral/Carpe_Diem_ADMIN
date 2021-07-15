@@ -1,3 +1,4 @@
+import { FileProps } from '../../@types/Activity';
 import { Player } from '../Player'
 
 import styles from './styles.module.scss'
@@ -7,16 +8,8 @@ interface DetailArchiveProps{
   handleRemoveArchive: (index: number) => void;
   file: SelectedArchive | undefined;
 }
-interface ArchiveProps{
-  id: string;
-  name: string | undefined;
-  format: string | undefined;
-  duration: number | undefined;
-  url: string | undefined;
-  author: string | undefined;
-}
 interface SelectedArchive {
-  file: ArchiveProps;
+  file: FileProps;
   index: number;
 }
 

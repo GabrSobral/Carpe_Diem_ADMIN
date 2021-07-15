@@ -18,7 +18,7 @@ export function ActivityContent(){
     <div className={styles.container}>
       <HeaderContent/>
       {
-        activity && (
+        activity ? (
           <>
           <main>
           <div className={styles.title_subtitle}>
@@ -62,6 +62,10 @@ export function ActivityContent(){
   
         <ConfigButton/>
         </>
+        ) : (
+          <div className={styles.no_activity_selected}>
+            <h1>Não tem nenhuma atividade selecionada</h1>
+          </div>
         )
       }
     </div>

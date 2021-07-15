@@ -1,21 +1,8 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
+import { Category, FileProps } from "../@types/Activity";
 
 interface CreateActivityProvider{
   children: ReactNode;
-}
-
-interface File{
-  id: string;
-  name: string;
-  format: string;
-  duration: number;
-  category: string;
-  url: string;
-  author: string;
-}
-interface Category{
-  id: string;
-  name: string;
 }
 
 interface CreateActivityProps {
@@ -23,12 +10,12 @@ interface CreateActivityProps {
   subTitle: string;
   description: string;
   category: Category | undefined;
-  archives: File[];
+  archives: FileProps[] | [];
   handleSetCategory: (value: Category) => void;
   handleSetTitle: (value: string) => void;
   handleSetSubTitle: (value: string) => void;
   handleSetDescription: (value: string) => void;
-  handleSetArchive: (files: File) => void;
+  handleSetArchive: (files: FileProps) => void;
   handleRemoveArchive: (index: number) => void;
   handleClearInputs: () => void;
 }
@@ -36,8 +23,8 @@ interface CreateActivityProps {
 export const CreateActivityContext = createContext({} as CreateActivityProps)
 
 export function CreateActivityProvider({ children }: CreateActivityProvider){
-  const [ category, setCategory ] = useState<Category>()
-  const [ archives, setArchives ] = useState<File[]>([])
+  const [ category, setCategory ] = useState<Category | undefined>()
+  const [ archives, setArchives ] = useState<FileProps[]>([])
   const [ title, setTitle ] = useState<string>('')
   const [ subTitle, setSubTitle ] = useState<string>('')
   const [ description, setDescription ] = useState<string>('')
@@ -54,7 +41,7 @@ export function CreateActivityProvider({ children }: CreateActivityProvider){
   function handleSetCategory(value: Category){ 
     setCategory(value) 
   }
-  function handleSetArchive(file: File){  
+  function handleSetArchive(file: FileProps){  
     setArchives(prevState => [ ...prevState, file ]) 
   }
   function handleRemoveArchive(index: number){
@@ -66,7 +53,7 @@ export function CreateActivityProvider({ children }: CreateActivityProvider){
     setSubTitle('')
     setDescription('')
     setCategory(undefined)
-    setCategory(undefined)
+    setArchives([])
   }
 
   return(
@@ -74,16 +61,16 @@ export function CreateActivityProvider({ children }: CreateActivityProvider){
       value={{
         category,
         archives,
-        handleSetCategory,
         handleSetArchive,
+        handleClearInputs,
+        handleSetCategory,
         title,
         subTitle,
         description,
         handleSetTitle,
         handleSetSubTitle,
-        handleSetDescription,
         handleRemoveArchive,
-        handleClearInputs
+        handleSetDescription,
       }}
     >
       {children}

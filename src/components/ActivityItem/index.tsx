@@ -16,9 +16,9 @@ interface ActivityItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement
 }
 
 const icons = {
-  meditacao: <Image src={musicSVG} alt="Icone de música"/>,
-  musica: <Image src={gymSVG} alt="Icone de esporte"/>,
-  games: <Image src={gamesSVG} alt="Icone de games"/>,
+  Meditacao: <Image src={musicSVG} alt="Icone de música"/>,
+  Musica: <Image src={gymSVG} alt="Icone de esporte"/>,
+  Games: <Image src={gamesSVG} alt="Icone de games"/>,
 }
 
 export function ActivityItem({ title, category, description, id, ...rest }: ActivityItemProps){

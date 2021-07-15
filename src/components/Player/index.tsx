@@ -9,13 +9,13 @@ import pauseSVG from '../../images/pause.svg'
 import { convertDurationToTimeString } from '../../utils/ConvertDurationtoTimeString'
 import styles from './styles.module.scss'
 
-interface FileProps{
+interface PlayerProps{
   name: string;
   duration: number;
   url: string 
 }
 
-export function Player({ name,  duration, url }: FileProps){
+export function Player({ name,  duration, url }: PlayerProps){
   const [ isPlaying, setIsPlaying ] = useState<boolean>(false)
   const [ progress, setProgress ] = useState<number>(0)
   const audioRef = useRef<HTMLAudioElement>(null)

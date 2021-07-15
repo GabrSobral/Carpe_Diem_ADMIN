@@ -2,7 +2,6 @@ import Image from 'next/image'
 
 import plusSVG from '../../images/plus.svg'
 
-import Link from 'next/link'
 
 import styles from './styles.module.scss'
 import { usePage } from '../../hooks/usePage'

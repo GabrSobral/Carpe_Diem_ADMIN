@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Loading from 'react-loading'
 
 import configSVG from '../../images/config.svg'
 import changeSVG from '../../images/change.svg'
@@ -6,12 +7,29 @@ import trashSVG from '../../images/trash.svg'
 import ViewSVG from '../../images/view.svg'
 
 import styles from './styles.module.scss'
+import { api } from '../../services/api'
+import { useActivity } from '../../hooks/useActivity'
+import { useState } from 'react'
+import { usePage } from '../../hooks/usePage'
 
 interface ConfigButtonProps{
   view?: boolean;
 }
 
 export function ConfigButton({ view = false }: ConfigButtonProps){
+  const [ isLoading, setIsLoading ] = useState(false)
+  const { handleSetPage } = usePage()
+  const { activity, handleClearSelectActivity, handleRemoveActivityFromList } = useActivity()
+
+  async function DeleteActivity(){
+    setIsLoading(true)
+    await api.delete(`/activity/delete/${activity?.id}`)
+    .then(() => {
+      handleRemoveActivityFromList()
+      handleClearSelectActivity()
+      setIsLoading(false)
+    })
+  }
 
   return(
     <div className={styles.container}>
@@ -20,7 +38,7 @@ export function ConfigButton({ view = false }: ConfigButtonProps){
 
         {
           !view ? (
-            <button type="button">
+            <button type="button" onClick={() => handleSetPage("ActivityUpdate")}>
               Alterar 
               <Image src={changeSVG} alt="Botão de alterar atividade"/>
             </button>
@@ -32,9 +50,18 @@ export function ConfigButton({ view = false }: ConfigButtonProps){
           )
         }
 
-        <button type="button" className={styles.delete_button}>
-          Deletar 
-          <Image src={trashSVG} alt="Botão de alterar atividade"/>
+        <button type="button" className={styles.delete_button} onClick={DeleteActivity}>
+          {
+            isLoading ? (
+              <Loading type="spin" width={24} height={24} color="#616BC5"/>
+            ) : (
+              <>
+                Deletar
+                <Image src={trashSVG} alt="Botão de alterar atividade"/>
+              </>
+            )
+          }
+         
         </button>
       </div>
 

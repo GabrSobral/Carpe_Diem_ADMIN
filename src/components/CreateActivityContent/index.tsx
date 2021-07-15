@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
+import Loading from 'react-loading'
 
 import saveSVG from '../../images/save.svg'
 import plusSVG from '../../images/plus.svg'
@@ -16,33 +17,16 @@ import styles from './styles.module.scss'
 import { useCreateActivity } from '../../hooks/useCreateActivity'
 import { useActivity } from '../../hooks/useActivity'
 
-interface FileProps{
-  id: string;
-  name: string;
-  format: string;
-  duration: number;
-  url: string;
-  author: string
-  category: string;
-}
+import { FileProps } from '../../@types/Activity'
+
 interface ArchiveSelected{
   file: FileProps;
   index: number
 }
 
-interface Activity{
-  id: string;
-  title: string;
-  description: string;
-  created_at: string;
-  updated_at: string;
-  body: string;
-  category: string;
-  files: FileProps[]
-}
-
 export function CreateActivityContent(){
   const [ isFilled, setIsFilled ] = useState(false)
+  const [ isLoading, setIsLoading ] = useState(false)
   const { handleAddActivity } = useActivity()
   const [ isDetailArchiveVisible, setIsDetailArchiveVisible ] = useState<boolean>(false)
   const [ archiveSelected, setArchiveSelected ] = useState<ArchiveSelected>()
@@ -72,6 +56,7 @@ export function CreateActivityContent(){
 
   async function handleSumbit(event: FormEvent){
     event.preventDefault()
+    setIsLoading(true)
 
     title.trim()
     subTitle.trim()
@@ -98,7 +83,7 @@ export function CreateActivityContent(){
     })
 
     const { data } = await api.get(`/activity/show/${newActivity.data.id}`)
-
+    setIsLoading(false)
     handleClearInputs()
     handleAddActivity(data)
   }
@@ -152,10 +137,18 @@ export function CreateActivityContent(){
             <button 
               type="submit" 
               className={styles.submit_button}
-              disabled={!isFilled}
+              disabled={isLoading || !isFilled}
             >
-              <Image src={saveSVG} alt="Icone de salvar"/>
-              Salvar
+              {
+              isLoading ? (
+                <Loading type="spin" width={32} height={32} color="#fff"/>
+              ) : (
+                <>
+                  <Image src={saveSVG} alt="Icone de salvar"/>
+                  Salvar
+                </>
+              )
+            }
             </button>
           </form>
         </main>

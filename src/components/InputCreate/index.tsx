@@ -2,7 +2,7 @@ import styles from './styles.module.scss'
 
 interface InputCreateProps{
   title: string;
-  value: string;
+  value: string | undefined;
   setValue: (value: string) => void;
   type: 'text' | 'textarea';
 }

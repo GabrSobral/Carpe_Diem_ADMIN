@@ -65,4 +65,12 @@
       }
     }
   }
+
+  .no_activity_selected{
+    width: 100%;
+    height: calc(100vh - 13rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
