@@ -1,15 +1,16 @@
+import { useEffect } from 'react'
 import styles from './styles.module.scss'
 
 import { SelectModal } from '../../../components/SelectModal'
 import { ActivitiesBar } from '../../../components/ActivitiesBar'
 import { ActivityContent } from '../../../components/ActivityContent'
 import { CreateActivityContent } from '../../../components/CreateActivityContent'
+import { UpdateActivityContent } from '../../../components/UpdateActivityContent'
 
 import { CreateActivityProvider } from '../../../contexts/CreateActivityContext'
 
 import { usePage } from '../../../hooks/usePage'
 import { useModal } from '../../../hooks/useModal'
-import { useEffect } from 'react'
 
 export default function Activities(){
   const { isOpenArchives, isOpenCategory } = useModal()
@@ -24,6 +25,7 @@ export default function Activities(){
 
         { page === "ActivityDetails" && ( <ActivityContent/> )}
         { page === "ActivityCreate" && ( <CreateActivityContent/> )}
+        { page === "ActivityUpdate" && ( <UpdateActivityContent/> )}
         
       </div>
       <ActivitiesBar/>

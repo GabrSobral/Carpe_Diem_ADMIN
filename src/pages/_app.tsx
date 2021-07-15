@@ -17,17 +17,17 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <div className={styles.pages}>
-      {url[1] && <SideBar active={url[1]}/>}
+      <ActivityProvider>
+        <PageProvider>
+          {url[1] && <SideBar active={url[1]}/>}
 
-      <main className={styles.main}>
-        <ModalProvider>
-          <ActivityProvider>
-            <PageProvider>
-              <Component {...pageProps} />
-            </PageProvider>
-          </ActivityProvider>
-        </ModalProvider>
-      </main>
+          <main className={styles.main}>
+            <ModalProvider>
+                  <Component {...pageProps} />
+            </ModalProvider>
+          </main>
+        </PageProvider>
+      </ActivityProvider>
     </div>
   )
 }
