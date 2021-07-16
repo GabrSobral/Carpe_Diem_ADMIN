@@ -24,7 +24,7 @@ const icons = {
 export function ActivityItem({ title, category, description, id, ...rest }: ActivityItemProps){
   const { activity } = useActivity()
   return(
-    <button 
+    <button
       type="button" 
       className={`${styles.container} ${id === activity?.id ? styles.active : ''}`}
       {...rest}
