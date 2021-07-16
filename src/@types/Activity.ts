@@ -4,8 +4,9 @@ export interface FileProps {
   format: string;
   duration: number;
   url: string;
-  author?: string
+  size?: string
   category: string;
+  created_at: Date;
 }
 
 export interface Activity extends Index{
