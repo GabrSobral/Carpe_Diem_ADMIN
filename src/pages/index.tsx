@@ -23,7 +23,7 @@ export default function Login() {
   function handleSetEmail(value: string){ setEmail(value) }
   function handleSetPassword(value: string){ setPassword(value) }
 
-  useEffect(() => { prefetch('/Activities/Home') },[prefetch])
+  useEffect(() => { prefetch('/Activities') },[prefetch])
 
   useEffect(() => {
     email && password ? setIsFilled(true) : setIsFilled(false)
@@ -35,7 +35,7 @@ export default function Login() {
     await api.post('/login', { email, password }).then(({ data }) => {
       setToken(data.token)
       setIsLoading(false)
-      push('/Activities/Home')
+      push('/Activities')
     }).catch((error) => {
       setMessage(error.response.data.error)
       setPassword('')

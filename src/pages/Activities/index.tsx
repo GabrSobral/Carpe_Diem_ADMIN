@@ -1,16 +1,15 @@
-import { useEffect } from 'react'
 import styles from './styles.module.scss'
 
-import { SelectModal } from '../../../components/SelectModal'
-import { ActivitiesBar } from '../../../components/ActivitiesBar'
-import { ActivityContent } from '../../../components/ActivityContent'
-import { CreateActivityContent } from '../../../components/CreateActivityContent'
-import { UpdateActivityContent } from '../../../components/UpdateActivityContent'
+import { SelectModal } from '../../components/SelectModal'
+import { InformationBar } from '../../components/InformationBar'
+import { ActivityContent } from '../../components/ActivityContent'
+import { CreateActivityContent } from '../../components/CreateActivityContent'
+import { UpdateActivityContent } from '../../components/UpdateActivityContent'
 
-import { CreateActivityProvider } from '../../../contexts/CreateActivityContext'
+import { CreateActivityProvider } from '../../contexts/CreateActivityContext'
 
-import { usePage } from '../../../hooks/usePage'
-import { useModal } from '../../../hooks/useModal'
+import { usePage } from '../../hooks/usePage'
+import { useModal } from '../../hooks/useModal'
 
 export default function Activities(){
   const { isOpenArchives, isOpenCategory } = useModal()
@@ -28,8 +27,8 @@ export default function Activities(){
         { page === "ActivityUpdate" && ( <UpdateActivityContent/> )}
         
       </div>
-      <ActivitiesBar/>
-      </CreateActivityProvider>
+      <InformationBar/>
+    </CreateActivityProvider>
     </div>
   )
 }
