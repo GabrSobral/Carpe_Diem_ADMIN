@@ -31,6 +31,14 @@
     margin: 1rem 0;
     width: 100%;
 
+    .title{
+     font-size: 1.5rem;
+     font-weight: 700;
+     word-wrap: normal;
+     max-width: 100%;
+     overflow-wrap: break-word;
+    }
+
     div{
       margin-top: 0.5rem;
       display: flex;

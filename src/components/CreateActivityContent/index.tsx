@@ -101,7 +101,6 @@ export function CreateActivityContent(){
       ) }
 
         <main>
-          {/* <span className={styles.created_at}>Criado em: 08/07/2021 ás 15: 32</span> */}
           <form onSubmit={handleSumbit}>
             <InputCreate title="Título:" type="text" setValue={handleSetTitle} value={title}/>
             <InputCreate title="Subtítulo:" type="text" setValue={handleSetSubTitle} value={subTitle}/>
@@ -114,7 +113,6 @@ export function CreateActivityContent(){
 
             <div className={`${styles.select_container} ${ archives.length !== 0  && styles.active}`}>
               <span>Arquivos:</span>
-
               <div className={styles.archives_list}>
                 {
                   archives.map((item, index) => (
@@ -126,7 +124,6 @@ export function CreateActivityContent(){
                     />
                   ))
                 }
-
                 <button type="button" className={styles.add_file} onClick={handleModalArchives}>
                   <Image src={plusSVG} alt="Icone de adicionar"/>
                 </button>
@@ -140,14 +137,11 @@ export function CreateActivityContent(){
               disabled={isLoading || !isFilled}
             >
               {
-              isLoading ? (
-                <Loading type="spin" width={32} height={32} color="#fff"/>
-              ) : (
-                <>
+              isLoading ? <Loading type="spin" width={32} height={32} color="#fff"/>
+              : (<>
                   <Image src={saveSVG} alt="Icone de salvar"/>
                   Salvar
-                </>
-              )
+                </>)
             }
             </button>
           </form>

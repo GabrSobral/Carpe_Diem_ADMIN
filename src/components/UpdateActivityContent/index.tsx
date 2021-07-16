@@ -48,6 +48,7 @@ export function UpdateActivityContent(){
   } = useCreateActivity()
 
   useEffect(() => {
+    handleClearInputs()
     setTitle(activity?.title)
     activity?.category && handleSetCategory(activity?.category)
     setSubTitle(activity?.description)

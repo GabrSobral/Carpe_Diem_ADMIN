@@ -37,10 +37,11 @@ export function DetailArchiveModal({ handleCloseModal, handleRemoveArchive, file
         </header>
         
         <main className={styles.main}>
-          <h1>{file?.file.name}</h1>
+          <span className={styles.title}>{file?.file.name}</span>
           <div>
             <span><strong>Formato: </strong>{file?.file.format}</span>
-            <span><strong>Autor: </strong>{file?.file.author}</span>
+            <span><strong>Size: </strong>{file?.file.size}</span>
+            <span><strong>Criado em: </strong>{file?.file.created_at}</span>
           </div>
         </main>
 

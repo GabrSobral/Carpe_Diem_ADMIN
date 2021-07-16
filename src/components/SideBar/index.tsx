@@ -19,7 +19,7 @@ export function SideBar({ active }: SideBarProps){
   function handleNavigate(page: string){
     switch(page){
       case "Activities" : {
-        push("/Activities/Home"); break;
+        push("/Activities"); break;
       }
       case "Archives" : {
         push("/Archives"); break;
@@ -49,7 +49,13 @@ export function SideBar({ active }: SideBarProps){
           </div>
         </button>
       
-        <button type="button" className={active == "Archives" ? styles.active : ''}>
+        <button 
+          type="button" 
+          className={active == "Archives" ? styles.active : ''}
+          onClick={() => {
+            handleNavigate("Archives")
+          }}
+        >
           <Image src={ArchivesSVG} alt="icone de arquivos"/>
 
           <div className={styles.button_hover}> 
