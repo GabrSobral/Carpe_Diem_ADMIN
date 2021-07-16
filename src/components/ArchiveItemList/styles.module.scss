@@ -9,6 +9,34 @@
 
   display: flex;
 
+  &.uploaded{
+    .icon_container_archive{
+      background-color: var(--green-300);
+
+      .image_container_archive{
+        background-color: var(--green-350);
+      }
+    }
+  }
+  &.canceled{
+    .icon_container_archive{
+      background-color: var(--orange-300);
+
+      .image_container_archive{
+        background-color: var(--orange-350);
+      }
+    }
+  }
+  &.error{
+    .icon_container_archive{
+      background-color: var(--red-300);
+
+      .image_container_archive{
+        background-color: var(--red-350);
+      }
+    }
+  }
+
   &:hover{
     filter: brightness(0.96);
   }
@@ -73,6 +101,16 @@
       background-color: transparent;
       padding: 0 0.3rem;
     }
-
+    .title_canceled{
+      position: absolute;
+      font-size: 1rem;
+      padding: 0 0.3rem;
+      bottom: 1rem;
+      right: 1rem;
+      color: var(--white);
+      background-color: var(--red-300);
+      border-radius: 7px;
+      width: fit-content;
+    }
   }
 }
