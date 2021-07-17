@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import { FileProps } from '../../@types/Activity';
 import { Player } from '../Player'
 
@@ -5,7 +6,7 @@ import styles from './styles.module.scss'
 
 interface DetailArchiveProps{
   handleCloseModal: () => void;
-  handleRemoveArchive: (index: number) => void;
+  handleRemoveArchive?: (index: number) => void;
   file: SelectedArchive | undefined;
 }
 interface SelectedArchive {
@@ -14,6 +15,9 @@ interface SelectedArchive {
 }
 
 export function DetailArchiveModal({ handleCloseModal, handleRemoveArchive, file }: DetailArchiveProps){
+  const date = Date.parse(String(file?.file.created_at)) || new Date()
+  const formattedDate = format(date, "dd/MM/yyyy 'às' HH:mm")
+
   return(
     <div className={styles.background}>
       <div className={styles.container}>
@@ -41,14 +45,17 @@ export function DetailArchiveModal({ handleCloseModal, handleRemoveArchive, file
           <div>
             <span><strong>Formato: </strong>{file?.file.format}</span>
             <span><strong>Size: </strong>{file?.file.size}</span>
-            <span><strong>Criado em: </strong>{file?.file.created_at}</span>
+            <span><strong>Criado em: </strong>{formattedDate}</span>
           </div>
         </main>
 
         <div className={styles.buttons_container}>
-          <button type="button" onClick={() => {handleRemoveArchive(Number(file?.index)); handleCloseModal()}}>
-            Remover anexo
-          </button>
+          { handleRemoveArchive && (
+            <button type="button" onClick={() => {handleRemoveArchive(Number(file?.index)); handleCloseModal()}}>
+              Remover anexo
+            </button>
+          )}
+
           <button type="button" onClick={handleCloseModal}>
             Fechar
           </button>
