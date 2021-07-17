@@ -32,7 +32,8 @@ export default function Login() {
   async function handleSubmit(event: FormEvent){    
     event.preventDefault()
     setIsLoading(true)
-    await api.post('/login', { email, password }).then(({ data }) => {
+    api.post('/login', { email, password }).then(({ data }) => {
+      localStorage.setItem('@CarpeDiemUsername', data.user.name)
       setToken(data.token)
       setIsLoading(false)
       push('/Activities')
@@ -41,7 +42,6 @@ export default function Login() {
       setPassword('')
       setIsLoading(false)
     })
-
   }
 
   return (
