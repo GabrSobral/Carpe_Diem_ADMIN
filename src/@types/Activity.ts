@@ -4,7 +4,7 @@ export interface FileProps {
   format: string;
   duration: number;
   url: string;
-  size?: string
+  size?: number
   category: string;
   created_at: Date;
 }
