@@ -5,6 +5,7 @@ import plusSVG from '../../images/plus.svg'
 
 import styles from './styles.module.scss'
 import { usePage } from '../../hooks/usePage'
+import { useEffect, useState } from 'react'
 
 interface HeaderContentProps {
   title?: string;
@@ -12,11 +13,17 @@ interface HeaderContentProps {
 
 export function HeaderContent({title}: HeaderContentProps){
   const { handleSetPageClearingState } = usePage()
-  const username = localStorage.getItem('@CarpeDiemUsername')
+  const [ name, setName ] = useState<string | null>('')
+
+  useEffect(() =>{ 
+    const username = localStorage.getItem('@CarpeDiemUsername')
+    setName(username)
+
+  },[])
   return(
     <header className={styles.container}>
       <div>
-        <span>Olá {username}</span>
+        <span>Olá {name}</span>
       </div>
 
       {
