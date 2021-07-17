@@ -33,20 +33,26 @@ export interface UploadArchivesProps{
 export const ArchiveContext = createContext({} as ArchiveProps)
 
 export function ArchiveProvider({ children }: ArchiveProviderProps){
-  const [ uploadArchives, setUploadArchives ] = useState<UploadArchivesProps[]>([])
   const [ allArchives, setAllArchives ] = useState<FileProps[]>([])
-  const [ teste, setTeste ] = useState<FileProps[]>([])
+  const [ uploadArchives, setUploadArchives ] = useState<UploadArchivesProps[]>([])
 
   function handleSetAllArchives(archives: FileProps[]){
     setAllArchives(archives)
   }
 
-  function deleteArchive(id: string, index: number){
-    allArchives.splice(index, 1)
+  useEffect(() => {
     console.log(allArchives)
-    setTeste(allArchives)
-    setAllArchives(allArchives)
-    api.delete(`archive/delete/${id}`)
+  },[allArchives])
+
+  async function deleteArchive(id: string, index: number){
+    const allFiles = allArchives
+    allFiles.splice(index, 1)
+    console.log('id: ', id, 'index: ', index)
+    await api.delete(`archive/delete/${id}`)
+
+    setAllArchives([])
+
+    allFiles.forEach(item => setAllArchives(state => [ item, ...state]))
   }
 
   const upload = async (files: File[]) => {
