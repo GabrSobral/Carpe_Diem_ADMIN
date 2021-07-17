@@ -4,12 +4,13 @@
   background-color: var(--white);
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.248);
   border-radius: 7px;
-  cursor: pointer;
+  cursor: progress;
   overflow: hidden;
 
   display: flex;
 
   &.uploaded{
+    cursor: default;
     .icon_container_archive{
       background-color: var(--green-300);
 
@@ -19,6 +20,7 @@
     }
   }
   &.canceled{
+    cursor: default;
     .icon_container_archive{
       background-color: var(--orange-300);
 
@@ -28,6 +30,7 @@
     }
   }
   &.error{
+    cursor: not-allowed;
     .icon_container_archive{
       background-color: var(--red-300);
 
