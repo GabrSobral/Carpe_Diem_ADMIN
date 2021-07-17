@@ -137,12 +137,12 @@ export function CreateActivityContent(){
               disabled={isLoading || !isFilled}
             >
               {
-              isLoading ? <Loading type="spin" width={32} height={32} color="#fff"/>
-              : (<>
-                  <Image src={saveSVG} alt="Icone de salvar"/>
-                  Salvar
-                </>)
-            }
+                isLoading ? <Loading type="spin" width={32} height={32} color="#fff"/>
+                : (<>
+                    <Image src={saveSVG} alt="Icone de salvar"/>
+                    Salvar
+                  </>)
+              }
             </button>
           </form>
         </main>

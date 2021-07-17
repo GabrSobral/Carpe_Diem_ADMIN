@@ -12,10 +12,11 @@ interface HeaderContentProps {
 
 export function HeaderContent({title}: HeaderContentProps){
   const { handleSetPageClearingState } = usePage()
+  const username = localStorage.getItem('@CarpeDiemUsername')
   return(
     <header className={styles.container}>
       <div>
-        <span>Olá Gabriel</span>
+        <span>Olá {username}</span>
       </div>
 
       {
