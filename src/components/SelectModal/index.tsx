@@ -33,20 +33,20 @@ export function SelectModal({ type }: ModalProps){
 
   useEffect(() => {
     if(type === 'category'){
-      if(categories.length !== 0){
-        setData(categories)
-        return
-      }
+      // if(categories.length !== 0){
+      //   setData(categories)
+      //   return
+      // }
       api.get('/category/list').then(({ data }) => {
         handleSetCategories(data)
         setData(data)
       })
     }
     if(type === 'archive'){
-      if(archives.length !== 0){
-        setData(archives)
-        return
-      }
+      // if(archives.length !== 0){
+      //   setData(archives)
+      //   return
+      // }
       api.get('/archive/list').then(({ data }) => {
         handlesetArchives(data)
         setData(data)

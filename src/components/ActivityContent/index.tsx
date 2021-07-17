@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import Image from 'next/image'
 import { useState } from 'react'
 
 import { useActivity } from '../../hooks/useActivity'
@@ -33,29 +34,47 @@ export function ActivityContent(){
            <div className={styles.files}>
             <span>Arquivos: {activity?.files.length}</span>
   
-            {
-              activity?.files.map(item => {
-                if(item.format === "mp4"){ 
-                  return (
-                    <>
-                    <video controls className={styles.video}>
+            {activity?.files.map(item => {
+                
+                if(item.format === "mp4"){
+                  return(
+                    <video controls className={styles.video} key={item.id}>
                       <source src={item.url} type="video/mp4"/>
                       Your browser does not support the video tag.
                     </video>
-                    </>
                   )
                 }
-                return (
-                  <div className={styles.audio_files} key={item.id}>
-                    <Player 
-                      name={item.name || ''}
-                      url={item.url || ''}
-                      duration={item.duration || 0}
-                    />
-                  </div>
-                )
-              })
-            }
+      
+                if(item.format === "mp3"){
+                  return(
+                    <div className={styles.audio_files} key={item.id}>
+                      <Player 
+                        name={item.name || ''}
+                        url={item.url || ''}
+                        duration={item.duration || 0}
+                      />
+                    </div>
+                  )
+                }
+      
+                if(item.format === "png"){
+                  return(
+                    <div className={styles.image}>
+                      <Image 
+                        key={item.id}
+                        src={item.url} 
+                        alt="Imagem do arquivo" 
+                        width={512}
+                        height={288}
+                        objectFit="contain"
+                     />
+                    </div>
+                    
+                  )
+                }
+
+                return <p key={item.id}>banana</p>
+            })}
   
           </div>      
         </main>
