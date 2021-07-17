@@ -83,7 +83,7 @@ export function Player({ name,  duration, url }: PlayerProps){
               railStyle={{ backgroundColor : '#9f75ff' }}
               handleStyle={{ borderColor : '#04d361', borderWidth : 4 }}
             />
-          <span>{convertDurationToTimeString(duration)}</span>
+          <span>{convertDurationToTimeString(Math.round(duration))}</span>
         </div>
       </div>
       <span className={styles.audio_name}>{name}</span>
