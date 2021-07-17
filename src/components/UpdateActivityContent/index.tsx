@@ -16,7 +16,7 @@ import { api } from '../../services/api'
 import styles from './styles.module.scss'
 import { useCreateActivity } from '../../hooks/useCreateActivity'
 import { useActivity } from '../../hooks/useActivity'
-import { FileProps } from '../../@types/Activity'
+import { Activity, FileProps } from '../../@types/Activity'
 import { format } from 'date-fns'
 import { usePage } from '../../hooks/usePage'
 
@@ -36,7 +36,7 @@ export function UpdateActivityContent(){
   const [ isDetailArchiveVisible, setIsDetailArchiveVisible ] = useState<boolean>(false)
 
   const { handleModalCategory, handleModalArchives } = useModal()
-  const { activity } = useActivity()
+  const { activity, handleUpdateActivityFromList, handleSelectActivity } = useActivity()
   const { handleSetPage } = usePage()
   const { 
     category,
@@ -105,9 +105,8 @@ export function UpdateActivityContent(){
       body: descriptionFormatted,
       category: category?.id
     })
-    activity?.files.forEach(async (item) => {
-      await api.delete(`/archive-activity/delete/${item.id}`)
-    })
+
+    await api.delete(`/archive-activity/delete/${activity?.id}`)
 
     archives.forEach(async (file) => {
       await api.post('/archive-activity/new', {
@@ -115,6 +114,19 @@ export function UpdateActivityContent(){
         archive: file.id
       })
     })
+    const updated_activity: Activity = {
+      id: newActivity.data.id,
+      title: newActivity.data.title,
+      body: newActivity.data.body,
+      category: newActivity.data.category,
+      description: newActivity.data.description,
+      created_at: newActivity.data.created_at,
+      files: archives,
+      updated_at: Date.now().toString(),
+      index: activity?.index || 0
+    }
+    handleUpdateActivityFromList(updated_activity)
+    handleSelectActivity(updated_activity, updated_activity.index)
     setIsLoading(false)
     handleSetPage('ActivityDetails')
     handleClearInputs()
