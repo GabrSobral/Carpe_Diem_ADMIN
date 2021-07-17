@@ -16,7 +16,7 @@ export  function ArchivesList(){
            <div 
             {...getRootProps()}
             
-            className={`${styles.drop_container} ${isDragActive ? 'drag_active' : ''} ${isDragReject && 'drag_reject'}`}
+            className={`${styles.drop_container} ${isDragActive && styles.drag_active} ${isDragReject && styles.drag_reject}`}
             >
               <Image src={AddFileSVG} alt="Novos arquivos"/>
               <span>Arraste novos <br/> arquivos para cá</span>

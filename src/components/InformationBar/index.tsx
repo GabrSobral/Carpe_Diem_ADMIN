@@ -22,23 +22,27 @@ export function InformationBar({ type = "activities" }: InformationBar){
   return(
     <aside className={styles.container}>
       <header>
-        <div className={styles.search_bar}>
-          <button type="button">
-            <Image src={searchSVG} alt="pesquisar"/>
-          </button>
-            <input 
-              type="text" 
-              placeholder="Pesquise"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-            />
-        </div>
-
+        {type !== "archives" && (
+          <div className={styles.search_bar}>
+            <button type="button">
+              <Image src={searchSVG} alt="pesquisar"/>
+            </button>
+              <input 
+                type="text" 
+                placeholder="Pesquise"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+              />
+          </div>
+        )}
+        
         <h4>{type === "activities" ? "Todas as Atividades" : "Uploads"}</h4>
 
-        <button type="button" onClick={() => setReload(!reload)}>
-          <Image src={reloadSVG} alt="recarregar"/>
-        </button>
+        {type !== "archives" && (
+          <button type="button" onClick={() => setReload(!reload)}>
+            <Image src={reloadSVG} alt="recarregar"/>
+          </button>
+        )}
       </header>
 
       <main>
