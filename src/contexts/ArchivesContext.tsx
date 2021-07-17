@@ -14,12 +14,14 @@ interface ArchiveProps {
   uploadArchives: UploadArchivesProps[];
   handleSetAllArchives: (archives: FileProps[]) => void
   allArchives: FileProps[];
-  cancelUpload: (id: string, cancelToken: CancelTokenSource) => void
+  cancelUpload: (id: string, cancelToken: CancelTokenSource) => void;
+  deleteArchive: (id: string, index: number) => void
 }
 export interface UploadArchivesProps{
   file: File | null;
   id: string;
   name: string;
+  size: number,
   progress?: number;
   uploaded: boolean;
   error?: boolean;
@@ -33,9 +35,18 @@ export const ArchiveContext = createContext({} as ArchiveProps)
 export function ArchiveProvider({ children }: ArchiveProviderProps){
   const [ uploadArchives, setUploadArchives ] = useState<UploadArchivesProps[]>([])
   const [ allArchives, setAllArchives ] = useState<FileProps[]>([])
+  const [ teste, setTeste ] = useState<FileProps[]>([])
 
   function handleSetAllArchives(archives: FileProps[]){
     setAllArchives(archives)
+  }
+
+  function deleteArchive(id: string, index: number){
+    allArchives.splice(index, 1)
+    console.log(allArchives)
+    setTeste(allArchives)
+    setAllArchives(allArchives)
+    api.delete(`archive/delete/${id}`)
   }
 
   const upload = async (files: File[]) => {
@@ -43,6 +54,7 @@ export function ArchiveProvider({ children }: ArchiveProviderProps){
       file,
       id: uniqueId(),
       name: file.name,
+      size: file.size,
       progress: 0,
       uploaded: false,
       error: false,
@@ -87,6 +99,7 @@ export function ArchiveProvider({ children }: ArchiveProviderProps){
     }).then(({data})=>{
       alert(`O upload de ${data.name} foi feito com sucesso`)
       updateFile(uploadedArchive.id, { uploaded: true, id: data.id })
+      setAllArchives(prevState => [data, ...prevState])
     }).catch((data)=>{
       if(data.__proto__.__CANCEL__ === true){
         updateFile(uploadedArchive.id, { canceled: true })
@@ -103,7 +116,8 @@ export function ArchiveProvider({ children }: ArchiveProviderProps){
         uploadArchives,
         handleSetAllArchives,
         allArchives,
-        cancelUpload
+        cancelUpload,
+        deleteArchive
       }}
     >
       {children}
