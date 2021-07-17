@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { ArchivesListContent } from '../../components/ArchivesListContent'
 
 import { InformationBar } from '../../components/InformationBar'
 
@@ -8,8 +8,7 @@ export default function Archives(){
   return(
     <div className={styles.home_page}>   
       <div className={styles.content}>
-
-        
+        <ArchivesListContent/>
       </div>
       <InformationBar type="archives"/>
     </div>
