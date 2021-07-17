@@ -9,6 +9,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import { UploadArchivesProps } from '../../contexts/ArchivesContext';
 import styles from './styles.module.scss'
 import { useArchive } from '../../hooks/useArchive';
+import fileSize from 'filesize';
 
 interface ArchiveItemListProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
   file: UploadArchivesProps
@@ -18,7 +19,7 @@ export function ArchiveItemList({ file }: ArchiveItemListProps){
   const { cancelUpload } = useArchive()
 
   return(
-    <div className={`${styles.container_archive} ${file.uploaded && styles.uploaded} ${file.canceled && styles.canceled}`}>
+    <div className={`${styles.container_archive} ${file.uploaded && styles.uploaded} ${file.canceled && styles.canceled} ${file.error && styles.error}`}>
       <div className={styles.icon_container_archive}>
         <div className={styles.image_container_archive}>
           { !file.uploaded && !file.error && !file.canceled && (
@@ -42,10 +43,10 @@ export function ArchiveItemList({ file }: ArchiveItemListProps){
 
       <div className={styles.content_archive}>
         <span>{file.name}</span>
-        <p>descrição hihihi</p>
+        <p>{fileSize(file.size)}</p>
 
         { file.canceled && (<span className={styles.title_canceled}>Cancelado</span>) }
-        { !file.uploaded && !file.canceled && 
+        { !file.uploaded && !file.canceled && !file.error &&
           <button 
             type="button" 
             onClick={() => cancelUpload(file.id, file.cancelToken)}
