@@ -10,11 +10,11 @@ interface SelectButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement
   title: string;
 }
 
-export function SelectModalButton({ isActive = false, title, ...rest }: SelectButtonProps){
+export function SelectModalButton({ isActive = true, title, ...rest }: SelectButtonProps){
   return(
     <button 
       type="button" 
-      className={`${styles.container} ${isActive && styles.active}`}
+      className={`${styles.container} ${isActive ? styles.active : ''}`}
       {...rest}
     >
       <div className={styles.select_icon}>

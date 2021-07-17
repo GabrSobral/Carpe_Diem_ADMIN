@@ -1,0 +1,16 @@
+.container{
+  position: relative;
+  z-index: 15;
+  width: 100%;
+  background-color: var(--white);
+  padding: 2rem;
+  padding-bottom: 3rem;
+  
+  main{
+    display: grid;
+    width: 100%;
+    gap: 1rem;
+    grid-template-columns: repeat(3, auto) ;
+    margin-top: 4rem;
+  }
+}

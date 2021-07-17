@@ -9,6 +9,9 @@
     position: relative; 
 
     &:focus-within{
+      .config_button{
+        transform: rotate(90deg);
+      }
       .config_menu{
         display: flex;
         height: auto;
@@ -38,7 +41,8 @@
       height: 3rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      gap: 1rem;
       padding: 0.5rem 1rem;
       font-weight: 700;
       font-size: 1rem;

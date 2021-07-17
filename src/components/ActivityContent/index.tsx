@@ -1,3 +1,6 @@
+import { format } from 'date-fns'
+import { useState } from 'react'
+
 import { useActivity } from '../../hooks/useActivity'
 import { ConfigButton } from '../ConfigButton'
 import { HeaderContent } from '../HeaderContent'
@@ -8,17 +11,20 @@ import styles from './styles.module.scss'
 export function ActivityContent(){
   const { activity } = useActivity()
 
+  const date = Date.parse(String(activity?.created_at)) || new Date()
+  const formattedDate = format(date, "dd/MM/yyyy 'às' HH:mm")
+
   return(
     <div className={styles.container}>
       <HeaderContent/>
       {
-        activity && (
+        activity ? (
           <>
           <main>
           <div className={styles.title_subtitle}>
             <h1>{activity?.title}</h1>
             <span className={styles.subtitle}>{activity?.description}</span>
-            <span className={styles.created_at}>Criado em: 08/07/2021 ás 15: 32</span>
+            <span className={styles.created_at}>Criado em: {formattedDate}</span>
           </div>
   
           <div className={styles.description} dangerouslySetInnerHTML={{ __html: activity?.body as string}}>
@@ -56,6 +62,10 @@ export function ActivityContent(){
   
         <ConfigButton/>
         </>
+        ) : (
+          <div className={styles.no_activity_selected}>
+            <h1>Não tem nenhuma atividade selecionada</h1>
+          </div>
         )
       }
     </div>

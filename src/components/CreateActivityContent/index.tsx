@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
+import Loading from 'react-loading'
 
 import saveSVG from '../../images/save.svg'
 import plusSVG from '../../images/plus.svg'
@@ -16,32 +17,16 @@ import styles from './styles.module.scss'
 import { useCreateActivity } from '../../hooks/useCreateActivity'
 import { useActivity } from '../../hooks/useActivity'
 
-interface FileProps{
-  id: string;
-  name: string;
-  format: string;
-  duration: number;
-  url: string;
-  author: string;
-}
+import { FileProps } from '../../@types/Activity'
+
 interface ArchiveSelected{
   file: FileProps;
   index: number
 }
 
-interface Activity{
-  id: string;
-  title: string;
-  description: string;
-  created_at: string;
-  updated_at: string;
-  body: string;
-  category: string;
-  files: FileProps[]
-}
-
 export function CreateActivityContent(){
   const [ isFilled, setIsFilled ] = useState(false)
+  const [ isLoading, setIsLoading ] = useState(false)
   const { handleAddActivity } = useActivity()
   const [ isDetailArchiveVisible, setIsDetailArchiveVisible ] = useState<boolean>(false)
   const [ archiveSelected, setArchiveSelected ] = useState<ArchiveSelected>()
@@ -52,6 +37,7 @@ export function CreateActivityContent(){
     description,
     handleSetDescription,
     handleSetSubTitle,
+    handleClearInputs,
     handleSetTitle,
     subTitle,
     handleRemoveArchive
@@ -70,15 +56,22 @@ export function CreateActivityContent(){
 
   async function handleSumbit(event: FormEvent){
     event.preventDefault()
+    setIsLoading(true)
 
     title.trim()
     subTitle.trim()
     description.trim()
 
+    function breakLines(string: string){
+      return string.replace(/(?:\r\n|\r|\n)/g, '<hr>');
+    }
+
+    const descriptionFormatted = breakLines(description) 
+
     const newActivity = await api.post('/activity/new', {
       title,
       description: subTitle,
-      body: description,
+      body: descriptionFormatted,
       category: category?.id
     })
 
@@ -89,18 +82,10 @@ export function CreateActivityContent(){
       })
     })
 
-    // const Activity = {
-    //   id: newActivity.data.id,
-    //   title: newActivity.data.title,
-    //   created_at: newActivity.data.created_at,
-    //   updated_at: newActivity.data.updated_at,
-    //   description: newActivity.data.description,
-    //   body: newActivity.data.body,
-    //   category: newActivity.data.body,
-    //   files: 
-    // } as Activity
-
-    // handleAddActivity(Activity)
+    const { data } = await api.get(`/activity/show/${newActivity.data.id}`)
+    setIsLoading(false)
+    handleClearInputs()
+    handleAddActivity(data)
   }
 
   return(
@@ -116,7 +101,6 @@ export function CreateActivityContent(){
       ) }
 
         <main>
-          {/* <span className={styles.created_at}>Criado em: 08/07/2021 ás 15: 32</span> */}
           <form onSubmit={handleSumbit}>
             <InputCreate title="Título:" type="text" setValue={handleSetTitle} value={title}/>
             <InputCreate title="Subtítulo:" type="text" setValue={handleSetSubTitle} value={subTitle}/>
@@ -129,7 +113,6 @@ export function CreateActivityContent(){
 
             <div className={`${styles.select_container} ${ archives.length !== 0  && styles.active}`}>
               <span>Arquivos:</span>
-
               <div className={styles.archives_list}>
                 {
                   archives.map((item, index) => (
@@ -141,7 +124,6 @@ export function CreateActivityContent(){
                     />
                   ))
                 }
-
                 <button type="button" className={styles.add_file} onClick={handleModalArchives}>
                   <Image src={plusSVG} alt="Icone de adicionar"/>
                 </button>
@@ -152,10 +134,15 @@ export function CreateActivityContent(){
             <button 
               type="submit" 
               className={styles.submit_button}
-              disabled={!isFilled}
+              disabled={isLoading || !isFilled}
             >
-              <Image src={saveSVG} alt="Icone de salvar"/>
-              Salvar
+              {
+              isLoading ? <Loading type="spin" width={32} height={32} color="#fff"/>
+              : (<>
+                  <Image src={saveSVG} alt="Icone de salvar"/>
+                  Salvar
+                </>)
+            }
             </button>
           </form>
         </main>

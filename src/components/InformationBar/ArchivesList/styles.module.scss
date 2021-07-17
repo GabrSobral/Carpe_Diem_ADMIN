@@ -1,0 +1,30 @@
+.drop_container{
+  width: 100%;
+  min-height: 6rem;
+  border: 3px dashed var(--gray-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  border-radius: 7px;
+  gap: 1rem;
+  cursor: pointer;
+
+  img{
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+}
+
+.drag_active{
+  border-color: var(--green-300);
+  span{
+    color: var(--green-300);
+  }
+}
+.drag_reject{
+  border-color: var(--red-300);
+  span{
+    color: var(--red-300);
+  }
+}

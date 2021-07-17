@@ -1,37 +1,19 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
+import { Activity } from "../@types/Activity";
 import { api } from "../services/api";
 
 interface ActivityProviderProps{
   children: ReactNode;
 }
 
-interface FileProps {
-  id: string;
-  name: string;
-  format: string;
-  duration: number;
-  category: string;
-  url: string 
-}
-
-interface Activity{
-  id: string;
-  title: string;
-  description: string;
-  created_at: string;
-  updated_at: string;
-  body: string;
-  category: string;
-  files: FileProps[]
-}
-
 interface ActivityContextProps {
   activities: Activity[] | undefined;
   activity: Activity | undefined;
-  handleSelectActivity: (activity_data: Activity) => void;
+  handleSelectActivity: (activity_data: Activity, index: number) => void;
   handleSetActivities: (activitiesData: Activity[]) => void;
   handleClearSelectActivity: () => void
-  handleAddActivity: (activity_data: Activity) => void
+  handleAddActivity: (activity_data: Activity) => void;
+  handleRemoveActivityFromList: () => void
 }
 
 export const ActivityContext = createContext({} as ActivityContextProps)
@@ -44,13 +26,18 @@ export function ActivityProvider({ children }: ActivityProviderProps){
   function handleSetActivities(activitiesData: Activity[]){
     setActivities(activitiesData)
   }
-  function handleSelectActivity(activity_data: Activity){
+  function handleSelectActivity(activity_data: Activity, index: number){
+    activity_data.index = index
     setActivity(activity_data)
   }
   function handleClearSelectActivity(){ setActivity(undefined) }
 
   function handleAddActivity(activity_data: Activity){
     setActivities(prevState => [...prevState, activity_data])
+  }
+  function handleRemoveActivityFromList(){
+    activity?.index && activities.splice(activity?.index, 1)
+    setActivities(activities)
   }
 
   return (
@@ -61,7 +48,8 @@ export function ActivityProvider({ children }: ActivityProviderProps){
         activity,
         handleSetActivities,
         handleClearSelectActivity,
-        handleAddActivity
+        handleAddActivity,
+        handleRemoveActivityFromList
       }}
     >
       {children}

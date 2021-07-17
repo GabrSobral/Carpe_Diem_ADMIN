@@ -1,26 +1,23 @@
+import { format } from 'date-fns';
+import { FileProps } from '../../@types/Activity';
 import { Player } from '../Player'
 
 import styles from './styles.module.scss'
 
 interface DetailArchiveProps{
   handleCloseModal: () => void;
-  handleRemoveArchive: (index: number) => void;
+  handleRemoveArchive?: (index: number) => void;
   file: SelectedArchive | undefined;
 }
-interface ArchiveProps{
-  id: string;
-  name: string | undefined;
-  format: string | undefined;
-  duration: number | undefined;
-  url: string | undefined;
-  author: string | undefined;
-}
 interface SelectedArchive {
-  file: ArchiveProps;
+  file: FileProps;
   index: number;
 }
 
 export function DetailArchiveModal({ handleCloseModal, handleRemoveArchive, file }: DetailArchiveProps){
+  const date = Date.parse(String(file?.file.created_at)) || new Date()
+  const formattedDate = format(date, "dd/MM/yyyy 'às' HH:mm")
+
   return(
     <div className={styles.background}>
       <div className={styles.container}>
@@ -44,17 +41,21 @@ export function DetailArchiveModal({ handleCloseModal, handleRemoveArchive, file
         </header>
         
         <main className={styles.main}>
-          <h1>{file?.file.name}</h1>
+          <span className={styles.title}>{file?.file.name}</span>
           <div>
             <span><strong>Formato: </strong>{file?.file.format}</span>
-            <span><strong>Autor: </strong>{file?.file.author}</span>
+            <span><strong>Size: </strong>{file?.file.size}</span>
+            <span><strong>Criado em: </strong>{formattedDate}</span>
           </div>
         </main>
 
         <div className={styles.buttons_container}>
-          <button type="button" onClick={() => {handleRemoveArchive(Number(file?.index)); handleCloseModal()}}>
-            Remover anexo
-          </button>
+          { handleRemoveArchive && (
+            <button type="button" onClick={() => {handleRemoveArchive(Number(file?.index)); handleCloseModal()}}>
+              Remover anexo
+            </button>
+          )}
+
           <button type="button" onClick={handleCloseModal}>
             Fechar
           </button>

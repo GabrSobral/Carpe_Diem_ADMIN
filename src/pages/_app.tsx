@@ -11,24 +11,28 @@ import { PageProvider } from '../contexts/PageContext'
 
 import styles from '../styles/app.module.scss'
 
-function MyApp({ Component, pageProps }: AppProps) {
+import { ArchiveProvider } from '../contexts/ArchivesContext'
+
+function MyApp({ Component, pageProps }: AppProps) {  
   const { pathname } = useRouter()
   const url = pathname.split('/')
-
+     
   return (
     <div className={styles.pages}>
-      {url[1] && <SideBar active={url[1]}/>}
+      <ActivityProvider>
+        <ArchiveProvider>
+          <PageProvider>
+            {url[1] && <SideBar active={url[1]}/>}
 
-      <main className={styles.main}>
-        <ModalProvider>
-          <ActivityProvider>
-            <PageProvider>
-              <Component {...pageProps} />
-            </PageProvider>
-          </ActivityProvider>
-        </ModalProvider>
-      </main>
+            <main className={styles.main}>
+              <ModalProvider>
+                <Component {...pageProps} />
+              </ModalProvider>
+            </main>
+          </PageProvider>
+        </ArchiveProvider>
+      </ActivityProvider>
     </div>
-  )
+ )
 }
 export default MyApp
