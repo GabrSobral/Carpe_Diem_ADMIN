@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getToken } from '../utils/Token'
 
 const api = axios.create({
-  baseURL: process.env.API_ADDRESS
+  baseURL: 'https://carpe-diem-api.herokuapp.com'
 })
 
 const token = getToken()
