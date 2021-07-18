@@ -20,13 +20,17 @@ export function ActivitiesList(
   const { activities, handleSelectActivity, handleSetActivities } = useActivity()
   const [ isLoading, setIsLoading ] = useState(false)
   const { handleSetPage } = usePage()
+
+
   
   useEffect(() => {
-    setIsLoading(true)
-    api.get('/activity/list').then(({ data }) => {
+    (async function(){
+      setIsLoading(true)
+      await api.get('/activity/list').then(({ data }) => {
       handleSetActivities(data)
       setIsLoading(false)
     })
+    })()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[reload])
 
