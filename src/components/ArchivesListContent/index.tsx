@@ -20,7 +20,9 @@ export function ArchivesListContent(){
   }
 
   useEffect(() => {
-    api.get('/archive/list').then(({data}) => { handleSetAllArchives(data) })
+    (async function(){
+      await api.get('/archive/list').then(({data}) => { handleSetAllArchives(data) })
+    })()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
