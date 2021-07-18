@@ -7,9 +7,11 @@ const api = axios.create({
 
 const token = getToken()
 
-api.interceptors.request.use((config) => {
-  config.headers.authorization = `Bearer ${token}`
-  return config
-})
+if(token){
+  api.interceptors.request.use((config) => {
+    config.headers.authorization = `Bearer ${token}`
+    return config
+  })
+}
 
 export { api }
