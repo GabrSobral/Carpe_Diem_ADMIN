@@ -23,6 +23,11 @@ export function AuthProvider({ children }: AuthProviderProps){
 
     setToken(data.token)
     setIsAuthenticated(true)
+
+    api.interceptors.request.use((config) => {
+      config.headers.authorization = `Bearer ${data.token}`
+      return config
+    })
   
     return data
   }
