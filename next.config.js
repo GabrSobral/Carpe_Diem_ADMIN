@@ -3,6 +3,6 @@ module.exports ={
     domains : ['res.cloudinary.com']
   },
   env: {
-    BASE_URL: process.env.NEXT_PUBLIC_API_ADDRESS,
+    BASE_URL: process.env.API_ADDRESS,
   }
 }

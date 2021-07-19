@@ -5,11 +5,12 @@ const api = axios.create({
   baseURL: process.env.BASE_URL
 })
 
+console.log(process.env.BASE_URL)
+
 const token = getToken()
 
 if(token){
   api.interceptors.request.use((config) => {
-  console.log(process.env.NEXT_PUBLIC_API_ADDRESS)
     config.headers.authorization = `Bearer ${token}`
     return config
   })
