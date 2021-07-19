@@ -70,7 +70,10 @@ export function SelectModal({ type }: ModalProps){
     }
   }
   function handleSetSelectData(){
-    handleSelectData(selectData)
+    if(selectData){
+      handleSelectData(selectData)
+      handleModalClose()
+    }
     handleModalClose()
   }
 
@@ -112,7 +115,7 @@ export function SelectModal({ type }: ModalProps){
               Cancelar
             </button>
 
-            <button type="button" onClick={handleSetSelectData}>
+            <button type="button" onClick={handleSetSelectData} disabled={!selectData}>
               <Image src={checkSVG} alt="Cancelar"/>
               Concluir
             </button>
