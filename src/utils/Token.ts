@@ -1,15 +1,18 @@
-import cookies from 'js-cookie'
+import { setCookie, parseCookies, destroyCookie  } from 'nookies'
 
 const TokenName = "@CarpeDiem-Token"
 
 export function setToken(token: string){
-  cookies.set(TokenName, token, { expires: 1 })
+  setCookie(undefined, TokenName, token, {
+    maxAge: 60 * 60 * 24 //1 day
+  })
 }
 export function getToken(){
-  const token = cookies.get(TokenName)
+  const { "@CarpeDiem-Token": token } = parseCookies()
+  console.log(token)
   return token
 }
 
 export function removeToken(){
-  cookies.remove(TokenName)
+  destroyCookie(undefined, TokenName)
 }

@@ -8,11 +8,16 @@ import { LoginInput } from '../components/LoginInput'
 import enter from '../images/enter.svg'
 import logo from '../images/logo.svg'
 import { api } from '../services/api'
-import { setToken } from '../utils/Token'
+import { getToken, setToken } from '../utils/Token'
 
 import styles from '../styles/styles.module.scss'
+import { useAuth } from '../hooks/useAuth'
+import { sendError } from 'next/dist/next-server/server/api-utils'
+import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
 
 export default function Login() {
+  const { signIn } = useAuth()
   const [ email, setEmail ] = useState<string>('')
   const [ password, setPassword ] = useState<string>('')
   const [ message, setMessage ] = useState<string>('')
@@ -32,16 +37,16 @@ export default function Login() {
   async function handleSubmit(event: FormEvent){    
     event.preventDefault()
     setIsLoading(true)
-    api.post('/login', { email, password }).then(({ data }) => {
-      localStorage.setItem('@CarpeDiemUsername', data.user.name)
-      setToken(data.token)
+    try{
+      const user = await signIn(email, password)
+      console.log(user)
       setIsLoading(false)
       push('/Activities')
-    }).catch((error) => {
+    }catch(error){
       setMessage(error.response.data.error)
       setPassword('')
       setIsLoading(false)
-    })
+    }
   }
 
   return (
@@ -93,7 +98,6 @@ export default function Login() {
                   </>
                 )
               }
-              
             </button>
           </form>
 
@@ -101,4 +105,22 @@ export default function Login() {
       </main>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['@CarpeDiem-Token'] : token } = parseCookies(ctx)
+
+  if(token){
+    return {
+      redirect: {
+        destination: '/Activities',
+        permanent: false,
+      }
+    }
+  }
+  return{
+    props: {
+
+    }
+  }
 }

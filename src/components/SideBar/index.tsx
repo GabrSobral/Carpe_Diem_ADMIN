@@ -7,6 +7,7 @@ import ArchivesSVG from '../../images/archives_bar.svg'
 import UsersSVG from '../../images/users_bar.svg'
 import LogOutSVG from '../../images/logout_bar.svg'
 import { usePage } from '../../hooks/usePage'
+import { useAuth } from '../../hooks/useAuth'
 
 interface SideBarProps {
   active: string;
@@ -15,6 +16,7 @@ interface SideBarProps {
 export function SideBar({ active }: SideBarProps){
   const { push } = useRouter()
   const { handleSetPage } = usePage()
+  const { logout } = useAuth()
 
   function handleNavigate(page: string){
     switch(page){
@@ -72,7 +74,7 @@ export function SideBar({ active }: SideBarProps){
         </button>
       </nav>
       
-      <button type="button">
+      <button type="button" onClick={logout}>
         <Image src={LogOutSVG} alt="icone de usuários"/>
 
         <div className={styles.button_hover}> 

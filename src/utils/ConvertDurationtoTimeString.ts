@@ -1,5 +1,4 @@
 export function convertDurationToTimeString(duration : number){
-  console.log(duration)
   const minutes = Math.floor((duration % 3600) / 60)
   const seconds = duration % 60
 

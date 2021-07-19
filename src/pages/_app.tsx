@@ -12,6 +12,7 @@ import { PageProvider } from '../contexts/PageContext'
 import styles from '../styles/app.module.scss'
 
 import { ArchiveProvider } from '../contexts/ArchivesContext'
+import { AuthProvider } from '../contexts/AuthContext'
 
 function MyApp({ Component, pageProps }: AppProps) {  
   const { pathname } = useRouter()
@@ -19,19 +20,21 @@ function MyApp({ Component, pageProps }: AppProps) {
      
   return (
     <div className={styles.pages}>
-      <ActivityProvider>
-        <ArchiveProvider>
-          <PageProvider>
-            {url[1] && <SideBar active={url[1]}/>}
+      <AuthProvider>
+        <ActivityProvider>
+          <ArchiveProvider>
+            <PageProvider>
+              {url[1] && <SideBar active={url[1]}/>}
 
-            <main className={styles.main}>
-              <ModalProvider>
-                <Component {...pageProps} />
-              </ModalProvider>
-            </main>
-          </PageProvider>
-        </ArchiveProvider>
-      </ActivityProvider>
+              <main className={styles.main}>
+                <ModalProvider>
+                  <Component {...pageProps} />
+                </ModalProvider>
+              </main>
+            </PageProvider>
+          </ArchiveProvider>
+        </ActivityProvider>
+      </AuthProvider>
     </div>
  )
 }
