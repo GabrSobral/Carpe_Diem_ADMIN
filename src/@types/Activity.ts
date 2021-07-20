@@ -1,7 +1,7 @@
 export interface Question{
   id: string;
   body: string;
-  category: string;
+  category: Category
 }
 
 export interface FileProps {
