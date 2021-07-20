@@ -1,3 +1,9 @@
+export interface Question{
+  id: string;
+  body: string;
+  category: string;
+}
+
 export interface FileProps {
   id: string;
   name: string;
