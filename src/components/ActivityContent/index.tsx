@@ -59,7 +59,7 @@ export function ActivityContent(){
       
                 if(item.format === "png"){
                   return(
-                    <div className={styles.image}>
+                    <div className={styles.image} key={item.id}>
                       <Image 
                         key={item.id}
                         src={item.url} 
