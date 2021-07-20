@@ -6,6 +6,7 @@ import ActivitiesSVG from '../../images/activities_bar.svg'
 import ArchivesSVG from '../../images/archives_bar.svg'
 import UsersSVG from '../../images/users_bar.svg'
 import LogOutSVG from '../../images/logout_bar.svg'
+import TagSVG from '../../images/tag.svg'
 import { usePage } from '../../hooks/usePage'
 import { useAuth } from '../../hooks/useAuth'
 
@@ -28,6 +29,9 @@ export function SideBar({ active }: SideBarProps){
       }
       case "Users" : {
         push("/Users"); break;
+      }
+      case "AnswersAndCategories" : {
+        push("/AnswersAndCategories"); break;
       }
     }
   }
@@ -70,6 +74,20 @@ export function SideBar({ active }: SideBarProps){
 
           <div className={styles.button_hover}> 
             <span>Usuários</span> 
+          </div>
+        </button>
+
+        <button 
+          type="button" 
+          className={active == "AnswersAndCategories" ? styles.active : ''}
+          onClick={() => {
+            handleNavigate("AnswersAndCategories")
+          }}
+        >
+          <Image src={TagSVG} alt="icone de Categorias e perguntas"/>
+
+          <div className={styles.button_hover}> 
+            <span>Categorias e perguntas</span> 
           </div>
         </button>
       </nav>
