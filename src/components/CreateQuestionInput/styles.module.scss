@@ -1,0 +1,48 @@
+.container{
+  position: relative;
+  padding: 1rem;
+  margin-top: 1rem;
+  width: 100%;
+  border-radius: 7px;
+  background-color: var(--gray-50);
+  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.254);
+
+  .select_container{
+    margin-top: 1rem;
+    display: flex;
+    width: 100%;
+    min-width: 10rem;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    span{
+      font-weight: 600;
+      font-size: 1rem;
+    }
+  }
+  .active{
+    span{
+      color: var(--blue-300);
+    }
+  }
+
+  .absolute{
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .submit_button{
+    width: 12rem;
+    height: 3rem;
+    background-color: var(--green-300);
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    gap: 0.5rem;
+    margin-left: auto;
+    margin-top: 0.5rem;
+  }
+}
