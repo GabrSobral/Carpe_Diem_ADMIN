@@ -69,6 +69,7 @@ export function SelectModal({ type }: ModalProps){
       handleSetArchive(value) 
     }
   }
+  
   function handleSetSelectData(){
     if(selectData){
       handleSelectData(selectData)

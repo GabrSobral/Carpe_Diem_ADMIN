@@ -12,13 +12,15 @@ import { usePage } from '../../hooks/usePage'
 import { useModal } from '../../hooks/useModal'
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
+import { useCreateActivity } from '../../hooks/useCreateActivity'
 
 export default function Activities(){
   const { isOpenArchives, isOpenCategory } = useModal()
   const { page } = usePage()
+  const { handleSetCategory, handleSetArchive } = useCreateActivity()
   
   return(
-    <div className={styles.home_page}>   
+    <div className={styles.home_page}>  
     <CreateActivityProvider>
       <div className={styles.content}>
         { isOpenCategory && <SelectModal type="category" /> }
