@@ -27,9 +27,9 @@ export function SideBar({ active }: SideBarProps){
       case "Archives" : {
         push("/Archives"); break;
       }
-      case "Users" : {
-        push("/Users"); break;
-      }
+      // case "Users" : {
+      //   push("/Users"); break;
+      // }
       case "AnswersAndCategories" : {
         push("/AnswersAndCategories"); break;
       }
@@ -69,13 +69,13 @@ export function SideBar({ active }: SideBarProps){
           </div>
         </button>
 
-        <button type="button" className={active == "Users" ? styles.active : ''}>
+        {/* <button type="button" className={active == "Users" ? styles.active : ''}>
           <Image src={UsersSVG} alt="icone de usuários"/>
 
           <div className={styles.button_hover}> 
             <span>Usuários</span> 
           </div>
-        </button>
+        </button> */}
 
         <button 
           type="button" 
