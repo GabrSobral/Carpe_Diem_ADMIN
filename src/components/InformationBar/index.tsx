@@ -62,7 +62,7 @@ export function InformationBar({ type = "activities" }: InformationBar){
            <ArchivesList/>
           )}
           {type === "categories" &&(
-           <CategoriesList/>
+           <CategoriesList search={search} reload={reload}/>
           )}
         
       </main>
