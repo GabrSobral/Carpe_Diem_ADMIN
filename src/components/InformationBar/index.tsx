@@ -9,8 +9,9 @@ import reloadSVG from '../../images/reload.svg'
 
 import styles from './styles.module.scss'
 import { ArchivesList } from './ArchivesList'
+import { CategoriesList } from './CategoriesList'
 interface InformationBar{
-  type?: "activities" | "archives";
+  type?: "activities" | "archives" | "categories";
 }
 
 export function InformationBar({ type = "activities" }: InformationBar){
@@ -36,7 +37,11 @@ export function InformationBar({ type = "activities" }: InformationBar){
           </div>
         )}
         
-        <h4>{type === "activities" ? "Todas as Atividades" : "Uploads"}</h4>
+        <h4>
+          {type === "activities" && "Todas as Atividades"}
+          {type === "archives" &&"Uploads"}
+          {type === "categories" && "Todas as categorias"}
+        </h4>
 
         {type !== "archives" && (
           <button type="button" onClick={() => setReload(!reload)}>
@@ -46,16 +51,19 @@ export function InformationBar({ type = "activities" }: InformationBar){
       </header>
 
       <main>
-        {
-          type === "activities" ? 
+          {type === "activities" &&(
             <ActivitiesList
               search={search}
               handleSetSearch={handleSetSearch}
               reload={reload}
             /> 
-          :
-            <ArchivesList/>
-        }
+          )}
+          {type === "archives" &&(
+           <ArchivesList/>
+          )}
+          {type === "categories" &&(
+           <CategoriesList/>
+          )}
         
       </main>
     </aside>
