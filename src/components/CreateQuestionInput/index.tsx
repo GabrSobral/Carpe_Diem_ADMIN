@@ -58,7 +58,13 @@ export function CreateQuestionInput({ handleAddQuestionToList }: CreateQuestionI
   }
 
   return(
-    <div className={styles.container}>
+    <motion.div 
+      className={styles.container}
+      initial={{ height: 0}}
+      animate={{ height: 'fit-content'}}
+      exit={{ height: 0}}  
+    >
+     <AnimatePresence exitBeforeEnter>
       { isModalVisible && 
         <SelectModal 
           handleSelectData={handleSetCategory}
@@ -66,6 +72,8 @@ export function CreateQuestionInput({ handleAddQuestionToList }: CreateQuestionI
           handleModalClose={handleCloseCategoryModal}
           fetchFunction={handleFetchCategories}
         /> }
+      </AnimatePresence>
+      
       <InputCreate 
         title="Pergunta" 
         value={question} 
@@ -96,6 +104,6 @@ export function CreateQuestionInput({ handleAddQuestionToList }: CreateQuestionI
               </>)}
         </button>
       </div>
-    </div>
+    </motion.div>
   )
 }

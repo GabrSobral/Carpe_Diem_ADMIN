@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import Image from 'next/image'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 
 import { Question } from "../../@types/Activity";
 import { api } from "../../services/api";
 import plusSVG from '../../images/plus.svg'
-
 
 import { HeaderContent } from "../HeaderContent";
 import { QuestionItem } from "../QuestionItem";
@@ -44,17 +43,10 @@ export function AnswersAndCategoriesContent(){
 
         <AnimatePresence>
           { createQuestionIsVisible && (
-            <motion.div
-              initial={{ height: 0, opacity: 0}}
-              animate={{ height: 'fit-content', opacity: 1}}
-              exit={{ height: 0, opacity: 0}}
-            >
             <CreateQuestionInput handleAddQuestionToList={handleAddQuestionToList}/>
-          </motion.div>
-
           )}
         </AnimatePresence>
-        
+
         <main className={styles.main_content}>
           {questions.map((item) => (
             <QuestionItem 

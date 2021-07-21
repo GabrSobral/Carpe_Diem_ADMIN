@@ -1,3 +1,4 @@
+import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { FileProps } from "../../@types/Activity";
 import { useArchive } from "../../hooks/useArchive";
@@ -28,6 +29,7 @@ export function ArchivesListContent(){
 
   return(
     <div className={styles.container}>
+      <AnimatePresence exitBeforeEnter>
       {
         isModalVisible && (
           <DetailArchiveModal 
@@ -35,6 +37,8 @@ export function ArchivesListContent(){
             file={{file: selectedArchive, index: 0}}/>
         )
       }
+      </AnimatePresence>
+
       <HeaderContent title="Arquivos"/>
         <main>
           {allArchives.map(( item, index) => (

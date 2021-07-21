@@ -3,6 +3,9 @@ import { parseCookies } from 'nookies'
 import { AnswersAndCategoriesContent } from '../../components/AnswersAndCategoriesContent'
 import { InformationBar } from '../../components/InformationBar'
 
+import { ModalProvider, useModal } from '../../contexts/ModalContext'
+
+
 import styles from './styles.module.scss'
 
 export default function AnswersAndCategories(){

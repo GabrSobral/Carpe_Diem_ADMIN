@@ -117,14 +117,12 @@ export function CreateActivityContent(){
       >
       <AnimatePresence exitBeforeEnter>
         { isCategoryModalOpen && 
-          <AnimatePresence>
-            <SelectModal 
-              handleSelectData={handleSetCategory}
-              title="Selecione a categoria"
-              handleModalClose={handleCloseCategoryModal}
-              fetchFunction={handleFetchCategories}
-            /> 
-          </AnimatePresence>
+          <SelectModal 
+            handleSelectData={handleSetCategory}
+            title="Selecione a categoria"
+            handleModalClose={handleCloseCategoryModal}
+            fetchFunction={handleFetchCategories}
+          /> 
         }
 
         { isArchiveyModalOpen && 
