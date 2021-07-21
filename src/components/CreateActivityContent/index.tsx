@@ -109,7 +109,8 @@ export function CreateActivityContent(){
     <AnimatePresence exitBeforeEnter>
     <div className={styles.container}>
       <HeaderContent title="Criar Atividade"/>
-      <motion.div 
+      <motion.div
+        key="CreateAtivityContent"
         initial={{ opacity: 0, y: 50}}
         animate={{ opacity: 1, y: 0}}
         exit={{ opacity: 0}}

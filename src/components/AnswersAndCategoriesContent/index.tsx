@@ -55,7 +55,7 @@ export function AnswersAndCategoriesContent(){
           )}
         </AnimatePresence>
         
-        <main>
+        <main className={styles.main_content}>
           {questions.map((item) => (
             <QuestionItem 
               key={item.id}

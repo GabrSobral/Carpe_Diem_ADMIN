@@ -11,6 +11,7 @@ import { CreateActivityProvider } from '../contexts/CreateActivityContext'
 
 import '../styles/globals.scss'
 import styles from '../styles/app.module.scss'
+import Head from 'next/head'
 
 function MyApp({ Component, pageProps }: AppProps) {  
   const { pathname } = useRouter()
@@ -18,6 +19,12 @@ function MyApp({ Component, pageProps }: AppProps) {
      
   return (
     <div className={styles.pages}>
+
+      <Head>
+        <title>Carpe Diem</title>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" key="viewport" />
+      </Head>
       <AuthProvider>
         <ActivityProvider>
           <PageProvider>
