@@ -1,6 +1,4 @@
 import Image from "next/image"
-import { useModal } from "../../hooks/useModal"
-
 import musicSVG from '../../images/music.svg'
 
 import styles from './styles.module.scss'

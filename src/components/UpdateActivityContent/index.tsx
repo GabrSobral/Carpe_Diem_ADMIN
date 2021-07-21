@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
+import { AnimatePresence, motion } from 'framer-motion'
 import Loading from 'react-loading'
 
 import saveSVG from '../../images/save.svg'
@@ -10,7 +11,6 @@ import { InputCreate } from '../InputCreate'
 import { SelectButton } from '../SelectButton'
 import { DetailArchiveModal } from '../DetailArchiveModal'
 
-import { useModal } from '../../hooks/useModal'
 import { api } from '../../services/api'
 
 import styles from './styles.module.scss'
@@ -19,6 +19,7 @@ import { useActivity } from '../../hooks/useActivity'
 import { Activity, FileProps } from '../../@types/Activity'
 import { format } from 'date-fns'
 import { usePage } from '../../hooks/usePage'
+import { SelectModal } from '../SelectModal'
 
 interface ArchiveSelected{
   file: FileProps;
@@ -26,6 +27,9 @@ interface ArchiveSelected{
 }
 
 export function UpdateActivityContent(){
+  const [ isCategoryModalOpen, setIsCategoryModalOpen ] = useState(false)
+  const [ isArchiveModalOpen, setIsArchiveModalOpen ] = useState(false)
+
   const [ title, setTitle ] = useState<string | undefined>('')
   const [ subTitle, setSubTitle ] = useState<string | undefined>('')
   const [ description, setDescription ] = useState<string | undefined>('')
@@ -35,7 +39,6 @@ export function UpdateActivityContent(){
   const [ archiveSelected, setArchiveSelected ] = useState<ArchiveSelected>()
   const [ isDetailArchiveVisible, setIsDetailArchiveVisible ] = useState<boolean>(false)
 
-  const { handleModalCategory, handleModalArchives } = useModal()
   const { activity, handleUpdateActivityFromList, handleSelectActivity } = useActivity()
   const { handleSetPage } = usePage()
   const { 
@@ -46,6 +49,11 @@ export function UpdateActivityContent(){
     handleSetArchive,
     handleRemoveArchive
   } = useCreateActivity()
+
+  const created_at = Date.parse(String(activity?.created_at)) || new Date()
+  const updated_at = Date.parse(String(activity?.created_at)) || new Date()
+  const formattedCreatedAt = format(created_at, "dd/MM/yyyy 'às' HH:mm")
+  const formattedUpdatedAt = format(updated_at, "dd/MM/yyyy 'às' HH:mm")
 
   useEffect(() => {
     handleClearInputs()
@@ -72,10 +80,18 @@ export function UpdateActivityContent(){
     })
   } 
 
-  const created_at = Date.parse(String(activity?.created_at)) || new Date()
-  const updated_at = Date.parse(String(activity?.created_at)) || new Date()
-  const formattedCreatedAt = format(created_at, "dd/MM/yyyy 'às' HH:mm")
-  const formattedUpdatedAt = format(updated_at, "dd/MM/yyyy 'às' HH:mm")
+  function handleCloseCategoryModal(){ setIsCategoryModalOpen(!isCategoryModalOpen) }
+  function handleCloseArchiveModal(){ setIsArchiveModalOpen(!isArchiveModalOpen) }
+
+  async function handleFetchCategories(){
+    const { data } = await api.get('/category/list')
+    return data
+  }
+
+  async function handleFetchArchives(){
+    const { data } = await api.get('/archive/list')
+    return data
+  }
 
   function handleDetailArchive(archive: FileProps, index: number){
     setArchiveSelected({ file: archive, index })
@@ -133,8 +149,31 @@ export function UpdateActivityContent(){
   }
 
   return(
+    <AnimatePresence exitBeforeEnter>
     <div className={styles.container}>
       <HeaderContent title="Alterar Atividade"/>
+
+      <motion.div 
+        initial={{ opacity: 0, y: 50}}
+        animate={{ opacity: 1, y: 0}}
+        exit={{ opacity: 0}}
+      >
+
+      { isCategoryModalOpen && 
+        <SelectModal 
+          handleSelectData={handleSetCategory}
+          title="Selecione a categoria"
+          handleModalClose={handleCloseCategoryModal}
+          fetchFunction={handleFetchCategories}
+        /> }
+
+      { isArchiveModalOpen && 
+        <SelectModal 
+          handleSelectData={handleSetArchive}
+          title="Selecione a categoria"
+          handleModalClose={handleCloseArchiveModal}
+          fetchFunction={handleFetchArchives}
+        /> }
 
       { isDetailArchiveVisible && (
         <DetailArchiveModal 
@@ -154,7 +193,7 @@ export function UpdateActivityContent(){
 
           <div className={`${styles.select_container} ${ category && styles.active}`}>
             <span>Categoria:</span>
-            <SelectButton isActive={category ? true : false} title={category?.name || 'Selecione'} onClick={handleModalCategory}/>
+            <SelectButton isActive={category ? true : false} title={category?.name || 'Selecione'} onClick={handleCloseCategoryModal}/>
           </div>
 
           <div className={`${styles.select_container} ${ archives.length !== 0  && styles.active}`}>
@@ -172,7 +211,7 @@ export function UpdateActivityContent(){
                 ))
               }
 
-              <button type="button" className={styles.add_file} onClick={handleModalArchives}>
+              <button type="button" className={styles.add_file} onClick={handleCloseArchiveModal}>
                 <Image src={plusSVG} alt="Icone de adicionar"/>
               </button>
 
@@ -198,6 +237,8 @@ export function UpdateActivityContent(){
           </button>
         </form>
       </main>
+      </motion.div>
     </div>
+    </AnimatePresence>
   )
 }

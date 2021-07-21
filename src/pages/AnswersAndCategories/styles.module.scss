@@ -1,0 +1,10 @@
+.home_page{
+  width: 100%;
+  display: flex;
+
+  .content{
+    flex: 0.7;
+    overflow-y: scroll;
+    padding-bottom: 5rem;
+  }
+}

@@ -1,0 +1,37 @@
+.container{
+  position: relative;
+  z-index: 15;
+  width: 100%;
+  background-color: var(--white);
+  padding: 2rem;
+  padding-bottom: 3rem;
+
+  > button{
+    margin-left: auto;
+    margin-top: 3rem;
+    background-color: var(--green-300);
+    color: var(--white);
+    transition: all 0.2s ease;
+    
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.7rem 1rem;
+    user-select: none;
+    border-radius: 7px;
+
+    &:hover{
+      filter: brightness(0.9);
+    }
+  }
+  
+  main{
+    width: 100%;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

@@ -1,5 +1,7 @@
 import { format } from 'date-fns'
 import Image from 'next/image'
+import { AnimatePresence, motion, useMotionValue } from 'framer-motion'
+
 import { useState } from 'react'
 
 import { useActivity } from '../../hooks/useActivity'
@@ -10,6 +12,7 @@ import { Player } from '../Player'
 import styles from './styles.module.scss'
 
 export function ActivityContent(){
+  const [ isVisible, setIsVisible ] = useState(false)
   const { activity } = useActivity()
 
   const date = Date.parse(String(activity?.created_at)) || new Date()
@@ -17,16 +20,22 @@ export function ActivityContent(){
 
   return(
     <div className={styles.container}>
+      <AnimatePresence exitBeforeEnter>
       <HeaderContent/>
       {
         activity ? (
           <>
-          <main>
-          <div className={styles.title_subtitle}>
+          <motion.main
+            key="Activities"
+            initial={{ opacity: 0, y: 50}}
+            animate={{ opacity: 1, y: 0}}
+            exit={{ opacity: 0}}
+          >
+          <motion.div className={styles.title_subtitle}>
             <h1>{activity?.title}</h1>
             <span className={styles.subtitle}>{activity?.description}</span>
             <span className={styles.created_at}>Criado em: {formattedDate}</span>
-          </div>
+          </motion.div>
   
           <div className={styles.description} dangerouslySetInnerHTML={{ __html: activity?.body as string}}>
           </div>
@@ -59,7 +68,7 @@ export function ActivityContent(){
       
                 if(item.format === "png"){
                   return(
-                    <div className={styles.image}>
+                    <div className={styles.image} key={item.id}>
                       <Image 
                         key={item.id}
                         src={item.url} 
@@ -77,7 +86,7 @@ export function ActivityContent(){
             })}
   
           </div>      
-        </main>
+        </motion.main>
   
         <ConfigButton/>
         </>
@@ -87,6 +96,7 @@ export function ActivityContent(){
           </div>
         )
       }
+      </AnimatePresence>
     </div>
   )
 }

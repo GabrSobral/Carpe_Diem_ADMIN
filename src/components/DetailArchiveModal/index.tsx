@@ -1,9 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { format } from 'date-fns';
+import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image';
+import filesize from 'filesize'
+
 import { FileProps } from '../../@types/Activity';
 import { Player } from '../Player'
-import filesize from 'filesize'
 
 import styles from './styles.module.scss'
 
@@ -22,8 +24,24 @@ export function DetailArchiveModal({ handleCloseModal, handleRemoveArchive, file
   const formattedDate = format(date, "dd/MM/yyyy 'às' HH:mm")
 
   return(
-    <div className={styles.background}>
-      <div className={styles.container}>
+    <AnimatePresence exitBeforeEnter>
+
+    <motion.div 
+      className={styles.background}
+      layout
+      initial={{ opacity: 0}}
+      animate={{ opacity: 1}}
+      exit={{ opacity: 0, scale: 0}}
+      transition={{ duration: 0.2 }}   
+    >
+      <motion.div 
+        className={styles.container}
+        layout 
+        initial={{ opacity: 0}}
+        animate={{ opacity: 1}}
+        exit={{ opacity: 0}}
+        transition={{ duration: 0.2 }}   
+      >
         <header>
 
           { file?.file.format === "mp4" && (
@@ -76,7 +94,9 @@ export function DetailArchiveModal({ handleCloseModal, handleRemoveArchive, file
             Fechar
           </button>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
+    </AnimatePresence>
+
   )
 }

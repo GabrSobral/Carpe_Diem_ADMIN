@@ -9,7 +9,6 @@ export function setToken(token: string){
 }
 export function getToken(){
   const { "@CarpeDiem-Token": token } = parseCookies()
-  console.log(token)
   return token
 }
 

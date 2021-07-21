@@ -50,9 +50,9 @@ export function ArchiveProvider({ children }: ArchiveProviderProps){
     console.log('id: ', id, 'index: ', index)
     await api.delete(`archive/delete/${id}`)
 
-    setAllArchives([])
+    const newList = allArchives.filter((item) => item.id !== id);
 
-    allFiles.forEach(item => setAllArchives(state => [ item, ...state]))
+    setAllArchives(newList)
   }
 
   const upload = async (files: File[]) => {

@@ -1,25 +1,20 @@
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
-import { ArchivesListContent } from '../../components/ArchivesListContent'
-
+import { AnswersAndCategoriesContent } from '../../components/AnswersAndCategoriesContent'
 import { InformationBar } from '../../components/InformationBar'
-import { ArchiveProvider } from '../../contexts/ArchivesContext'
 
 import styles from './styles.module.scss'
 
-export default function Archives(){
+export default function AnswersAndCategories(){
   return(
     <div className={styles.home_page}>
-      <ArchiveProvider>
-        <div className={styles.content}>
-          <ArchivesListContent/>
-        </div>
-        <InformationBar type="archives"/>
-      </ArchiveProvider>
+      <div className={styles.content}>
+        <AnswersAndCategoriesContent/>
+      </div>
+      <InformationBar type="categories"/>
     </div>
   )
 }
-
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { ['@CarpeDiem-Token'] : token } = parseCookies(ctx)
