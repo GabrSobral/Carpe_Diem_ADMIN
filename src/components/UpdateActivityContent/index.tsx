@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
+import { AnimatePresence, motion } from 'framer-motion'
 import Loading from 'react-loading'
 
 import saveSVG from '../../images/save.svg'
@@ -148,8 +149,15 @@ export function UpdateActivityContent(){
   }
 
   return(
+    <AnimatePresence exitBeforeEnter>
     <div className={styles.container}>
       <HeaderContent title="Alterar Atividade"/>
+
+      <motion.div 
+        initial={{ opacity: 0, y: 50}}
+        animate={{ opacity: 1, y: 0}}
+        exit={{ opacity: 0}}
+      >
 
       { isCategoryModalOpen && 
         <SelectModal 
@@ -229,6 +237,8 @@ export function UpdateActivityContent(){
           </button>
         </form>
       </main>
+      </motion.div>
     </div>
+    </AnimatePresence>
   )
 }

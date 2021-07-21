@@ -1,14 +1,13 @@
-import styles from './styles.module.scss'
+import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
 
-import { SelectModal } from '../../components/SelectModal'
 import { InformationBar } from '../../components/InformationBar'
 import { ActivityContent } from '../../components/ActivityContent'
 import { CreateActivityContent } from '../../components/CreateActivityContent'
 import { UpdateActivityContent } from '../../components/UpdateActivityContent'
 
 import { usePage } from '../../hooks/usePage'
-import { GetServerSideProps } from 'next'
-import { parseCookies } from 'nookies'
+import styles from './styles.module.scss'
 
 
 export default function Activities(){

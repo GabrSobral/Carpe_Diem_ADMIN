@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import Loading from 'react-loading'
 import Image from 'next/image'
 

@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
 import Loading from 'react-loading'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import saveSVG from '../../images/save.svg'
 import plusSVG from '../../images/plus.svg'
@@ -105,32 +106,44 @@ export function CreateActivityContent(){
   }
 
   return(
+    <AnimatePresence exitBeforeEnter>
     <div className={styles.container}>
       <HeaderContent title="Criar Atividade"/>
+      <motion.div 
+        initial={{ opacity: 0, y: 50}}
+        animate={{ opacity: 1, y: 0}}
+        exit={{ opacity: 0}}
+      >
+      <AnimatePresence exitBeforeEnter>
+        { isCategoryModalOpen && 
+          <AnimatePresence>
+            <SelectModal 
+              handleSelectData={handleSetCategory}
+              title="Selecione a categoria"
+              handleModalClose={handleCloseCategoryModal}
+              fetchFunction={handleFetchCategories}
+            /> 
+          </AnimatePresence>
+        }
 
-      { isCategoryModalOpen && 
-        <SelectModal 
-          handleSelectData={handleSetCategory}
-          title="Selecione a categoria"
-          handleModalClose={handleCloseCategoryModal}
-          fetchFunction={handleFetchCategories}
-        /> }
+        { isArchiveyModalOpen && 
+          <SelectModal 
+            handleSelectData={handleSetArchive}
+            title="Selecione um arquivo"
+            handleModalClose={handleCloseArchiveModal}
+            fetchFunction={handleFetchArchives}
+          />
+        }
+        
+        { isDetailArchiveVisible && 
+          <DetailArchiveModal 
+            handleCloseModal={handleCloseModal}
+            handleRemoveArchive={handleRemoveArchive}
+            file={archiveSelected}
+          />
+        }
+      </AnimatePresence>
 
-      { isArchiveyModalOpen && 
-        <SelectModal 
-          handleSelectData={handleSetArchive}
-          title="Selecione a categoria"
-          handleModalClose={handleCloseArchiveModal}
-          fetchFunction={handleFetchArchives}
-        /> }
-
-      { isDetailArchiveVisible && (
-        <DetailArchiveModal 
-          handleCloseModal={handleCloseModal}
-          handleRemoveArchive={handleRemoveArchive}
-          file={archiveSelected}
-        />
-      ) }
 
         <main>
           <form onSubmit={handleSumbit}>
@@ -178,6 +191,8 @@ export function CreateActivityContent(){
             </button>
           </form>
         </main>
+        </motion.div>
     </div>
+    </AnimatePresence>
   )
 }

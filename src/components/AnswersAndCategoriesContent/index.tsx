@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Image from 'next/image'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import { Question } from "../../@types/Activity";
 import { api } from "../../services/api";
@@ -40,8 +41,19 @@ export function AnswersAndCategoriesContent(){
           Criar Pergunta
           <Image src={plusSVG} alt="Icone de adicionar"/>
         </button>
-        { createQuestionIsVisible && 
-        <CreateQuestionInput handleAddQuestionToList={handleAddQuestionToList}/> }
+
+        <AnimatePresence>
+          { createQuestionIsVisible && (
+            <motion.div
+              initial={{ height: 0, opacity: 0}}
+              animate={{ height: 'fit-content', opacity: 1}}
+              exit={{ height: 0, opacity: 0}}
+            >
+            <CreateQuestionInput handleAddQuestionToList={handleAddQuestionToList}/>
+          </motion.div>
+
+          )}
+        </AnimatePresence>
         
         <main>
           {questions.map((item) => (
