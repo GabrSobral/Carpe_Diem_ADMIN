@@ -21,8 +21,6 @@ export function ActivitiesList(
   const [ isLoading, setIsLoading ] = useState(false)
   const { handleSetPage } = usePage()
 
-
-  
   useEffect(() => {
     (async function(){
       setIsLoading(true)

@@ -23,6 +23,7 @@ interface CategoriesListProps{
 }
 
 export function CategoriesList({ search, reload }: CategoriesListProps){
+  const [ isLoading, setIsLoading ] = useState(false)
   const [ newCategory, setNewCategory ] = useState<string>('')
   const [ categories, setCategories ] = useState<Category[]>([])
   const [ isModalVisible, setIsModalVisible ] = useState<boolean>(false)
@@ -30,8 +31,10 @@ export function CategoriesList({ search, reload }: CategoriesListProps){
 
   useEffect(() => {
     (async function(){
+      setIsLoading(true)
       const { data } = await api.get('/category/list')
       setCategories(data)
+      setIsLoading(false)
     })()
   },[reload])
 
@@ -122,7 +125,12 @@ export function CategoriesList({ search, reload }: CategoriesListProps){
       </div>
 
       <div className={styles.categories_list}>
-          {categories.filter(value => {
+          {isLoading ? 
+            <div className={styles.loading}>
+              <Loading type='spin' width={52} height={52} color="#616BC5"/>
+            </div> : 
+          
+          categories.filter(value => {
             if(search === ''){
               return value
             }else if(value.name.toLowerCase().includes(search.toLowerCase())){
