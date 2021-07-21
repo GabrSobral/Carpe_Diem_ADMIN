@@ -10,7 +10,6 @@ import { InputCreate } from '../InputCreate'
 import { SelectButton } from '../SelectButton'
 import { DetailArchiveModal } from '../DetailArchiveModal'
 
-import { useModal } from '../../hooks/useModal'
 import { api } from '../../services/api'
 
 import styles from './styles.module.scss'
@@ -18,6 +17,7 @@ import { useCreateActivity } from '../../hooks/useCreateActivity'
 import { useActivity } from '../../hooks/useActivity'
 
 import { FileProps } from '../../@types/Activity'
+import { SelectModal } from '../SelectModal'
 
 interface ArchiveSelected{
   file: FileProps;
@@ -25,11 +25,15 @@ interface ArchiveSelected{
 }
 
 export function CreateActivityContent(){
+  const [ isCategoryModalOpen, setIsCategoryModalOpen ] = useState(false)
+  const [ isArchiveyModalOpen, setIsArchiveModalOpen ] = useState(false)
+
   const [ isFilled, setIsFilled ] = useState(false)
   const [ isLoading, setIsLoading ] = useState(false)
   const { handleAddActivity } = useActivity()
   const [ isDetailArchiveVisible, setIsDetailArchiveVisible ] = useState<boolean>(false)
   const [ archiveSelected, setArchiveSelected ] = useState<ArchiveSelected>()
+  const { handleSetCategory, handleSetArchive } = useCreateActivity()
   const { 
     category,
     archives,
@@ -42,7 +46,6 @@ export function CreateActivityContent(){
     subTitle,
     handleRemoveArchive
   } = useCreateActivity()
-  const { handleModalCategory, handleModalArchives } = useModal()
 
   useEffect(() => {
     title && subTitle && description && category ? setIsFilled(true) : setIsFilled(false)
@@ -53,6 +56,19 @@ export function CreateActivityContent(){
     setIsDetailArchiveVisible(!isDetailArchiveVisible)
   }
   function handleCloseModal(){ setIsDetailArchiveVisible(!isDetailArchiveVisible) }
+
+  function handleCloseCategoryModal(){ setIsCategoryModalOpen(!isCategoryModalOpen) }
+  function handleCloseArchiveModal(){ setIsArchiveModalOpen(!isArchiveyModalOpen) }
+
+  async function handleFetchCategories(){
+    const { data } = await api.get('/category/list')
+    return data
+  }
+
+  async function handleFetchArchives(){
+    const { data } = await api.get('/archive/list')
+    return data
+  }
 
   async function handleSumbit(event: FormEvent){
     event.preventDefault()
@@ -92,6 +108,22 @@ export function CreateActivityContent(){
     <div className={styles.container}>
       <HeaderContent title="Criar Atividade"/>
 
+      { isCategoryModalOpen && 
+        <SelectModal 
+          handleSelectData={handleSetCategory}
+          title="Selecione a categoria"
+          handleModalClose={handleCloseCategoryModal}
+          fetchFunction={handleFetchCategories}
+        /> }
+
+      { isArchiveyModalOpen && 
+        <SelectModal 
+          handleSelectData={handleSetArchive}
+          title="Selecione a categoria"
+          handleModalClose={handleCloseArchiveModal}
+          fetchFunction={handleFetchArchives}
+        /> }
+
       { isDetailArchiveVisible && (
         <DetailArchiveModal 
           handleCloseModal={handleCloseModal}
@@ -108,7 +140,7 @@ export function CreateActivityContent(){
 
             <div className={`${styles.select_container} ${ category && styles.active}`}>
               <span>Categoria:</span>
-              <SelectButton isActive={category ? true : false} title={category?.name || 'Selecione'} onClick={handleModalCategory}/>
+              <SelectButton isActive={category ? true : false} title={category?.name || 'Selecione'} onClick={handleCloseCategoryModal}/>
             </div>
 
             <div className={`${styles.select_container} ${ archives.length !== 0  && styles.active}`}>
@@ -124,7 +156,7 @@ export function CreateActivityContent(){
                     />
                   ))
                 }
-                <button type="button" className={styles.add_file} onClick={handleModalArchives}>
+                <button type="button" className={styles.add_file} onClick={handleCloseArchiveModal}>
                   <Image src={plusSVG} alt="Icone de adicionar"/>
                 </button>
 
