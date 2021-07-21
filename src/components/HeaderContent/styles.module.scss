@@ -1,11 +1,12 @@
 .container{
   position: sticky;
-  top: 0.5rem;
+  top: -2rem;
   padding: 0.5rem 0;
   z-index: 100;
   width: 100%;
   display: flex;
   align-items: center;
+  padding-top: 3rem;
   justify-content: space-between;
   background-color: var(--white);
 
