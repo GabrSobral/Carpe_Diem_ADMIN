@@ -24,19 +24,16 @@ export function DetailArchiveModal({ handleCloseModal, handleRemoveArchive, file
   const formattedDate = format(date, "dd/MM/yyyy 'às' HH:mm")
 
   return(
-    <AnimatePresence exitBeforeEnter>
-
     <motion.div 
       className={styles.background}
       layout
       initial={{ opacity: 0}}
       animate={{ opacity: 1}}
-      exit={{ opacity: 0, scale: 0}}
+      exit={{ opacity: 0}}
       transition={{ duration: 0.2 }}   
     >
       <motion.div 
         className={styles.container}
-        layout 
         initial={{ opacity: 0}}
         animate={{ opacity: 1}}
         exit={{ opacity: 0}}
@@ -96,7 +93,5 @@ export function DetailArchiveModal({ handleCloseModal, handleRemoveArchive, file
         </div>
       </motion.div>
     </motion.div>
-    </AnimatePresence>
-
   )
 }

@@ -8,6 +8,7 @@ import { usePage } from "../../../hooks/usePage";
 
 import { api } from "../../../services/api";
 import { ActivityItem } from "../../ActivityItem";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface ActivitiesListProps{
   search: string;
@@ -48,8 +49,8 @@ export function ActivitiesList(
             return value
         }
       }).map((item, index) => (
+        <AnimatePresence exitBeforeEnter key={item.id}>
           <ActivityItem 
-            key={item.id}
             id={item.id}
             title={item.title}
             description={item.description}
@@ -61,6 +62,7 @@ export function ActivitiesList(
               handleSetPage("ActivityDetails")
             }}
           />
+        </AnimatePresence>
         ))
      }
     </>

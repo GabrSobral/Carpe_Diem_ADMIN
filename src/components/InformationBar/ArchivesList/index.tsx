@@ -5,6 +5,7 @@ import AddFileSVG from '../../../images/new_archive.svg'
 
 import { useArchive } from "../../../hooks/useArchive";
 import styles from './styles.module.scss'
+import { AnimatePresence } from "framer-motion";
 
 export  function ArchivesList(){
   const { upload, uploadArchives } = useArchive()
@@ -25,7 +26,11 @@ export  function ArchivesList(){
          )}
       </DropZone>
       { uploadArchives?.length !== 0 && 
-        uploadArchives?.map(file => ( <ArchiveItemList key={file.id} file={file}/> ))
+        uploadArchives?.map(file => ( 
+          <AnimatePresence exitBeforeEnter key={file.id}>
+            <ArchiveItemList  file={file}/> 
+          </AnimatePresence>
+        ))
       }
     </>
   )

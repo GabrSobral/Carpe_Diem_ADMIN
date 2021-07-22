@@ -1,7 +1,8 @@
+import { useState } from 'react'
 import { format } from 'date-fns'
 import fileSize from 'filesize'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { useState } from 'react'
 import Loading from 'react-loading'
 
 import { FileProps } from '../../../@types/Activity'
@@ -20,11 +21,18 @@ interface ArchiveListContentItemProps{
 }
 
 export function ArchiveListContentItem({ file, handleDelete, handleSelectArchive, handleOpenModal }: ArchiveListContentItemProps){
+  const [ isLoading, setIsLoading ] = useState(false)
   const date = Date.parse(String(file.created_at)) || new Date()
   const formattedDate = format(date, "dd/MM/yyyy 'às' HH:mm")
   
   return(
-    <div className={styles.container}>
+    <motion.div 
+      layout 
+      className={styles.container}
+      initial={{ opacity: 0}}
+      animate={{ opacity: 1}}  
+      exit={{ scale: 0 }}
+    >
       <header>
         <div></div>
         <span>Formato: {file.format}</span>
@@ -56,9 +64,22 @@ export function ArchiveListContentItem({ file, handleDelete, handleSelectArchive
         </button>
     
 
-        <button type="button" className={styles.delete_button} onClick={handleDelete}>
-          Deletar
-          <Image src={trashSVG} alt="Botão de alterar atividade"/>
+        <button type="button" 
+          className={styles.delete_button} 
+          onClick={() => {
+            handleDelete()
+            setIsLoading(true)
+          }}
+        >
+          {isLoading ? (
+            <Loading type="spin" width={24} height={24} color="#fff"/>
+          ) : (
+            <>
+            Deletar
+           <Image src={trashSVG} alt="Botão de alterar atividade"/>
+            </>
+          )}
+          
         </button>
       </div>
 
@@ -67,6 +88,6 @@ export function ArchiveListContentItem({ file, handleDelete, handleSelectArchive
       </button>
       </div>
     </div>
-    </div>
+    </motion.div>
   )
 }

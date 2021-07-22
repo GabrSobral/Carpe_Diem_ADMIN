@@ -6,8 +6,10 @@ import gymSVG from '../../images/gym.svg'
 import gamesSVG from '../../images/games.svg'
 
 import styles from './styles.module.scss'
+import { motion, MotionProps } from 'framer-motion'
 
-interface ActivityItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
+interface ActivityItemProps extends
+ React.ButtonHTMLAttributes<HTMLButtonElement>{
   id: string;
   title: string;
   description: string;

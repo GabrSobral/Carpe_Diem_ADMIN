@@ -4,13 +4,12 @@ import Image from 'next/image'
 
 import saveSVG from '../../../images/save.svg'
 import trashSVG from '../../../images/trash.svg'
-import deleteSVG from '../../../images/delete.svg'
-import xSVG from '../../../images/x.svg'
-import checkSVG from '../../../images/check.svg'
 
 import { Category } from '../../../@types/Activity'
 import { api } from '../../../services/api'
 import styles from './styles.module.scss'
+import { WarningDeleteModal } from '../../WarningDeleteModal'
+import { AnimatePresence, motion } from 'framer-motion'
 
 interface SelectedCategory{
   index?: number;
@@ -50,67 +49,20 @@ export function CategoriesList({ search, reload }: CategoriesListProps){
     setCategories(categories)
     setIsModalVisible(false)
   }
-  function DeleteCategoryModal(){
-    const [ isLoading, setIsLoading ] = useState(false)
-
-    const id = selectedCategory.category.id;
-    const index = selectedCategory.index
-    return(
-      <div className={styles.Modalbackground}>
-        <div className={styles.modal_popup}>
-          <Image 
-            src={deleteSVG} 
-            alt="Imagem de lixeira"
-            height={256}
-          />
-          <h2>
-            Você tem certeza de que quer excluir a 
-            categoria: <span>{selectedCategory.category.name}</span>?
-          </h2>
-
-          <span>Ao excluir esta categoria, você estará excluindo todas
-            as suas relações, como: atividades, perguntas, arquivos 
-            relacionados, etc... <strong>Você quer prosseguir?</strong>
-          </span>
-          <div className={styles.button_container_modal}>
-            <button 
-              type="button" 
-              onClick={() => {
-                deleteCategory(id, index || 0);
-                setIsLoading(true)
-              }}
-            >
-              {
-                isLoading ? <Loading type="spin" color="#fff" height={24} width={24}/>
-                : (
-                  <>
-                    <Image 
-                      src={checkSVG} 
-                      alt="Imagem de confirmação"
-                    />
-                    Sim
-                  </>
-                )
-              }
-              
-              
-            </button>
-            <button type="button" onClick={() => setIsModalVisible(!isModalVisible)}>
-              <Image 
-                src={xSVG} 
-                alt="Imagem de deleção"
-              />
-              Não
-            </button>
-          </div>
-        </div>
-      </div>
-    )
-  }
+  function handleCloseModal(){ setIsModalVisible(!isModalVisible) }
+ 
 
   return(
     <div className={`${styles.container} ${newCategory && styles.active}`}>
-      { isModalVisible && <DeleteCategoryModal/> }
+      <AnimatePresence exitBeforeEnter>
+      { isModalVisible && 
+        <WarningDeleteModal
+          closeModal={handleCloseModal}
+          handleRemoveFromList={() => deleteCategory(selectedCategory.category.id, selectedCategory.index || 0)}
+          name={selectedCategory.category.name}
+        /> 
+      }
+      </AnimatePresence>
       <div className={styles.input_container}>
         <span>Digite a categoria</span>
         <input 
@@ -137,24 +89,31 @@ export function CategoriesList({ search, reload }: CategoriesListProps){
                 return value
             }
           }).map((item, index) => (
-            <div  className={styles.category_item} key={item.id}>
-              <div className={styles.image_category_item}>
-                <div></div>
-              </div>
-      
-              <div className={styles.category_name}>
-                <span>{item.name}</span>
-              </div>
-              <button 
-                type="button"
-                onClick={() => {
-                  setIsModalVisible(!isModalVisible);
-                  setSeletedCategory({index, category: item})
-                }}
+            <AnimatePresence exitBeforeEnter key={item.id}>
+              <motion.div  
+                className={styles.category_item} 
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, x: 50 }}
               >
-                <Image src={trashSVG} alt="Excluir categoria" />
-              </button>
-            </div>
+                <div className={styles.image_category_item}>
+                  <div></div>
+                </div>
+        
+                <div className={styles.category_name}>
+                  <span>{item.name}</span>
+                </div>
+                <button 
+                  type="button"
+                  onClick={() => {
+                    setIsModalVisible(!isModalVisible);
+                    setSeletedCategory({index, category: item})
+                  }}
+                >
+                  <Image src={trashSVG} alt="Excluir categoria" />
+                </button>
+              </motion.div>
+            </AnimatePresence>
           ))}
       </div>
 
