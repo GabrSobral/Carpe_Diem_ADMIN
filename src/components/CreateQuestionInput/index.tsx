@@ -58,51 +58,53 @@ export function CreateQuestionInput({ handleAddQuestionToList }: CreateQuestionI
   }
 
   return(
-    <motion.div 
-      className={styles.container}
-      initial={{ height: 0}}
-      animate={{ height: 'fit-content'}}
-      exit={{ height: 0}}  
-    >
-     <AnimatePresence exitBeforeEnter>
-      { isModalVisible && 
-        <SelectModal 
-          handleSelectData={handleSetCategory}
-          title="Selecione a categoria"
-          handleModalClose={handleCloseCategoryModal}
-          fetchFunction={handleFetchCategories}
-        /> }
-      </AnimatePresence>
-      
-      <InputCreate 
-        title="Pergunta" 
-        value={question} 
-        setValue={handleSetQuestion} 
-        type="text"
-      />
-      
-      <div className={`${styles.select_container} ${ category?.id && styles.active}`}>
-        <span>Categoria:</span>
-        <SelectButton 
-          isActive={category ? true : false} 
-          title={category?.name || 'Selecione'} 
-          onClick={() => setIsModalVisible(!isModalVisible)}
+      <motion.div 
+        className={styles.container}
+        initial={{ height: 0}}
+        animate={{ height: 'fit-content'}}
+        exit={{ height: 0}}  
+      >
+      <AnimatePresence exitBeforeEnter>
+        { isModalVisible && 
+          <SelectModal 
+            handleSelectData={handleSetCategory}
+            title="Selecione a categoria"
+            handleModalClose={handleCloseCategoryModal}
+            fetchFunction={handleFetchCategories}
+          /> }
+        </AnimatePresence>
+        
+        <div className={styles.main_container}>
+        <InputCreate 
+          title="Pergunta" 
+          value={question} 
+          setValue={handleSetQuestion} 
+          type="text"
         />
-      </div>
+        
+        <div className={`${styles.select_container} ${ category?.id && styles.active}`}>
+          <span>Categoria:</span>
+          <SelectButton 
+            isActive={category ? true : false} 
+            title={category?.name || 'Selecione'} 
+            onClick={() => setIsModalVisible(!isModalVisible)}
+          />
+        </div>
 
-      <div className={styles.absolute}>
-        <button 
-        onClick={createQuestion}
-          type="submit" 
-          className={styles.submit_button}
-          disabled={isLoading || !isFilled}
-        >
-          {isLoading ? <Loading type="spin" width={32} height={32} color="#fff"/>
-            : (<>
-                <Image src={saveSVG} alt="Icone de salvar"/>
-                Salvar
-              </>)}
-        </button>
+        <div className={styles.absolute}>
+          <button 
+          onClick={createQuestion}
+            type="submit" 
+            className={styles.submit_button}
+            disabled={isLoading || !isFilled}
+          >
+            {isLoading ? <Loading type="spin" width={32} height={32} color="#fff"/>
+              : (<>
+                  <Image src={saveSVG} alt="Icone de salvar"/>
+                  Salvar
+                </>)}
+          </button>
+        </div>
       </div>
     </motion.div>
   )

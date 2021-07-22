@@ -11,9 +11,12 @@ import { QuestionItem } from "../QuestionItem";
 
 import styles from "./styles.module.scss" 
 import { CreateQuestionInput } from "../CreateQuestionInput";
+import { WarningDeleteModal } from "../WarningDeleteModal";
 
 export function AnswersAndCategoriesContent(){
+  const [ isModalVisible, setIsModalVisible ] = useState<boolean>(false)
   const [ questions, setQuestions ] = useState<Question[]>([])
+  const [ selectedQuestion, setSelectedQuestion ] = useState<Question>()
   const [ createQuestionIsVisible, setCreateQuestionIsVisible ] = useState(false)
 
   useEffect(() => {
@@ -24,13 +27,22 @@ export function AnswersAndCategoriesContent(){
   },[])
 
   function handleUpdateQuestionState(id: string){
+    (async function(){
+      await api.delete(`/question/delete/${id}`)
+    })()
     const newList = questions.filter((item) => item.id !== id);
 
     setQuestions(newList)
+    setIsModalVisible(!isModalVisible)
   }
-
   function handleAddQuestionToList(question: Question){
     setQuestions(prevState => [...prevState, question])
+  }
+  function handleCloseModal(){ setIsModalVisible(!isModalVisible) }
+
+  function handleSetSelectedQuestionAndOpenModal(question: Question){ 
+    setSelectedQuestion(question)
+    setIsModalVisible(!isModalVisible)
   }
 
   return(
@@ -41,19 +53,30 @@ export function AnswersAndCategoriesContent(){
           <Image src={plusSVG} alt="Icone de adicionar"/>
         </button>
 
-        <AnimatePresence>
+        <AnimatePresence exitBeforeEnter>
           { createQuestionIsVisible && (
             <CreateQuestionInput handleAddQuestionToList={handleAddQuestionToList}/>
           )}
         </AnimatePresence>
 
+        <AnimatePresence exitBeforeEnter>
+          { isModalVisible && 
+            <WarningDeleteModal
+              closeModal={handleCloseModal}
+              handleRemoveFromList={() => handleUpdateQuestionState(selectedQuestion?.id || '')}
+              name={selectedQuestion?.body || ''}
+            /> 
+          }
+        </AnimatePresence>
+
         <main className={styles.main_content}>
           {questions.map((item) => (
-            <QuestionItem 
-              key={item.id}
-              question={item}
-              handleUpdateQuestionState={() => handleUpdateQuestionState(item.id)}
-            />
+            <AnimatePresence exitBeforeEnter key={item.id}>
+              <QuestionItem 
+                question={item}
+                handleSelect={handleSetSelectedQuestionAndOpenModal}
+              />
+            </AnimatePresence>
           ))}
         </main>
     </div>

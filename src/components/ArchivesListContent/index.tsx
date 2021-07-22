@@ -42,13 +42,15 @@ export function ArchivesListContent(){
       <HeaderContent title="Arquivos"/>
         <main>
           {allArchives.map(( item, index) => (
+            <AnimatePresence exitBeforeEnter key={item.id}>
             <ArchiveListContentItem 
-              key={item.id}
+              
               file={item}
               handleDelete={() => deleteArchive(item.id, index)}
               handleSelectArchive={()=> handleSelectArchive(item)}
               handleOpenModal={handleCloseModal}
             />
+            </AnimatePresence>
           ))}
         </main>
     </div>

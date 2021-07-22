@@ -20,16 +20,17 @@ export function ActivityContent(){
 
   return(
     <div className={styles.container}>
-      <AnimatePresence exitBeforeEnter>
       <HeaderContent/>
+      <AnimatePresence exitBeforeEnter>
       {
         activity ? (
           <>
           <motion.main
             key="Activities"
-            initial={{ opacity: 0, y: 50}}
-            animate={{ opacity: 1, y: 0}}
-            exit={{ opacity: 0}}
+            initial={{ opacity: 0, x: -100}}
+            animate={{ opacity: 1, x: 0}}
+            exit={{ opacity: 0, x: 100}}
+            transition={{ duration: 0.3 }}
           >
           <motion.div className={styles.title_subtitle}>
             <h1>{activity?.title}</h1>
@@ -81,7 +82,6 @@ export function ActivityContent(){
                     
                   )
                 }
-
                 return <p key={item.id}>banana</p>
             })}
   

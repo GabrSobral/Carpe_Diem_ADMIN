@@ -89,24 +89,31 @@ export function CategoriesList({ search, reload }: CategoriesListProps){
                 return value
             }
           }).map((item, index) => (
-            <div  className={styles.category_item} key={item.id}>
-              <div className={styles.image_category_item}>
-                <div></div>
-              </div>
-      
-              <div className={styles.category_name}>
-                <span>{item.name}</span>
-              </div>
-              <button 
-                type="button"
-                onClick={() => {
-                  setIsModalVisible(!isModalVisible);
-                  setSeletedCategory({index, category: item})
-                }}
+            <AnimatePresence exitBeforeEnter key={item.id}>
+              <motion.div  
+                className={styles.category_item} 
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, x: 50 }}
               >
-                <Image src={trashSVG} alt="Excluir categoria" />
-              </button>
-            </div>
+                <div className={styles.image_category_item}>
+                  <div></div>
+                </div>
+        
+                <div className={styles.category_name}>
+                  <span>{item.name}</span>
+                </div>
+                <button 
+                  type="button"
+                  onClick={() => {
+                    setIsModalVisible(!isModalVisible);
+                    setSeletedCategory({index, category: item})
+                  }}
+                >
+                  <Image src={trashSVG} alt="Excluir categoria" />
+                </button>
+              </motion.div>
+            </AnimatePresence>
           ))}
       </div>
 

@@ -10,6 +10,7 @@ import { UploadArchivesProps } from '../../contexts/ArchivesContext';
 import styles from './styles.module.scss'
 import { useArchive } from '../../hooks/useArchive';
 import fileSize from 'filesize';
+import { motion } from 'framer-motion';
 
 interface ArchiveItemListProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
   file: UploadArchivesProps
@@ -19,7 +20,15 @@ export function ArchiveItemList({ file }: ArchiveItemListProps){
   const { cancelUpload } = useArchive()
 
   return(
-    <div className={`${styles.container_archive} ${file.uploaded && styles.uploaded} ${file.canceled && styles.canceled} ${file.error && styles.error}`}>
+    <motion.div 
+      className={`
+        ${styles.container_archive} 
+        ${file.uploaded && styles.uploaded} 
+        ${file.canceled && styles.canceled} 
+        ${file.error && styles.error}`}
+      initial={{opacity: 0, y: -50}}
+      animate={{ opacity: 1, y: 0 }}
+      >
       <div className={styles.icon_container_archive}>
         <div className={styles.image_container_archive}>
           { !file.uploaded && !file.error && !file.canceled && (
@@ -55,6 +64,6 @@ export function ArchiveItemList({ file }: ArchiveItemListProps){
           </button>}
        
       </div>
-    </div>
+    </motion.div>
   )
 }

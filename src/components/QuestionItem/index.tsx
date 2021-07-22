@@ -1,37 +1,27 @@
-import { useState } from 'react'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 import trashSVG from '../../images/trash.svg'
 import { Question } from '../../@types/Activity'
 
 import { SelectButton } from '../SelectButton'
-import { WarningDeleteModal } from '../WarningDeleteModal'
 
 import styles from './styles.module.scss'
 
 interface QuestionItemProps{
   question: Question;
-  handleUpdateQuestionState: () => void;
+  handleSelect: ( question: Question ) => void
 }
 
-
-export function QuestionItem({ question, handleUpdateQuestionState }: QuestionItemProps){
-  const [ isModalVisible, setIsModalVisible ] = useState<boolean>(false)
-
-  function handleCloseModal(){ setIsModalVisible(!isModalVisible) }
+export function QuestionItem({ question, handleSelect }: QuestionItemProps){
 
   return(
-    <motion.div layout className={styles.container}>
-      <AnimatePresence exitBeforeEnter>
-      { isModalVisible && 
-        <WarningDeleteModal
-          closeModal={handleCloseModal}
-          handleRemoveFromList={() => handleUpdateQuestionState()}
-          name={question.body}
-        /> 
-      }
-      </AnimatePresence>
+    <motion.div  
+      className={styles.container}
+      initial={{ opacity: 0, x: -50 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 50 }}  
+    >
       <h2>{question.body}</h2>
 
       <div className={styles.category_container}>
@@ -41,7 +31,7 @@ export function QuestionItem({ question, handleUpdateQuestionState }: QuestionIt
       <button 
         type="button" 
         className={styles.delete_button} 
-        onClick={() => setIsModalVisible(!isModalVisible)}
+        onClick={() => handleSelect(question)}
       >
         <Image src={trashSVG} alt="Deletar pergunta"/>
       </button>

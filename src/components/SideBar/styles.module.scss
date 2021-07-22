@@ -60,7 +60,7 @@
     .button_hover {
       position: absolute;
       display: none;
-      width: 6rem;
+      width: fit-content;
       height: 3rem;
       background-color: var(--white);
 
@@ -68,17 +68,17 @@
       border-radius: 7px;
       left: 4rem;
       pointer-events: none;
-      padding: 0.5rem;
+      padding: 0.5rem 1rem;
 
       transition: 0.2s ease;
 
       span{
         font-size: 1rem;
+        white-space: nowrap;
       }
     }
     &:hover .button_hover{
       display: flex;
-
       align-items: center;
       justify-content: center;
     }
