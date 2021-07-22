@@ -17,6 +17,8 @@ You can access the Figma design: <a href="https://www.figma.com/file/c2MLFNjqO7O
 
 - <a href="https://www.typescriptlang.org">Typescript <img alt="TypeScript" src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=flat-square&logo=typescript&logoColor=white"/></a>
 
+- <a href="https://www.framer.com/motion/">Framer Motion</a>
+
 ## Prerequisites
 
 - <a href="https://nodejs.org/en/">NodeJS <img alt="NodeJS" src="https://img.shields.io/badge/Node.js-%2343853D.svg?style=flat-square&logo=node-dot-js&logoColor=white"/></a> (the version used to create this was v14.17.1)
