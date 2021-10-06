@@ -23,7 +23,11 @@ export interface Activity extends Index{
   updated_at: string;
   body: string;
   category: Category
-  files: FileProps[]
+  files: FileProps[];
+  feedback: {
+    goodCount: number;
+    badCount: number;
+  }
 }
 interface Index{
   index: number;

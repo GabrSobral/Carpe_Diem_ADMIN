@@ -1,6 +1,7 @@
 import { format } from 'date-fns'
 import Image from 'next/image'
-import { AnimatePresence, motion, useMotionValue } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Chart } from "react-google-charts"
 
 import { useState } from 'react'
 
@@ -14,6 +15,7 @@ import styles from './styles.module.scss'
 export function ActivityContent(){
   const [ isVisible, setIsVisible ] = useState(false)
   const { activity } = useActivity()
+  console.log(activity)
 
   const date = Date.parse(String(activity?.created_at)) || new Date()
   const formattedDate = format(date, "dd/MM/yyyy 'às' HH:mm")
@@ -38,8 +40,34 @@ export function ActivityContent(){
             <span className={styles.created_at}>Criado em: {formattedDate}</span>
           </motion.div>
   
-          <div className={styles.description} dangerouslySetInnerHTML={{ __html: activity?.body as string}}>
-          </div>
+            <div className={styles.description} dangerouslySetInnerHTML={{ __html: activity?.body as string}}>
+            </div>
+
+            <div style={{ backgroundColor: "#f00" }}>
+            <Chart
+              width={'100%'}
+              chartType="BarChart"
+              loader={<div>Loading Chart</div>}
+              data={[
+                ['Feedback', 'Gostaram', 'Não gostaram'],
+                [activity.title, activity.feedback.goodCount, activity.feedback.badCount],
+              ]}
+              options={{
+                title: 'Quantidade de feedbacks da atividade',
+                chartArea: { width: '70%'},
+                colors:["#83CD98", '#DE8D8D'],
+                height: 200,
+                hAxis: {
+                  title: 'Quantidade',
+                  minValue: 0,
+                },
+                vAxis: {
+                  title: 'Feedbacks',
+                },
+              }}
+            />
+            </div>
+            
   
            <div className={styles.files}>
             <span>Arquivos: {activity?.files.length}</span>
