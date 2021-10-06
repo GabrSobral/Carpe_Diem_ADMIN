@@ -2,17 +2,16 @@ import { FormEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Loading from 'react-loading'
+import LottieView from 'react-lottie'
 
 import { LoginInput } from '../components/LoginInput'
 
 import enter from '../images/enter.svg'
 import logo from '../images/logo.svg'
-import { api } from '../services/api'
-import { getToken, setToken } from '../utils/Token'
+import HomeAnimation from '../images/HomeAnimation.json'
 
 import styles from '../styles/styles.module.scss'
 import { useAuth } from '../hooks/useAuth'
-import { sendError } from 'next/dist/next-server/server/api-utils'
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
 
@@ -55,6 +54,14 @@ export default function Login() {
         <div className={styles.logo}>
           <Image src={logo} alt="Logo" />
         </div>
+        <LottieView
+            width={900}
+            options={{
+              animationData: HomeAnimation,
+              loop: true,
+              autoplay: true
+            }}
+          />
       </aside>
 
       <main>

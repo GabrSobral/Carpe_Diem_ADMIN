@@ -40,11 +40,16 @@
       gap: 0.5rem;
     }
 
+    .chartContainer{
+      margin-top: 1rem;
+      width: 100%;
+    }
+
     .files{
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
-      margin-top: 5rem;
+      margin-top: 2rem;
 
       .video{
         width: 32rem;

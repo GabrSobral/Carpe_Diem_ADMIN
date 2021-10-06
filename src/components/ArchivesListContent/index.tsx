@@ -13,13 +13,6 @@ export function ArchivesListContent(){
   const [ selectedArchive, setSelectedArchive ] = useState<FileProps>({} as FileProps)
   const [ isModalVisible, setIsModalVisible] = useState<boolean>(false)
 
-  function handleSelectArchive(archive: FileProps){
-    setSelectedArchive(archive)
-  }
-  function handleCloseModal(){
-    setIsModalVisible(!isModalVisible)
-  }
-
   useEffect(() => {
     (async function(){
       await api.get('/archive/list').then(({data}) => { handleSetAllArchives(data) })
@@ -29,27 +22,23 @@ export function ArchivesListContent(){
 
   return(
     <div className={styles.container}>
-      <AnimatePresence exitBeforeEnter>
-      {
-        isModalVisible && (
-          <DetailArchiveModal 
-            handleCloseModal={handleCloseModal} 
-            file={{file: selectedArchive, index: 0}}/>
-        )
-      }
-      </AnimatePresence>
 
+      <DetailArchiveModal 
+        isVisible={isModalVisible}
+        handleCloseModal={() => setIsModalVisible(false)} 
+        file={{file: selectedArchive, index: 0}}
+      />
+    
       <HeaderContent title="Arquivos"/>
         <main>
           {allArchives.map(( item, index) => (
             <AnimatePresence exitBeforeEnter key={item.id}>
-            <ArchiveListContentItem 
-              
-              file={item}
-              handleDelete={() => deleteArchive(item.id, index)}
-              handleSelectArchive={()=> handleSelectArchive(item)}
-              handleOpenModal={handleCloseModal}
-            />
+              <ArchiveListContentItem 
+                file={item}
+                handleDelete={() => deleteArchive(item.id, index)}
+                handleSelectArchive={()=> setSelectedArchive(item)}
+                handleOpenModal={() => setIsModalVisible(prev => !prev)}
+              />
             </AnimatePresence>
           ))}
         </main>

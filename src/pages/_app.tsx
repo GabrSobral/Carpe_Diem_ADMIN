@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <div className={styles.pages}>
 
       <Head>
-        <title>Carpe Diem</title>
+        <title>Carpe Diem - Dashboard</title>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" key="viewport" />
       </Head>

@@ -19,19 +19,9 @@ interface CreateQuestionInputProps{
 
 export function CreateQuestionInput({ handleAddQuestionToList }: CreateQuestionInputProps){
   const [ isModalVisible, setIsModalVisible ] = useState<boolean>(false)
-  const [ isFilled, setIsFilled ] = useState(false)
   const [ question, setQuestion ] = useState<string>("")
   const [ isLoading, setIsLoading ] = useState<boolean>(false)
   const [ category , setCategory ] = useState<Category>()
-
-  useEffect(() => {
-    question && category ? setIsFilled(true) : setIsFilled(false)
-  },[category, question])
-
-  function handleSetQuestion(value: string){ setQuestion(value) }
-
-  function handleCloseCategoryModal(){ setIsModalVisible(!isModalVisible) }
-  function handleSetCategory(data: Category){ setCategory(data) }
 
   async function handleFetchCategories(){
     const { data } = await api.get('/category/list')
@@ -64,21 +54,19 @@ export function CreateQuestionInput({ handleAddQuestionToList }: CreateQuestionI
         animate={{ height: 'fit-content'}}
         exit={{ height: 0}}  
       >
-      <AnimatePresence exitBeforeEnter>
-        { isModalVisible && 
-          <SelectModal 
-            handleSelectData={handleSetCategory}
-            title="Selecione a categoria"
-            handleModalClose={handleCloseCategoryModal}
-            fetchFunction={handleFetchCategories}
-          /> }
-        </AnimatePresence>
+        <SelectModal 
+          isVisible={isModalVisible}
+          handleSelectData={(data: Category) => setCategory(data)}
+          title="Selecione a categoria"
+          handleModalClose={() => setIsModalVisible(false)}
+          fetchFunction={handleFetchCategories}
+        />
         
         <div className={styles.main_container}>
         <InputCreate 
           title="Pergunta" 
           value={question} 
-          setValue={handleSetQuestion} 
+          setValue={(value: string) => setQuestion(value)} 
           type="text"
         />
         
@@ -96,13 +84,14 @@ export function CreateQuestionInput({ handleAddQuestionToList }: CreateQuestionI
           onClick={createQuestion}
             type="submit" 
             className={styles.submit_button}
-            disabled={isLoading || !isFilled}
+            disabled={isLoading || (!question && !category)}
           >
             {isLoading ? <Loading type="spin" width={32} height={32} color="#fff"/>
-              : (<>
-                  <Image src={saveSVG} alt="Icone de salvar"/>
-                  Salvar
-                </>)}
+              : 
+              <>
+                <Image src={saveSVG} alt="Icone de salvar"/>
+                Salvar
+              </>}
           </button>
         </div>
       </div>

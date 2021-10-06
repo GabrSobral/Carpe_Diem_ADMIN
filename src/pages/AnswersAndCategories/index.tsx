@@ -10,7 +10,7 @@ import styles from './styles.module.scss'
 
 export default function AnswersAndCategories(){
   return(
-    <div className={styles.home_page}>
+    <div className={styles.home_page} style={{ display: 'flex' }}>
       <div className={styles.content}>
         <AnswersAndCategoriesContent/>
       </div>

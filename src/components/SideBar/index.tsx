@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import styles from './styles.module.scss'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -9,6 +10,7 @@ import LogOutSVG from '../../images/logout_bar.svg'
 import TagSVG from '../../images/tag.svg'
 import { usePage } from '../../hooks/usePage'
 import { useAuth } from '../../hooks/useAuth'
+import { ExitModal } from '../ExitModal'
 
 interface SideBarProps {
   active: string;
@@ -17,7 +19,7 @@ interface SideBarProps {
 export function SideBar({ active }: SideBarProps){
   const { push } = useRouter()
   const { handleSetPage } = usePage()
-  const { logout } = useAuth()
+  const [ isLogoutModalVisible, setIsLogoutModalVisible ] = useState(false)
 
   function handleNavigate(page: string){
     switch(page){
@@ -38,6 +40,10 @@ export function SideBar({ active }: SideBarProps){
 
   return(
     <aside className={styles.container}>
+      <ExitModal
+        isVisible={isLogoutModalVisible}
+        closeModal={() => setIsLogoutModalVisible(false)}
+      />
       <div/>
       <nav className={styles.buttons_container}>
         <button
@@ -92,7 +98,7 @@ export function SideBar({ active }: SideBarProps){
         </button>
       </nav>
       
-      <button type="button" onClick={logout}>
+      <button type="button" onClick={() => setIsLogoutModalVisible(true)}>
         <Image src={LogOutSVG} alt="icone de usuários"/>
 
         <div className={styles.button_hover}> 

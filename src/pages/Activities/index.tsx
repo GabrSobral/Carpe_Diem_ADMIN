@@ -14,7 +14,7 @@ export default function Activities(){
   const { page } = usePage()
   
   return(
-    <div className={styles.home_page}> 
+    <div className={styles.home_page} style={{ display: 'flex' }}> 
       <div className={styles.content}>
         
         { page === "ActivityDetails" && ( <ActivityContent/> )}

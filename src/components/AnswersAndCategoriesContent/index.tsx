@@ -53,20 +53,21 @@ export function AnswersAndCategoriesContent(){
           <Image src={plusSVG} alt="Icone de adicionar"/>
         </button>
 
+        <WarningDeleteModal
+          closeModal={handleCloseModal}
+          handleRemoveFromList={() => handleUpdateQuestionState(selectedQuestion?.body ||'')}
+          name={selectedQuestion?.body || ''}
+          title="pergunta"
+          description="Ao excluir esta pergunta, você estará excluindo todas
+          as suas relações, como: atividades, respostas, arquivos 
+          relacionados, etc..."
+          isVisible={isModalVisible}
+        /> 
+
         <AnimatePresence exitBeforeEnter>
           { createQuestionIsVisible && (
             <CreateQuestionInput handleAddQuestionToList={handleAddQuestionToList}/>
           )}
-        </AnimatePresence>
-
-        <AnimatePresence exitBeforeEnter>
-          { isModalVisible && 
-            <WarningDeleteModal
-              closeModal={handleCloseModal}
-              handleRemoveFromList={() => handleUpdateQuestionState(selectedQuestion?.id || '')}
-              name={selectedQuestion?.body || ''}
-            /> 
-          }
         </AnimatePresence>
 
         <main className={styles.main_content}>

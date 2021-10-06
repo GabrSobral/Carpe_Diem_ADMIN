@@ -1,9 +1,8 @@
 import { format } from 'date-fns'
+import Loading from "react-loading";
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Chart } from "react-google-charts"
-
-import { useState } from 'react'
 
 import { useActivity } from '../../hooks/useActivity'
 import { ConfigButton } from '../ConfigButton'
@@ -13,9 +12,7 @@ import { Player } from '../Player'
 import styles from './styles.module.scss'
 
 export function ActivityContent(){
-  const [ isVisible, setIsVisible ] = useState(false)
   const { activity } = useActivity()
-  console.log(activity)
 
   const date = Date.parse(String(activity?.created_at)) || new Date()
   const formattedDate = format(date, "dd/MM/yyyy 'às' HH:mm")
@@ -43,80 +40,96 @@ export function ActivityContent(){
             <div className={styles.description} dangerouslySetInnerHTML={{ __html: activity?.body as string}}>
             </div>
 
-            <div style={{ backgroundColor: "#f00" }}>
-            <Chart
-              width={'100%'}
-              chartType="BarChart"
-              loader={<div>Loading Chart</div>}
-              data={[
-                ['Feedback', 'Gostaram', 'Não gostaram'],
-                [activity.title, activity.feedback ? activity?.feedback.goodCount : 0, activity.feedback ? activity?.feedback.badCount : 0],
-              ]}
-              options={{
-                title: 'Quantidade de feedbacks da atividade',
-                chartArea: { width: '70%'},
-                colors:["#83CD98", '#DE8D8D'],
-                height: 200,
-                hAxis: {
-                  title: 'Quantidade',
-                  minValue: 0,
-                },
-                vAxis: {
-                  title: 'Feedbacks',
-                },
-              }}
-            />
+            <div className={styles.chartContainer}>
+              <Chart
+                width={'100%'}
+                chartType="BarChart"
+                loader={
+                  <div style={{ marginLeft: "49%" }}>
+                  <Loading 
+                    type='spin'
+                    width={24} 
+                    height={24} 
+                    color="#616BC5"
+                  />
+                  </div>}
+                data={[
+                  ['Feedback', 'Gostaram', 'Não gostaram'],
+                  [ activity.title, 
+                    activity.feedback ? activity?.feedback.goodCount : 0, 
+                    activity.feedback ? activity?.feedback.badCount : 0 ],
+                ]}
+                
+                options={{
+                  is3D: true,
+                  title: 'Quantidade de feedbacks da atividade',
+                  chartArea: { width: '70%'},
+                  colors:["#83CD98", '#DE8D8D'],
+                  height: 200,
+                  hAxis: {
+                    title: 'Quantidade',
+                    minValue: 0,
+                    viewWindow:{min:0},
+                    format: '0',
+                  },
+                  animation: {
+                    duration: 250,
+                    easing: 'out',
+                    startup: true,
+                  },
+                }}
+              />
             </div>
             
   
-           <div className={styles.files}>
-            <span>Arquivos: {activity?.files.length}</span>
-  
-            {activity?.files.map(item => {
-                
-                if(item.format === "mp4"){
-                  return(
-                    <video controls className={styles.video} key={item.id}>
-                      <source src={item.url} type="video/mp4"/>
-                      Your browser does not support the video tag.
-                    </video>
-                  )
-                }
-      
-                if(item.format === "mp3"){
-                  return(
-                    <div className={styles.audio_files} key={item.id}>
-                      <Player 
-                        name={item.name || ''}
-                        url={item.url || ''}
-                        duration={item.duration || 0}
+            <div className={styles.files}>
+              <span>Arquivos: {activity?.files.length}</span>
+    
+              {activity?.files.map(item => {
+                  
+                  if(item.format === "mp4"){
+                    return(
+                      <video controls className={styles.video} key={item.id}>
+                        <source src={item.url} type="video/mp4"/>
+                        Your browser does not support the video tag.
+                      </video>
+                    )
+                  }
+        
+                  if(item.format === "mp3"){
+                    return(
+                      <div className={styles.audio_files} key={item.id}>
+                        <Player 
+                          name={item.name || ''}
+                          url={item.url || ''}
+                          duration={item.duration || 0}
+                        />
+                      </div>
+                    )
+                  }
+        
+                  if(item.format === "png"){
+                    return(
+                      <div className={styles.image} key={item.id}>
+                        <Image 
+                          key={item.id}
+                          src={item.url} 
+                          alt="Imagem do arquivo" 
+                          width={512}
+                          height={288}
+                          objectFit="contain"
                       />
-                    </div>
-                  )
-                }
-      
-                if(item.format === "png"){
-                  return(
-                    <div className={styles.image} key={item.id}>
-                      <Image 
-                        key={item.id}
-                        src={item.url} 
-                        alt="Imagem do arquivo" 
-                        width={512}
-                        height={288}
-                        objectFit="contain"
-                     />
-                    </div>
-                    
-                  )
-                }
-                return <p key={item.id}>banana</p>
-            })}
-  
-          </div>      
-        </motion.main>
-  
-        <ConfigButton/>
+                      </div>
+                      
+                    )
+                  }
+                  return <p key={item.id}>banana</p>
+              })}
+    
+            </div>      
+          </motion.main>
+    
+          <ConfigButton/>
         </>
         ) : (
           <div className={styles.no_activity_selected}>

@@ -1,7 +1,8 @@
 .home_page{
   width: 100%;
   display: flex;
-
+  flex: 0.3;
+  
   .content{
     flex: 0.7;
     overflow-y: scroll;

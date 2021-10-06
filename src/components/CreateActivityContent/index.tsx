@@ -54,12 +54,8 @@ export function CreateActivityContent(){
 
   function handleDetailArchive(archive: FileProps, index: number){
     setArchiveSelected({ file: archive, index })
-    setIsDetailArchiveVisible(!isDetailArchiveVisible)
+    setIsDetailArchiveVisible(prev => !prev)
   }
-  function handleCloseModal(){ setIsDetailArchiveVisible(!isDetailArchiveVisible) }
-
-  function handleCloseCategoryModal(){ setIsCategoryModalOpen(!isCategoryModalOpen) }
-  function handleCloseArchiveModal(){ setIsArchiveModalOpen(!isArchiveyModalOpen) }
 
   async function handleFetchCategories(){
     const { data } = await api.get('/category/list')
@@ -106,7 +102,6 @@ export function CreateActivityContent(){
   }
 
   return(
-    <AnimatePresence exitBeforeEnter>
     <div className={styles.container}>
       <HeaderContent title="Criar Atividade"/>
       <motion.div
@@ -115,33 +110,28 @@ export function CreateActivityContent(){
         animate={{ opacity: 1, y: 0}}
         exit={{ opacity: 0}}
       >
-      <AnimatePresence exitBeforeEnter>
-        { isCategoryModalOpen && 
-          <SelectModal 
-            handleSelectData={handleSetCategory}
-            title="Selecione a categoria"
-            handleModalClose={handleCloseCategoryModal}
-            fetchFunction={handleFetchCategories}
-          /> 
-        }
+        <SelectModal 
+          isVisible={isCategoryModalOpen}
+          handleSelectData={handleSetCategory}
+          title="Selecione a categoria"
+          handleModalClose={() => setIsCategoryModalOpen(false)}
+          fetchFunction={handleFetchCategories}
+        /> 
 
-        { isArchiveyModalOpen && 
-          <SelectModal 
-            handleSelectData={handleSetArchive}
-            title="Selecione um arquivo"
-            handleModalClose={handleCloseArchiveModal}
-            fetchFunction={handleFetchArchives}
-          />
-        }
+        <SelectModal 
+          isVisible={isArchiveyModalOpen}
+          handleSelectData={handleSetArchive}
+          title="Selecione um arquivo"
+          handleModalClose={() => setIsArchiveModalOpen(false)}
+          fetchFunction={handleFetchArchives}
+        />
         
-        { isDetailArchiveVisible && 
-          <DetailArchiveModal 
-            handleCloseModal={handleCloseModal}
-            handleRemoveArchive={handleRemoveArchive}
-            file={archiveSelected}
-          />
-        }
-      </AnimatePresence>
+        <DetailArchiveModal
+          isVisible={isDetailArchiveVisible}
+          handleCloseModal={() => setIsDetailArchiveVisible(false)}
+          handleRemoveArchive={handleRemoveArchive}
+          file={archiveSelected}
+        />
 
 
         <main>
@@ -152,7 +142,11 @@ export function CreateActivityContent(){
 
             <div className={`${styles.select_container} ${ category && styles.active}`}>
               <span>Categoria:</span>
-              <SelectButton isActive={category ? true : false} title={category?.name || 'Selecione'} onClick={handleCloseCategoryModal}/>
+              <SelectButton 
+                isActive={category ? true : false} 
+                title={category?.name || 'Selecione'} 
+                onClick={() => setIsCategoryModalOpen(true) }
+              />
             </div>
 
             <div className={`${styles.select_container} ${ archives.length !== 0  && styles.active}`}>
@@ -168,7 +162,11 @@ export function CreateActivityContent(){
                     />
                   ))
                 }
-                <button type="button" className={styles.add_file} onClick={handleCloseArchiveModal}>
+                <button 
+                  type="button" 
+                  className={styles.add_file} 
+                  onClick={() =>  setIsArchiveModalOpen(true)}
+                >
                   <Image src={plusSVG} alt="Icone de adicionar"/>
                 </button>
 
@@ -192,6 +190,5 @@ export function CreateActivityContent(){
         </main>
         </motion.div>
     </div>
-    </AnimatePresence>
   )
 }

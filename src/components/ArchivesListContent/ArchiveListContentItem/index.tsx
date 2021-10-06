@@ -12,6 +12,7 @@ import trashSVG from '../../../images/trash.svg'
 import viewSVG from '../../../images/view.svg'
 
 import styles from './styles.module.scss'
+import { WarningDeleteModal } from '../../WarningDeleteModal'
 
 interface ArchiveListContentItemProps{
   file: FileProps;
@@ -24,6 +25,7 @@ export function ArchiveListContentItem({ file, handleDelete, handleSelectArchive
   const [ isLoading, setIsLoading ] = useState(false)
   const date = Date.parse(String(file.created_at)) || new Date()
   const formattedDate = format(date, "dd/MM/yyyy 'às' HH:mm")
+  const [ isModalVisible, setIsModalVisible ] = useState(false)
   
   return(
     <motion.div 
@@ -33,6 +35,18 @@ export function ArchiveListContentItem({ file, handleDelete, handleSelectArchive
       animate={{ opacity: 1}}  
       exit={{ scale: 0 }}
     >
+      <WarningDeleteModal
+        closeModal={() => setIsModalVisible(false)}
+        handleRemoveFromList={() => {
+          handleDelete()
+          setIsLoading(true)
+        }}
+        name={file.name}
+        title="arquivo"
+        description="Ao excluir este arquivo, você não poderá recuperá-lo 
+        novamente..."
+        isVisible={isModalVisible}
+      /> 
       <header>
         <div></div>
         <span>Formato: {file.format}</span>
@@ -66,10 +80,7 @@ export function ArchiveListContentItem({ file, handleDelete, handleSelectArchive
 
         <button type="button" 
           className={styles.delete_button} 
-          onClick={() => {
-            handleDelete()
-            setIsLoading(true)
-          }}
+          onClick={() => setIsModalVisible(true)}
         >
           {isLoading ? (
             <Loading type="spin" width={24} height={24} color="#fff"/>
