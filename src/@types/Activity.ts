@@ -24,7 +24,7 @@ export interface Activity extends Index{
   body: string;
   category: Category
   files: FileProps[];
-  feedback: {
+  feedback?: {
     goodCount: number;
     badCount: number;
   }
