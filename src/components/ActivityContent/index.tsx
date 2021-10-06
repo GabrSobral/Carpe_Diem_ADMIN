@@ -50,7 +50,7 @@ export function ActivityContent(){
               loader={<div>Loading Chart</div>}
               data={[
                 ['Feedback', 'Gostaram', 'Não gostaram'],
-                [activity.title, activity.feedback.goodCount, activity.feedback.badCount],
+                [activity.title, activity?.feedback.goodCount || 0, activity?.feedback.badCount || 0],
               ]}
               options={{
                 title: 'Quantidade de feedbacks da atividade',
