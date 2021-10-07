@@ -2,6 +2,8 @@
   position: relative;
   width: 100%;
   background-color: var(--white);
+  max-height: 100vh;
+  overflow-y: scroll;
   padding: 0 2rem;
   padding-bottom: 3rem;
   
