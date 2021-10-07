@@ -46,12 +46,12 @@ export function ActivityContent(){
                 chartType="BarChart"
                 loader={
                   <div style={{ marginLeft: "49%" }}>
-                  <Loading 
-                    type='spin'
-                    width={24} 
-                    height={24} 
-                    color="#616BC5"
-                  />
+                    <Loading 
+                      type='spin'
+                      width={24} 
+                      height={24} 
+                      color="#616BC5"
+                    />
                   </div>}
                 data={[
                   ['Feedback', 'Gostaram', 'Não gostaram'],
