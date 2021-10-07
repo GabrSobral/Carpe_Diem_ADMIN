@@ -56,10 +56,12 @@ export default function Login() {
         </div>
         <LottieView
             width={900}
+            isClickToPauseDisabled
             options={{
               animationData: HomeAnimation,
               loop: true,
-              autoplay: true
+              autoplay: true,
+              
             }}
           />
       </aside>
