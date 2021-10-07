@@ -1,6 +1,5 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 import { Activity } from "../@types/Activity";
-import { api } from "../services/api";
 
 interface ActivityProviderProps{
   children: ReactNode;

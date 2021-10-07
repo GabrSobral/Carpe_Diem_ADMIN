@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import { Category, FileProps } from "../@types/Activity";
+import { useArchive } from "../hooks/useArchive";
 
 interface CreateActivityProvider{
   children: ReactNode;

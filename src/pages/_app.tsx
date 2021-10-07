@@ -30,11 +30,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           <PageProvider>
             {url[1] && <SideBar active={url[1]}/>}
 
-            <main className={styles.main_app}>
+            <div className={styles.main_app}>
               <CreateActivityProvider>
                 <Component {...pageProps} />
               </CreateActivityProvider>
-            </main>
+            </div>
           </PageProvider>
         </ActivityProvider>
       </AuthProvider>

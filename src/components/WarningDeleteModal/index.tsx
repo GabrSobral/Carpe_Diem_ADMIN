@@ -1,12 +1,9 @@
-import { useEffect, useState } from 'react'
-import LottieView from 'react-lottie'
-import ReactDOM from 'react-dom'
+import { useState } from 'react'
 import Image from 'next/image'
 import Loading from 'react-loading'
 import { motion, AnimatePresence } from 'framer-motion'
 
 import deleteSVG from '../../images/delete.svg'
-import TrashAnimation from '../../images/trashAnimation.json'
 import xSVG from '../../images/x.svg'
 import checkSVG from '../../images/check.svg'
 
@@ -46,19 +43,11 @@ export function WarningDeleteModal(
               exit={{ opacity: 0, scale: 0}}
               transition={{ duration: 0.2 }}
             >
-              <LottieView
-                height={226}
-                options={{
-                  animationData: TrashAnimation,
-                  autoplay: true,
-                  loop:false,
-                }}
-              />
-              {/* <Image 
+              <Image 
                 src={deleteSVG} 
                 alt="Imagem de lixeira"
                 height={226}
-              /> */}
+              />
               <h2>
                 Você tem certeza de que quer excluir a {title}: <span>{name}</span>?
               </h2>
