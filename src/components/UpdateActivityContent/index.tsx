@@ -80,9 +80,6 @@ export function UpdateActivityContent(){
     })
   } 
 
-  function handleCloseCategoryModal(){ setIsCategoryModalOpen(!isCategoryModalOpen) }
-  function handleCloseArchiveModal(){ setIsArchiveModalOpen(!isArchiveModalOpen) }
-
   async function handleFetchCategories(){
     const { data } = await api.get('/category/list')
     return data
@@ -95,9 +92,8 @@ export function UpdateActivityContent(){
 
   function handleDetailArchive(archive: FileProps, index: number){
     setArchiveSelected({ file: archive, index })
-    setIsDetailArchiveVisible(!isDetailArchiveVisible)
+    setIsDetailArchiveVisible(prev => !prev)
   }
-  function handleCloseModal(){ setIsDetailArchiveVisible(!isDetailArchiveVisible) }
 
   async function handleSumbit(event: FormEvent){
     event.preventDefault()
@@ -110,7 +106,7 @@ export function UpdateActivityContent(){
     description.trim()
 
     function breakLines(string: string){
-      return string.replace(/(?:\r\n|\r|\n)/g, '<hr>');
+      return string.replace(/(?:\r\n|\r|\n)/g, '\n');
     }
 
     const descriptionFormatted = breakLines(description) 
@@ -150,7 +146,7 @@ export function UpdateActivityContent(){
 
   return(
     <AnimatePresence exitBeforeEnter>
-    <div className={styles.container}>
+    <div className={styles.container_updateActivityContent}>
       <HeaderContent title="Alterar Atividade"/>
 
       <motion.div 
@@ -159,31 +155,30 @@ export function UpdateActivityContent(){
         exit={{ opacity: 0}}
       >
 
-      { isCategoryModalOpen && 
         <SelectModal 
+          isVisible={isCategoryModalOpen}
           handleSelectData={handleSetCategory}
           title="Selecione a categoria"
-          handleModalClose={handleCloseCategoryModal}
+          handleModalClose={() => setIsCategoryModalOpen(false)}
           fetchFunction={handleFetchCategories}
-        /> }
+        />
 
-      { isArchiveModalOpen && 
         <SelectModal 
+          isVisible={isArchiveModalOpen}
           handleSelectData={handleSetArchive}
           title="Selecione a categoria"
-          handleModalClose={handleCloseArchiveModal}
+          handleModalClose={() => setIsArchiveModalOpen(false)}
           fetchFunction={handleFetchArchives}
-        /> }
+        />
 
-      { isDetailArchiveVisible && (
         <DetailArchiveModal 
-          handleCloseModal={handleCloseModal}
+          isVisible={isDetailArchiveVisible}
+          handleCloseModal={() => setIsDetailArchiveVisible(false)}
           handleRemoveArchive={handleRemoveArchive}
           file={archiveSelected}
         />
-      ) }
 
-      <main>
+      <main className={styles.main_updateActivityContent}>
         <span className={styles.created_at}>Criado em: {formattedUpdatedAt}</span>
         <span className={styles.created_at}>Atualizado em: {formattedCreatedAt}</span>
         <form onSubmit={handleSumbit}>
@@ -193,7 +188,11 @@ export function UpdateActivityContent(){
 
           <div className={`${styles.select_container} ${ category && styles.active}`}>
             <span>Categoria:</span>
-            <SelectButton isActive={category ? true : false} title={category?.name || 'Selecione'} onClick={handleCloseCategoryModal}/>
+            <SelectButton 
+              isActive={category ? true : false} 
+              title={category?.name || 'Selecione'} 
+              onClick={() => setIsCategoryModalOpen(true)}
+            />
           </div>
 
           <div className={`${styles.select_container} ${ archives.length !== 0  && styles.active}`}>
@@ -211,7 +210,10 @@ export function UpdateActivityContent(){
                 ))
               }
 
-              <button type="button" className={styles.add_file} onClick={handleCloseArchiveModal}>
+              <button 
+                type="button" 
+                className={styles.add_file} 
+                onClick={() => setIsArchiveModalOpen(true)}>
                 <Image src={plusSVG} alt="Icone de adicionar"/>
               </button>
 

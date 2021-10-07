@@ -1,12 +1,14 @@
-.container{
+.container_ActivityContent{
   position: relative;
   width: 100%;
+  max-height: 100vh;
   background-color: var(--white);
 
   padding: 0 2rem;
-  padding-bottom: 3rem;
+  padding-bottom: 2rem;
+  overflow-y: scroll;
 
-  main{
+  .activityContentMain{
     display: flex;
     flex-direction: column;
 
@@ -40,11 +42,16 @@
       gap: 0.5rem;
     }
 
+    .chartContainer{
+      margin-top: 1rem;
+      width: 100%;
+    }
+
     .files{
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
-      margin-top: 5rem;
+      margin-top: 2rem;
 
       .video{
         width: 32rem;

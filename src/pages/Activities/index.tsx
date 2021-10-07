@@ -7,15 +7,15 @@ import { CreateActivityContent } from '../../components/CreateActivityContent'
 import { UpdateActivityContent } from '../../components/UpdateActivityContent'
 
 import { usePage } from '../../hooks/usePage'
-import styles from './styles.module.scss'
+import { ActivityProvider } from '../../contexts/ActivityContext'
 
 
 export default function Activities(){
   const { page } = usePage()
   
   return(
-    <div className={styles.home_page}> 
-      <div className={styles.content}>
+    <div className="home_page" style={{ display: 'flex' }}> 
+      <div className="content">
         
         { page === "ActivityDetails" && ( <ActivityContent/> )}
         { page === "ActivityCreate" && ( <CreateActivityContent/> )}

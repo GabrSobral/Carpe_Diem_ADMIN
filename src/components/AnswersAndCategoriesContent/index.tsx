@@ -46,28 +46,28 @@ export function AnswersAndCategoriesContent(){
   }
 
   return(
-    <div className={styles.container}>
+    <div className={styles.containerAnswerAndCategories}>
       <HeaderContent title="Categorias e perguntas"/>
         <button type='button' onClick={() => setCreateQuestionIsVisible(!createQuestionIsVisible)}>
           Criar Pergunta
           <Image src={plusSVG} alt="Icone de adicionar"/>
         </button>
 
-        <AnimatePresence exitBeforeEnter>
-          { createQuestionIsVisible && (
-            <CreateQuestionInput handleAddQuestionToList={handleAddQuestionToList}/>
-          )}
-        </AnimatePresence>
+        <WarningDeleteModal
+          closeModal={handleCloseModal}
+          handleRemoveFromList={() => handleUpdateQuestionState(selectedQuestion?.body ||'')}
+          name={selectedQuestion?.body || ''}
+          title="pergunta"
+          description="Ao excluir esta pergunta, você estará excluindo todas
+          as suas relações, como: atividades, respostas, arquivos 
+          relacionados, etc..."
+          isVisible={isModalVisible}
+        /> 
 
-        <AnimatePresence exitBeforeEnter>
-          { isModalVisible && 
-            <WarningDeleteModal
-              closeModal={handleCloseModal}
-              handleRemoveFromList={() => handleUpdateQuestionState(selectedQuestion?.id || '')}
-              name={selectedQuestion?.body || ''}
-            /> 
-          }
-        </AnimatePresence>
+        <CreateQuestionInput 
+          handleAddQuestionToList={handleAddQuestionToList}
+          isVisible={createQuestionIsVisible}
+        />
 
         <main className={styles.main_content}>
           {questions.map((item) => (

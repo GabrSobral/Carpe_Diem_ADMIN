@@ -1,31 +1,33 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import LottieView from 'react-lottie'
 import ReactDOM from 'react-dom'
 import Image from 'next/image'
 import Loading from 'react-loading'
 import { motion, AnimatePresence } from 'framer-motion'
 
-import deleteSVG from '../../images/delete.svg'
-import TrashAnimation from '../../images/trashAnimation.json'
+import LogoutAnimation from '../../images/logout.json'
 import xSVG from '../../images/x.svg'
 import checkSVG from '../../images/check.svg'
 
 import styles from './styles.module.scss'
+import { useAuth } from '../../hooks/useAuth'
 import { ModalContainer } from '../ModalContainer'
 
 interface WarningDeleteModal{
-  name: string;
-  handleRemoveFromList: () => void | Promise<void>;
   closeModal: () => void;
-  title: "atividade" | "categoria" | 'pergunta' | "arquivo";
-  description: string;
   isVisible: boolean;
 }
 
-export function WarningDeleteModal(
-  { name, handleRemoveFromList, closeModal, title, description, isVisible }: WarningDeleteModal){
+let location: Element
+
+export function ExitModal({ closeModal, isVisible }: WarningDeleteModal){
   const [ isLoading, setIsLoading ] = useState(false)
-  
+  const { logout } = useAuth()
+
+  useEffect(() => {
+    location = document.querySelector('#modal')|| document.body
+  },[])
+
   return(
     <ModalContainer selector="#modal">
       <AnimatePresence exitBeforeEnter>
@@ -49,31 +51,23 @@ export function WarningDeleteModal(
               <LottieView
                 height={226}
                 options={{
-                  animationData: TrashAnimation,
+                  animationData: LogoutAnimation,
                   autoplay: true,
                   loop:false,
                 }}
               />
-              {/* <Image 
-                src={deleteSVG} 
-                alt="Imagem de lixeira"
-                height={226}
-              /> */}
-              <h2>
-                Você tem certeza de que quer excluir a {title}: <span>{name}</span>?
-              </h2>
+              <h2>Volte sempre...</h2>
 
               <div className={styles.descriptionDeleteModal}>
-                <span>
-                  {description}<strong>Você quer prosseguir?</strong>
-                </span>
+                <span>Você tem certeza de que quer sair?</span>
               </div>
+
               <div className={styles.button_container_modal}>
                 <button 
                   type="button" 
                   disabled={isLoading}
                   onClick={() => {
-                    handleRemoveFromList()
+                    logout()
                     setIsLoading(true)
                   }}
                 >
@@ -81,10 +75,7 @@ export function WarningDeleteModal(
                     isLoading ? <Loading type="spin" color="#fff" height={24} width={24}/>
                     : (
                       <>
-                        <Image 
-                          src={checkSVG} 
-                          alt="Imagem de confirmação"
-                        />
+                        <Image src={checkSVG} alt="Imagem de confirmação" />
                         Sim
                       </>
                     )

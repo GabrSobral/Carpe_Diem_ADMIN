@@ -75,12 +75,12 @@ export function Player({ name,  duration, url }: PlayerProps){
 
         <div className={styles.playerControllers}>
           <span>{convertDurationToTimeString(progress)}</span>
-          <Slider
+           <Slider
               max={duration}
               value={progress}
               onChange={handleSeek}
               trackStyle={{ backgroundColor :  '#04d361'}}
-              railStyle={{ backgroundColor : '#9f75ff' }}
+              railStyle={{ backgroundColor : '#e8e8e8' }}
               handleStyle={{ borderColor : '#04d361', borderWidth : 4 }}
             />
           <span>{convertDurationToTimeString(Math.round(duration))}</span>

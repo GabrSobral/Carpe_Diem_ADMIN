@@ -14,24 +14,15 @@ import saveSVG from '../../images/save.svg'
 import styles from './styles.module.scss'
 
 interface CreateQuestionInputProps{
-  handleAddQuestionToList: (question: Question) => void
+  handleAddQuestionToList: (question: Question) => void;
+  isVisible: boolean;
 }
 
-export function CreateQuestionInput({ handleAddQuestionToList }: CreateQuestionInputProps){
+export function CreateQuestionInput({ handleAddQuestionToList, isVisible }: CreateQuestionInputProps){
   const [ isModalVisible, setIsModalVisible ] = useState<boolean>(false)
-  const [ isFilled, setIsFilled ] = useState(false)
   const [ question, setQuestion ] = useState<string>("")
   const [ isLoading, setIsLoading ] = useState<boolean>(false)
   const [ category , setCategory ] = useState<Category>()
-
-  useEffect(() => {
-    question && category ? setIsFilled(true) : setIsFilled(false)
-  },[category, question])
-
-  function handleSetQuestion(value: string){ setQuestion(value) }
-
-  function handleCloseCategoryModal(){ setIsModalVisible(!isModalVisible) }
-  function handleSetCategory(data: Category){ setCategory(data) }
 
   async function handleFetchCategories(){
     const { data } = await api.get('/category/list')
@@ -58,54 +49,57 @@ export function CreateQuestionInput({ handleAddQuestionToList }: CreateQuestionI
   }
 
   return(
-      <motion.div 
-        className={styles.container}
-        initial={{ height: 0}}
-        animate={{ height: 'fit-content'}}
-        exit={{ height: 0}}  
-      >
-      <AnimatePresence exitBeforeEnter>
-        { isModalVisible && 
+    <AnimatePresence exitBeforeEnter>
+      {isVisible &&
+        <motion.div 
+          className={styles.container_CreateQuestionInput}
+          initial={{ height: 0}}
+          animate={{ height: 'fit-content'}}
+          exit={{ height: 0}}  
+        >
           <SelectModal 
-            handleSelectData={handleSetCategory}
+            isVisible={isModalVisible}
+            handleSelectData={(data: Category) => setCategory(data)}
             title="Selecione a categoria"
-            handleModalClose={handleCloseCategoryModal}
+            handleModalClose={() => setIsModalVisible(false)}
             fetchFunction={handleFetchCategories}
-          /> }
-        </AnimatePresence>
-        
-        <div className={styles.main_container}>
-        <InputCreate 
-          title="Pergunta" 
-          value={question} 
-          setValue={handleSetQuestion} 
-          type="text"
-        />
-        
-        <div className={`${styles.select_container} ${ category?.id && styles.active}`}>
-          <span>Categoria:</span>
-          <SelectButton 
-            isActive={category ? true : false} 
-            title={category?.name || 'Selecione'} 
-            onClick={() => setIsModalVisible(!isModalVisible)}
           />
-        </div>
+          
+          <div className={styles.main_container}>
+          <InputCreate 
+            title="Pergunta" 
+            value={question} 
+            setValue={(value: string) => setQuestion(value)} 
+            type="text"
+          />
+          
+          <div className={`${styles.select_container} ${ category?.id && styles.active}`}>
+            <span>Categoria:</span>
+            <SelectButton 
+              isActive={category ? true : false} 
+              title={category?.name || 'Selecione'} 
+              onClick={() => setIsModalVisible(!isModalVisible)}
+            />
+          </div>
 
-        <div className={styles.absolute}>
-          <button 
-          onClick={createQuestion}
-            type="submit" 
-            className={styles.submit_button}
-            disabled={isLoading || !isFilled}
-          >
-            {isLoading ? <Loading type="spin" width={32} height={32} color="#fff"/>
-              : (<>
+          <div className={styles.absolute}>
+            <button 
+            onClick={createQuestion}
+              type="submit" 
+              className={styles.submit_button}
+              disabled={isLoading || (!question && !category)}
+            >
+              {isLoading ? <Loading type="spin" width={32} height={32} color="#fff"/>
+                : 
+                <>
                   <Image src={saveSVG} alt="Icone de salvar"/>
                   Salvar
-                </>)}
-          </button>
+                </>}
+            </button>
+          </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+      }
+    </AnimatePresence>
   )
 }

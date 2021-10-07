@@ -13,44 +13,33 @@ export function ArchivesListContent(){
   const [ selectedArchive, setSelectedArchive ] = useState<FileProps>({} as FileProps)
   const [ isModalVisible, setIsModalVisible] = useState<boolean>(false)
 
-  function handleSelectArchive(archive: FileProps){
-    setSelectedArchive(archive)
-  }
-  function handleCloseModal(){
-    setIsModalVisible(!isModalVisible)
-  }
-
   useEffect(() => {
     (async function(){
-      await api.get('/archive/list').then(({data}) => { handleSetAllArchives(data) })
+      api.get('/archive/list')
+        .then(({ data }) => handleSetAllArchives(data)
+      )
     })()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  },[handleSetAllArchives])
 
   return(
-    <div className={styles.container}>
-      <AnimatePresence exitBeforeEnter>
-      {
-        isModalVisible && (
-          <DetailArchiveModal 
-            handleCloseModal={handleCloseModal} 
-            file={{file: selectedArchive, index: 0}}/>
-        )
-      }
-      </AnimatePresence>
+    <div className={styles.container_archiveListContent}>
 
+      <DetailArchiveModal 
+        isVisible={isModalVisible}
+        handleCloseModal={() => setIsModalVisible(false)} 
+        file={{file: selectedArchive, index: 0}}
+      />
+    
       <HeaderContent title="Arquivos"/>
-        <main>
+        <main className={styles.main_archiveListContent}>
           {allArchives.map(( item, index) => (
-            <AnimatePresence exitBeforeEnter key={item.id}>
-            <ArchiveListContentItem 
-              
+            <ArchiveListContentItem
+              key={item.id}
               file={item}
               handleDelete={() => deleteArchive(item.id, index)}
-              handleSelectArchive={()=> handleSelectArchive(item)}
-              handleOpenModal={handleCloseModal}
+              handleSelectArchive={()=> setSelectedArchive(item)}
+              handleOpenModal={() => setIsModalVisible(prev => !prev)}
             />
-            </AnimatePresence>
           ))}
         </main>
     </div>

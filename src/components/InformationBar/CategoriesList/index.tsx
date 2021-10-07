@@ -54,15 +54,17 @@ export function CategoriesList({ search, reload }: CategoriesListProps){
 
   return(
     <div className={`${styles.container} ${newCategory && styles.active}`}>
-      <AnimatePresence exitBeforeEnter>
-      { isModalVisible && 
-        <WarningDeleteModal
-          closeModal={handleCloseModal}
-          handleRemoveFromList={() => deleteCategory(selectedCategory.category.id, selectedCategory.index || 0)}
-          name={selectedCategory.category.name}
-        /> 
-      }
-      </AnimatePresence>
+      <WarningDeleteModal
+        closeModal={handleCloseModal}
+        handleRemoveFromList={() => deleteCategory(selectedCategory.category.id, selectedCategory.index || 0)}
+        name={selectedCategory.category.name}
+        title="categoria"
+        description="Ao excluir esta categoria, você estará excluindo todas
+        as suas relações, como: atividades, perguntas, arquivos 
+        relacionados, etc..."
+        isVisible={isModalVisible}
+      /> 
+      
       <div className={styles.input_container}>
         <span>Digite a categoria</span>
         <input 
