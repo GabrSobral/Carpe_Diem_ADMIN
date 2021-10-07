@@ -1,11 +1,11 @@
-.container{
+.container_archiveListContent{
   position: relative;
   width: 100%;
   background-color: var(--white);
   padding: 0 2rem;
   padding-bottom: 3rem;
   
-  main{
+  .main_archiveListContent{
     display: grid;
     width: 100%;
     gap: 1rem;

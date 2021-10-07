@@ -102,7 +102,7 @@ export function CreateActivityContent(){
   }
 
   return(
-    <div className={styles.container}>
+    <div className={styles.container_CreateActivitContent}>
       <HeaderContent title="Criar Atividade"/>
       <motion.div
         key="CreateAtivityContent"
@@ -133,8 +133,7 @@ export function CreateActivityContent(){
           file={archiveSelected}
         />
 
-
-        <main>
+        <main className={styles.CreateActivityContent_main}>
           <form onSubmit={handleSumbit}>
             <InputCreate title="Título:" type="text" setValue={handleSetTitle} value={title}/>
             <InputCreate title="Subtítulo:" type="text" setValue={handleSetSubTitle} value={subTitle}/>

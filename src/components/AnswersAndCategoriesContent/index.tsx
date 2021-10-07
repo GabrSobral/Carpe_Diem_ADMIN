@@ -46,7 +46,7 @@ export function AnswersAndCategoriesContent(){
   }
 
   return(
-    <div className={styles.container}>
+    <div className={styles.containerAnswerAndCategories}>
       <HeaderContent title="Categorias e perguntas"/>
         <button type='button' onClick={() => setCreateQuestionIsVisible(!createQuestionIsVisible)}>
           Criar Pergunta
@@ -64,11 +64,10 @@ export function AnswersAndCategoriesContent(){
           isVisible={isModalVisible}
         /> 
 
-        <AnimatePresence exitBeforeEnter>
-          { createQuestionIsVisible && (
-            <CreateQuestionInput handleAddQuestionToList={handleAddQuestionToList}/>
-          )}
-        </AnimatePresence>
+        <CreateQuestionInput 
+          handleAddQuestionToList={handleAddQuestionToList}
+          isVisible={createQuestionIsVisible}
+        />
 
         <main className={styles.main_content}>
           {questions.map((item) => (

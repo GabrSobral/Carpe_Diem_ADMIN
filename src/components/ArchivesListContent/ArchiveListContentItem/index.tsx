@@ -30,7 +30,7 @@ export function ArchiveListContentItem({ file, handleDelete, handleSelectArchive
   return(
     <motion.div 
       layout 
-      className={styles.container}
+      className={styles.container_ArchiveListContentItem}
       initial={{ opacity: 0}}
       animate={{ opacity: 1}}  
       exit={{ scale: 0 }}

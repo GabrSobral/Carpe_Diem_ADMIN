@@ -21,7 +21,7 @@ export function HeaderContent({title}: HeaderContentProps){
 
   },[])
   return(
-    <header className={styles.container}>
+    <header className={styles.container_headerContent}>
       <div>
         <span>Olá {name}</span>
       </div>

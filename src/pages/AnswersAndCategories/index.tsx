@@ -3,15 +3,10 @@ import { parseCookies } from 'nookies'
 import { AnswersAndCategoriesContent } from '../../components/AnswersAndCategoriesContent'
 import { InformationBar } from '../../components/InformationBar'
 
-import { ModalProvider, useModal } from '../../contexts/ModalContext'
-
-
-import styles from './styles.module.scss'
-
 export default function AnswersAndCategories(){
   return(
-    <div className={styles.home_page} style={{ display: 'flex' }}>
-      <div className={styles.content}>
+    <div className="home_page" style={{ display: 'flex' }}>
+      <div className="content">
         <AnswersAndCategoriesContent/>
       </div>
       <InformationBar type="categories"/>

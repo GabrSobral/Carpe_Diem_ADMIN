@@ -49,7 +49,7 @@ export default function Login() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container_SignInPage}>
       <aside className={styles.banner}>
         <div className={styles.logo}>
           <Image src={logo} alt="Logo" />

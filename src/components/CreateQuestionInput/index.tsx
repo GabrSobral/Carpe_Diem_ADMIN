@@ -14,10 +14,11 @@ import saveSVG from '../../images/save.svg'
 import styles from './styles.module.scss'
 
 interface CreateQuestionInputProps{
-  handleAddQuestionToList: (question: Question) => void
+  handleAddQuestionToList: (question: Question) => void;
+  isVisible: boolean;
 }
 
-export function CreateQuestionInput({ handleAddQuestionToList }: CreateQuestionInputProps){
+export function CreateQuestionInput({ handleAddQuestionToList, isVisible }: CreateQuestionInputProps){
   const [ isModalVisible, setIsModalVisible ] = useState<boolean>(false)
   const [ question, setQuestion ] = useState<string>("")
   const [ isLoading, setIsLoading ] = useState<boolean>(false)
@@ -48,53 +49,57 @@ export function CreateQuestionInput({ handleAddQuestionToList }: CreateQuestionI
   }
 
   return(
-      <motion.div 
-        className={styles.container}
-        initial={{ height: 0}}
-        animate={{ height: 'fit-content'}}
-        exit={{ height: 0}}  
-      >
-        <SelectModal 
-          isVisible={isModalVisible}
-          handleSelectData={(data: Category) => setCategory(data)}
-          title="Selecione a categoria"
-          handleModalClose={() => setIsModalVisible(false)}
-          fetchFunction={handleFetchCategories}
-        />
-        
-        <div className={styles.main_container}>
-        <InputCreate 
-          title="Pergunta" 
-          value={question} 
-          setValue={(value: string) => setQuestion(value)} 
-          type="text"
-        />
-        
-        <div className={`${styles.select_container} ${ category?.id && styles.active}`}>
-          <span>Categoria:</span>
-          <SelectButton 
-            isActive={category ? true : false} 
-            title={category?.name || 'Selecione'} 
-            onClick={() => setIsModalVisible(!isModalVisible)}
+    <AnimatePresence exitBeforeEnter>
+      {isVisible &&
+        <motion.div 
+          className={styles.container_CreateQuestionInput}
+          initial={{ height: 0}}
+          animate={{ height: 'fit-content'}}
+          exit={{ height: 0}}  
+        >
+          <SelectModal 
+            isVisible={isModalVisible}
+            handleSelectData={(data: Category) => setCategory(data)}
+            title="Selecione a categoria"
+            handleModalClose={() => setIsModalVisible(false)}
+            fetchFunction={handleFetchCategories}
           />
-        </div>
+          
+          <div className={styles.main_container}>
+          <InputCreate 
+            title="Pergunta" 
+            value={question} 
+            setValue={(value: string) => setQuestion(value)} 
+            type="text"
+          />
+          
+          <div className={`${styles.select_container} ${ category?.id && styles.active}`}>
+            <span>Categoria:</span>
+            <SelectButton 
+              isActive={category ? true : false} 
+              title={category?.name || 'Selecione'} 
+              onClick={() => setIsModalVisible(!isModalVisible)}
+            />
+          </div>
 
-        <div className={styles.absolute}>
-          <button 
-          onClick={createQuestion}
-            type="submit" 
-            className={styles.submit_button}
-            disabled={isLoading || (!question && !category)}
-          >
-            {isLoading ? <Loading type="spin" width={32} height={32} color="#fff"/>
-              : 
-              <>
-                <Image src={saveSVG} alt="Icone de salvar"/>
-                Salvar
-              </>}
-          </button>
+          <div className={styles.absolute}>
+            <button 
+            onClick={createQuestion}
+              type="submit" 
+              className={styles.submit_button}
+              disabled={isLoading || (!question && !category)}
+            >
+              {isLoading ? <Loading type="spin" width={32} height={32} color="#fff"/>
+                : 
+                <>
+                  <Image src={saveSVG} alt="Icone de salvar"/>
+                  Salvar
+                </>}
+            </button>
+          </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+      }
+    </AnimatePresence>
   )
 }

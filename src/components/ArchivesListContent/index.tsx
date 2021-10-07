@@ -15,13 +15,14 @@ export function ArchivesListContent(){
 
   useEffect(() => {
     (async function(){
-      await api.get('/archive/list').then(({data}) => { handleSetAllArchives(data) })
+      api.get('/archive/list')
+        .then(({ data }) => handleSetAllArchives(data)
+      )
     })()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  },[handleSetAllArchives])
 
   return(
-    <div className={styles.container}>
+    <div className={styles.container_archiveListContent}>
 
       <DetailArchiveModal 
         isVisible={isModalVisible}
@@ -30,16 +31,15 @@ export function ArchivesListContent(){
       />
     
       <HeaderContent title="Arquivos"/>
-        <main>
+        <main className={styles.main_archiveListContent}>
           {allArchives.map(( item, index) => (
-            <AnimatePresence exitBeforeEnter key={item.id}>
-              <ArchiveListContentItem 
-                file={item}
-                handleDelete={() => deleteArchive(item.id, index)}
-                handleSelectArchive={()=> setSelectedArchive(item)}
-                handleOpenModal={() => setIsModalVisible(prev => !prev)}
-              />
-            </AnimatePresence>
+            <ArchiveListContentItem
+              key={item.id}
+              file={item}
+              handleDelete={() => deleteArchive(item.id, index)}
+              handleSelectArchive={()=> setSelectedArchive(item)}
+              handleOpenModal={() => setIsModalVisible(prev => !prev)}
+            />
           ))}
         </main>
     </div>

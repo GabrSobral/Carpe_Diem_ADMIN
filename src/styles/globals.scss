@@ -6,6 +6,19 @@
   color: var(--text-gray);
 }
 
+.home_page{
+  min-width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex: 0.3;
+  overflow-y: hidden;
+
+  .content{
+    flex: 0.7;
+    overflow-y: scroll;
+  }
+}
+
 :root{
   --white: #FFFFFF;
   --gray-50: #F8F7F7;

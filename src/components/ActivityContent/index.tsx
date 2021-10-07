@@ -18,9 +18,8 @@ export function ActivityContent(){
   const formattedDate = format(date, "dd/MM/yyyy 'às' HH:mm")
 
   return(
-    <div className={styles.container}>
+    <div className={styles.container_ActivityContent}>
       <HeaderContent/>
-      <AnimatePresence exitBeforeEnter>
       {
         activity ? (
           <>
@@ -30,6 +29,7 @@ export function ActivityContent(){
             animate={{ opacity: 1, x: 0}}
             exit={{ opacity: 0, x: 100}}
             transition={{ duration: 0.3 }}
+            className={styles.activityContentMain}
           >
           <motion.div className={styles.title_subtitle}>
             <h1>{activity?.title}</h1>
@@ -137,7 +137,6 @@ export function ActivityContent(){
           </div>
         )
       }
-      </AnimatePresence>
     </div>
   )
 }

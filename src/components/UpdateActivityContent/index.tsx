@@ -146,7 +146,7 @@ export function UpdateActivityContent(){
 
   return(
     <AnimatePresence exitBeforeEnter>
-    <div className={styles.container}>
+    <div className={styles.container_updateActivityContent}>
       <HeaderContent title="Alterar Atividade"/>
 
       <motion.div 
@@ -178,7 +178,7 @@ export function UpdateActivityContent(){
           file={archiveSelected}
         />
 
-      <main>
+      <main className={styles.main_updateActivityContent}>
         <span className={styles.created_at}>Criado em: {formattedUpdatedAt}</span>
         <span className={styles.created_at}>Atualizado em: {formattedCreatedAt}</span>
         <form onSubmit={handleSumbit}>

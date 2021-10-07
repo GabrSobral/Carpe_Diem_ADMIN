@@ -40,7 +40,7 @@ export function DetailArchiveModal(
             transition={{ duration: 0.2 }}   
           >
             <motion.div 
-              className={styles.container}
+              className={styles.container_detailArchiveModal}
               initial={{ opacity: 0}}
               animate={{ opacity: 1}}
               exit={{ opacity: 0}}

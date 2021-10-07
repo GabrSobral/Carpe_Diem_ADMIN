@@ -36,18 +36,13 @@ export function ArchiveProvider({ children }: ArchiveProviderProps){
   const [ allArchives, setAllArchives ] = useState<FileProps[]>([])
   const [ uploadArchives, setUploadArchives ] = useState<UploadArchivesProps[]>([])
 
-  function handleSetAllArchives(archives: FileProps[]){
+  const handleSetAllArchives = useCallback((archives: FileProps[]) => {
     setAllArchives(archives)
-  }
-
-  useEffect(() => {
-    console.log(allArchives)
-  },[allArchives])
+  },[])
 
   async function deleteArchive(id: string, index: number){
     const allFiles = allArchives
     allFiles.splice(index, 1)
-    console.log('id: ', id, 'index: ', index)
     await api.delete(`archive/delete/${id}`)
 
     const newList = allArchives.filter((item) => item.id !== id);

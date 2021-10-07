@@ -1,11 +1,11 @@
-.container{
+.container_updateActivityContent{
   position: relative;
   width: 100%;
   background-color: var(--white);
   padding: 0 2rem;
   padding-bottom: 3rem;
   
-  main{
+  .main_updateActivityContent{
     display: flex;
     flex-direction: column;
     margin-top: 4rem;

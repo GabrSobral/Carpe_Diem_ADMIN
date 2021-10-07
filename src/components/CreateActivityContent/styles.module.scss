@@ -1,11 +1,11 @@
-.container{
+.container_CreateActivitContent{
   position: relative;
   width: 100%;
   background-color: var(--white);
   padding: 0 2rem;
   padding-bottom: 3rem;
   
-  main{
+  .CreateActivityContent_main{
     display: flex;
     flex-direction: column;
     margin-top: 4rem;
