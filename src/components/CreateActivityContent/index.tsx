@@ -76,7 +76,7 @@ export function CreateActivityContent(){
     description.trim()
 
     function breakLines(string: string){
-      return string.replace(/(?:\r\n|\r|\n)/g, '<hr>');
+      return string.replace(/(?:\r\n|\r|\n)/g,'<hr/>');
     }
 
     const descriptionFormatted = breakLines(description) 

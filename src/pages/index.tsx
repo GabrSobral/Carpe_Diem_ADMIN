@@ -55,15 +55,15 @@ export default function Login() {
           <Image src={logo} alt="Logo" />
         </div>
         <LottieView
-            width={900}
-            isClickToPauseDisabled
-            options={{
-              animationData: HomeAnimation,
-              loop: true,
-              autoplay: true,
-              
-            }}
-          />
+          width={900}
+          isClickToPauseDisabled
+          options={{
+            animationData: HomeAnimation,
+            loop: true,
+            autoplay: true,
+            
+          }}
+        />
       </aside>
 
       <main>
