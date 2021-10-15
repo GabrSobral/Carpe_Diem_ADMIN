@@ -3,6 +3,14 @@
   width: 100%;
   z-index: 10;
 
+
+  &:focus-within{
+    span{
+      top: 5%;
+      left: 0.7rem; 
+    }
+  }
+
   span{
     position: absolute;
     transform: translateY(-50%);

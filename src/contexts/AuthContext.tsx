@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import { api } from "../services/api";
-import { removeToken, setToken } from "../utils/Token";
+import { removeToken, setRefreshToken, setToken } from "../utils/Token";
 import Router from 'next/router'
 
 interface AuthProviderProps{
