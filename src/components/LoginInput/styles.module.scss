@@ -31,13 +31,13 @@
     height: 3rem;
     border: 0;
     padding: 0;
-    border-bottom: 2px solid var(--text-gray);
+    border-bottom: 1px solid var(--text-gray);
     transition: 0.2s ease;
 
     padding: 1rem 2.7rem 0 1rem;
 
     &.filled{
-      border-bottom: 2px solid var(--blue-300);
+      border-bottom: 1px solid var(--blue-300);
     }
   }
   .icon {

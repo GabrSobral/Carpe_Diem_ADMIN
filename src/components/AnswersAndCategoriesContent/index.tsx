@@ -55,7 +55,7 @@ export function AnswersAndCategoriesContent(){
 
         <WarningDeleteModal
           closeModal={handleCloseModal}
-          handleRemoveFromList={() => handleUpdateQuestionState(selectedQuestion?.body ||'')}
+          handleRemoveFromList={() => handleUpdateQuestionState(selectedQuestion?.id ||'')}
           name={selectedQuestion?.body || ''}
           title="pergunta"
           description="Ao excluir esta pergunta, você estará excluindo todas

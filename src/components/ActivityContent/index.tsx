@@ -1,7 +1,8 @@
 import { format } from 'date-fns'
+import LottieView from 'react-lottie'
 import Loading from "react-loading";
 import Image from 'next/image'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Chart } from "react-google-charts"
 
 import { useActivity } from '../../hooks/useActivity'
@@ -9,6 +10,7 @@ import { ConfigButton } from '../ConfigButton'
 import { HeaderContent } from '../HeaderContent'
 import { Player } from '../Player'
 
+import ActivityAnim from '../../images/Activity.json'
 import styles from './styles.module.scss'
 
 export function ActivityContent(){
@@ -133,7 +135,16 @@ export function ActivityContent(){
         </>
         ) : (
           <div className={styles.no_activity_selected}>
-            <h1>Não tem nenhuma atividade selecionada</h1>
+            <LottieView
+              height={300}
+              width={300}
+              options={{ 
+                animationData: ActivityAnim,
+                autoplay: true,
+                loop: true,
+              }}
+            />
+            <h3>Não tem nenhuma atividade selecionada</h3>
           </div>
         )
       }
