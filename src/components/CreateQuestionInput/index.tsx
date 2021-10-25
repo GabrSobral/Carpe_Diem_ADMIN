@@ -53,9 +53,9 @@ export function CreateQuestionInput({ handleAddQuestionToList, isVisible }: Crea
       {isVisible &&
         <motion.div 
           className={styles.container_CreateQuestionInput}
-          initial={{ height: 0}}
-          animate={{ height: 'fit-content'}}
-          exit={{ height: 0}}  
+          initial={{ height: 0, marginTop: 0}}
+          animate={{ height: 'fit-content', marginTop: '1rem'}}
+          exit={{ height: 0, marginTop: 0}}  
         >
           <SelectModal 
             isVisible={isModalVisible}
