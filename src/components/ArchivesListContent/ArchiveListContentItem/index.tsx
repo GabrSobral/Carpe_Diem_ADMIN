@@ -63,42 +63,42 @@ export function ArchiveListContentItem({ file, handleDelete, handleSelectArchive
       </main>
       
       <div className={styles.absolute}>
-      <div className={styles.relative}>
-      <div className={styles.config_menu}>
+        <div className={styles.relative}>
+          <div className={styles.config_menu}>
 
-        <button 
-          type="button" 
-          onClick={() => {
-            handleSelectArchive(file)
-            handleOpenModal()
-          }}
-        >
-          Visualizar
-          <Image src={viewSVG} alt="Botão de alterar atividade"/>
-        </button>
-    
+            <button 
+              type="button" 
+              onClick={() => {
+                handleSelectArchive(file)
+                handleOpenModal()
+              }}
+            >
+              Visualizar
+              <Image src={viewSVG} alt="Botão de alterar atividade"/>
+            </button>
+        
 
-        <button type="button" 
-          className={styles.delete_button} 
-          onClick={() => setIsModalVisible(true)}
-        >
-          {isLoading ? (
-            <Loading type="spin" width={24} height={24} color="#fff"/>
-          ) : (
-            <>
-            Deletar
-           <Image src={trashSVG} alt="Botão de alterar atividade"/>
-            </>
-          )}
-          
-        </button>
+            <button type="button" 
+              className={styles.delete_button} 
+              onClick={() => setIsModalVisible(true)}
+            >
+              {isLoading ? (
+                <Loading type="spin" width={24} height={24} color="#fff"/>
+              ) : (
+                <>
+                Deletar
+              <Image src={trashSVG} alt="Botão de alterar atividade"/>
+                </>
+              )}
+              
+            </button>
+          </div>
+
+          <button type="button" className={styles.config_button}>
+            <Image src={details_vertical} alt="Botão de configuração"/>
+          </button>
+        </div>
       </div>
-
-      <button type="button" className={styles.config_button}>
-        <Image src={details_vertical} alt="Botão de configuração"/>
-      </button>
-      </div>
-    </div>
     </motion.div>
   )
 }

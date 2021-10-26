@@ -22,7 +22,7 @@ export function QuestionItem({ question, handleSelect }: QuestionItemProps){
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 50 }}  
     >
-      <h2>{question.body}</h2>
+      <h3>{question.body}</h3>
 
       <div className={styles.category_container}>
         <SelectButton title={question.category.name} isActive/>

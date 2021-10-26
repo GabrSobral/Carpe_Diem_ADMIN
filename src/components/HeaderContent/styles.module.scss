@@ -9,6 +9,11 @@
   padding-top: 3rem;
   justify-content: space-between;
   background-color: var(--white);
+  border-bottom: 1px solid var(--gray-150);
+
+  > h1 {
+    font-size: 2rem;
+  }
 
   > div {
     background-color: var(--gray-150);
