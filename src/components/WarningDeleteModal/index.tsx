@@ -61,9 +61,10 @@ export function WarningDeleteModal(
                 <button 
                   type="button" 
                   disabled={isLoading}
-                  onClick={() => {
-                    handleRemoveFromList()
+                  onClick={async () => {
                     setIsLoading(true)
+                    await handleRemoveFromList()
+                    setIsLoading(false)
                   }}
                 >
                   {

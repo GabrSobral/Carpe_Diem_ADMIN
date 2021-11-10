@@ -18,6 +18,7 @@ interface ModalProps{
   title: string;
   fetchFunction: () => Promise<any>;
   isVisible: boolean;
+  alreadyExists: any[]
 }
 
 export function SelectModal({ 
@@ -25,7 +26,8 @@ export function SelectModal({
   handleModalClose,
   title,
   fetchFunction,
-  isVisible
+  isVisible,
+  alreadyExists
 }: ModalProps){
   const [ selectData, setSelectData ] = useState<any>()
   const [ data, setData] = useState<any>([])
@@ -38,7 +40,7 @@ export function SelectModal({
   },[fetchFunction])
 
   function handleSetSelectData(){
-    if(selectData){
+    if(selectData) {
       handleSelectData(selectData)
       handleModalClose()
     }
@@ -73,14 +75,19 @@ export function SelectModal({
 
               <main className={styles.main}>
                 {data.length == 0 ? <Loading type="spin" width={52} height={52} color="#5A63B1"/>
-                  : data.map((item: any) => (
-                      <SelectModalButton 
+                  : data.map((item: any) => {
+                      if(alreadyExists.some((alreadyExistsItem: any) => alreadyExistsItem?.id === item.id)) {
+                        console.log('Banana')
+                        return <div key={item.id}/>
+                      }
+
+                      return (<SelectModalButton 
                         title={item.title || item.name} 
                         key={item.id}
                         isActive={selectData?.id === item.id ? true : false}
                         onClick={() => setSelectData(item)}
-                      />
-                ))}
+                      />)
+                  })}
               </main>
 
               <nav className={styles.button_container}>

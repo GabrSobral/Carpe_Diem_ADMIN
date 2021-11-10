@@ -63,6 +63,7 @@ export function CreateQuestionInput({ handleAddQuestionToList, isVisible }: Crea
             title="Selecione a categoria"
             handleModalClose={() => setIsModalVisible(false)}
             fetchFunction={handleFetchCategories}
+            alreadyExists={[category]}
           />
           
           <div className={styles.main_container}>

@@ -3,6 +3,6 @@ module.exports ={
     domains : ['res.cloudinary.com']
   },
   env: {
-    BASE_URL: process.env.API_ADDRESS,
+    BASE_URL: "https://carpe-diem-api.herokuapp.com/",
   }
 }
