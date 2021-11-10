@@ -41,7 +41,7 @@ export default function Login() {
       console.log(user)
       setIsLoading(false)
       push('/Activities')
-    }catch(error){
+    }catch(error: any){
       setMessage(error.response.data.error)
       setPassword('')
       setIsLoading(false)
@@ -88,13 +88,6 @@ export default function Login() {
             {
               message && ( <span className={styles.error_message}>{message}</span> )
             }
-            <div className={styles.remember_forgot_password}>
-              <div>
-                <input type="checkbox" name="remember" value="remember" />
-                <label htmlFor="remember">Lembrar de mim</label>
-              </div>
-              <a href="#">Esqueci minha senha</a>
-            </div>
 
             <button type='submit' disabled={isLoading || !isFilled}>
               {

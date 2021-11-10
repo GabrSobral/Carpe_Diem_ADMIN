@@ -40,7 +40,7 @@ export function ArchiveProvider({ children }: ArchiveProviderProps){
     setAllArchives(archives)
   },[])
 
-  async function deleteArchive(id: string, index: number){
+  const deleteArchive = useCallback(async (id: string, index: number) => {
     const allFiles = allArchives
     allFiles.splice(index, 1)
     await api.delete(`archive/delete/${id}`)
@@ -48,37 +48,13 @@ export function ArchiveProvider({ children }: ArchiveProviderProps){
     const newList = allArchives.filter((item) => item.id !== id);
 
     setAllArchives(newList)
-  }
-
-  const upload = async (files: File[]) => {
-    const uploadedFile = files.map((file )=> ({
-      file,
-      id: uniqueId(),
-      name: file.name,
-      size: file.size,
-      progress: 0,
-      uploaded: false,
-      error: false,
-      canceled: false,
-      url: null,
-      cancelToken: axios.CancelToken.source()
-    } as UploadArchivesProps))
-
-    const concatArrays = uploadedFile.concat(uploadArchives)
-    setUploadArchives(concatArrays)
-    concatArrays.forEach((item) => processUpload(item))
-  }
+  },[allArchives])
 
   const updateFile = useCallback((id: string, data: any) => {
     setUploadArchives((state) =>
       state.map((file) => (file.id === id ? { ...file, ...data } : file))
     );
   }, []);
-
-  function cancelUpload(id: string, cancelToken: CancelTokenSource){
-    cancelToken.cancel()
-    updateFile(id, { canceled: true })
-  }
 
   const processUpload = useCallback((uploadedArchive: UploadArchivesProps) => {
     const data = new FormData()
@@ -109,6 +85,30 @@ export function ArchiveProvider({ children }: ArchiveProviderProps){
       updateFile(uploadedArchive.id, { error: true })
     })
   },[updateFile])
+
+  const upload = useCallback((files: File[]) => {
+    const uploadedFile = files.map((file )=> ({
+      file,
+      id: uniqueId(),
+      name: file.name,
+      size: file.size,
+      progress: 0,
+      uploaded: false,
+      error: false,
+      canceled: false,
+      url: null,
+      cancelToken: axios.CancelToken.source()
+    } as UploadArchivesProps))
+
+    const concatArrays = uploadedFile.concat(uploadArchives)
+    setUploadArchives(concatArrays)
+    concatArrays.forEach((item) => processUpload(item))
+  },[processUpload, uploadArchives])
+
+  function cancelUpload(id: string, cancelToken: CancelTokenSource){
+    cancelToken.cancel()
+    updateFile(id, { canceled: true })
+  }
 
   return (
     <ArchiveContext.Provider

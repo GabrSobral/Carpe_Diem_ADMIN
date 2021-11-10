@@ -55,19 +55,6 @@
         color: red;
       }
 
-      .remember_forgot_password{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        div{
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 5px;
-        }
-      }
-
       button {
         width: 100%;
         padding: 1rem;
@@ -75,6 +62,7 @@
         color: var(--white);
         font-size: 1.25rem;
         font-weight: 600;
+        margin-top: 0.5rem;
 
         display: flex;
         align-items: center;

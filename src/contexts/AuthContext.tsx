@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useCallback, useState } from "react";
 import { api } from "../services/api";
 import { removeToken, setRefreshToken, setToken } from "../utils/Token";
 import Router from 'next/router'
@@ -17,7 +17,7 @@ export const AuthContext = createContext({} as AuthContextProps)
 export function AuthProvider({ children }: AuthProviderProps){
   const [ isAuthenticated, setIsAuthenticated ] = useState<boolean>(false)
 
-  async function signIn(email: string, password: string){
+  const signIn = useCallback(async(email: string, password: string) => {
     const { data } = await api.post('/login', { email, password })
     localStorage.setItem('@CarpeDiemUsername', data.user.name)
 
@@ -30,7 +30,7 @@ export function AuthProvider({ children }: AuthProviderProps){
     })
   
     return data
-  }
+  },[])
 
   function logout(){
     removeToken()
