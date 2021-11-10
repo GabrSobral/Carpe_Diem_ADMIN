@@ -144,7 +144,7 @@ export function ActivityContent(){
                 loop: true,
               }}
             />
-            <h3>Não tem nenhuma atividade selecionada</h3>
+            <h3>Nenhuma atividade selecionada.</h3>
           </div>
         )
       }
