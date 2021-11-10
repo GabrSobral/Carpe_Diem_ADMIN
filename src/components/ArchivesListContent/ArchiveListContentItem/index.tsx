@@ -13,6 +13,7 @@ import viewSVG from '../../../images/view.svg'
 
 import styles from './styles.module.scss'
 import { WarningDeleteModal } from '../../WarningDeleteModal'
+import { Icons } from '../../Icons'
 
 interface ArchiveListContentItemProps{
   file: FileProps;
@@ -48,7 +49,9 @@ export function ArchiveListContentItem({ file, handleDelete, handleSelectArchive
         isVisible={isModalVisible}
       /> 
       <header>
-        <div></div>
+        <div>
+          <Icons name={file.format}/>
+        </div>
         <span>Formato: {file.format}</span>
       </header>
 

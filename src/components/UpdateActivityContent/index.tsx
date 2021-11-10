@@ -126,6 +126,7 @@ export function UpdateActivityContent(){
         archive: file.id
       })
     })
+    console.log(newActivity)
     const updated_activity: Activity = {
       id: newActivity.data.id,
       title: newActivity.data.title,
@@ -155,7 +156,8 @@ export function UpdateActivityContent(){
         exit={{ opacity: 0}}
       >
 
-        <SelectModal 
+        <SelectModal
+          alreadyExists={[category]}
           isVisible={isCategoryModalOpen}
           handleSelectData={handleSetCategory}
           title="Selecione a categoria"
@@ -164,6 +166,7 @@ export function UpdateActivityContent(){
         />
 
         <SelectModal 
+          alreadyExists={archives}
           isVisible={isArchiveModalOpen}
           handleSelectData={handleSetArchive}
           title="Selecione a categoria"
@@ -189,6 +192,7 @@ export function UpdateActivityContent(){
           <div className={`${styles.select_container} ${ category && styles.active}`}>
             <span>Categoria:</span>
             <SelectButton 
+              icon={category?.name || ''}
               isActive={category ? true : false} 
               title={category?.name || 'Selecione'} 
               onClick={() => setIsCategoryModalOpen(true)}
@@ -202,6 +206,7 @@ export function UpdateActivityContent(){
               {
                 archives.map((item, index) => (
                   <SelectButton 
+                    icon={item.format}
                     key={item.id}
                     isActive={archives ? true : false} 
                     title={item.name || ''}

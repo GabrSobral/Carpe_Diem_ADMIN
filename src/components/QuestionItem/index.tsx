@@ -25,7 +25,7 @@ export function QuestionItem({ question, handleSelect }: QuestionItemProps){
       <h3>{question.body}</h3>
 
       <div className={styles.category_container}>
-        <SelectButton title={question.category.name} isActive/>
+        <SelectButton title={question.category.name} isActive icon={question.category.name}/>
       </div>
 
       <button 

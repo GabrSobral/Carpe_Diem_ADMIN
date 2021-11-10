@@ -100,7 +100,7 @@ export function CreateActivityContent(){
     handleClearInputs()
     handleAddActivity(data)
   }
-
+  console.log(archives)
   return(
     <div className={styles.container_CreateActivitContent}>
       <HeaderContent title="Criar Atividade"/>
@@ -144,6 +144,7 @@ export function CreateActivityContent(){
             <div className={`${styles.select_container} ${ category && styles.active}`}>
               <span>Categoria:</span>
               <SelectButton 
+                icon={category?.name || ''}
                 isActive={category ? true : false} 
                 title={category?.name || 'Selecione'} 
                 onClick={() => setIsCategoryModalOpen(true) }
@@ -155,7 +156,8 @@ export function CreateActivityContent(){
               <div className={styles.archives_list}>
                 {
                   archives.map((item, index) => (
-                    <SelectButton 
+                    <SelectButton
+                      icon={item.format}
                       key={item.id}
                       isActive={archives ? true : false} 
                       title={item.name || ''}

@@ -1,15 +1,17 @@
 import Image from "next/image"
 
 import musicSVG from '../../images/music.svg'
+import { Icons } from "../Icons"
 
 import styles from './styles.module.scss'
 
 interface SelectButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
   isActive?: boolean;
   title: string;
+  category: string
 }
 
-export function SelectModalButton({ isActive = true, title, ...rest }: SelectButtonProps){
+export function SelectModalButton({ isActive = true, title, category, ...rest }: SelectButtonProps){
   return(
     <button 
       type="button" 
@@ -17,7 +19,7 @@ export function SelectModalButton({ isActive = true, title, ...rest }: SelectBut
       {...rest}
     >
       <div className={styles.select_icon}>
-        <Image src={musicSVG} alt="Icone de música"/>
+        <Icons name={category}/>
       </div>
       <div className={styles.select_name}>
         {title}

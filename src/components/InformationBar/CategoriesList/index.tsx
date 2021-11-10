@@ -10,6 +10,7 @@ import { api } from '../../../services/api'
 import styles from './styles.module.scss'
 import { WarningDeleteModal } from '../../WarningDeleteModal'
 import { AnimatePresence, motion } from 'framer-motion'
+import { Icons } from '../../Icons'
 
 interface SelectedCategory{
   index?: number;
@@ -99,7 +100,9 @@ export function CategoriesList({ search, reload }: CategoriesListProps){
                 exit={{ opacity: 0, x: 50 }}
               >
                 <div className={styles.image_category_item}>
-                  <div></div>
+                  <div>
+                    <Icons name={item.name}/>
+                  </div>
                 </div>
         
                 <div className={styles.category_name}>

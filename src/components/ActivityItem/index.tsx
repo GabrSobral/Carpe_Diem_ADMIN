@@ -7,6 +7,7 @@ import gamesSVG from '../../images/games.svg'
 
 import styles from './styles.module.scss'
 import { motion, MotionProps } from 'framer-motion'
+import { Icons } from '../Icons'
 
 interface ActivityItemProps extends
  React.ButtonHTMLAttributes<HTMLButtonElement>{
@@ -33,9 +34,7 @@ export function ActivityItem({ title, category, description, id, ...rest }: Acti
     >
       <div className={styles.icon_container}>
         <div className={styles.image_container}>
-          {
-            
-          }
+          <Icons name={category}/>
         </div>
       </div>
 

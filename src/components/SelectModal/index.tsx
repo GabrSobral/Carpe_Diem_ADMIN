@@ -40,10 +40,9 @@ export function SelectModal({
   },[fetchFunction])
 
   function handleSetSelectData(){
-    if(selectData) {
+    if(selectData)
       handleSelectData(selectData)
-      handleModalClose()
-    }
+
     handleModalClose()
   }
 
@@ -76,17 +75,17 @@ export function SelectModal({
               <main className={styles.main}>
                 {data.length == 0 ? <Loading type="spin" width={52} height={52} color="#5A63B1"/>
                   : data.map((item: any) => {
-                      if(alreadyExists.some((alreadyExistsItem: any) => alreadyExistsItem?.id === item.id)) {
-                        console.log('Banana')
+                      if(alreadyExists.some((alreadyExistsItem: any) => alreadyExistsItem?.id === item.id))
                         return <div key={item.id}/>
-                      }
 
-                      return (<SelectModalButton 
-                        title={item.title || item.name} 
-                        key={item.id}
-                        isActive={selectData?.id === item.id ? true : false}
-                        onClick={() => setSelectData(item)}
-                      />)
+                      return (
+                        <SelectModalButton 
+                          title={item.title || item.name}
+                          category={item.name || item.format}
+                          key={item.id}
+                          isActive={selectData?.id === item.id ? true : false}
+                          onClick={() => setSelectData(item)}
+                        />)
                   })}
               </main>
 
