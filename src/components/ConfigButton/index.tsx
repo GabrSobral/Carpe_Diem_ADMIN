@@ -27,11 +27,9 @@ export function ConfigButton({ view = false }: ConfigButtonProps){
   async function DeleteActivity(){
     setIsLoading(true)
     await api.delete(`/activity/delete/${activity?.id}`)
-    .then(() => {
-      handleRemoveActivityFromList()
-      handleClearSelectActivity()
-      setIsLoading(false)
-    })
+    handleRemoveActivityFromList()
+    handleClearSelectActivity()
+    setIsLoading(false)
   }
 
   return(
@@ -45,6 +43,7 @@ export function ConfigButton({ view = false }: ConfigButtonProps){
         as suas dependências..."
         isVisible={isModalVisible}
       />
+      
       <div className={styles.relative}>
         <div className={styles.config_menu}>
           {

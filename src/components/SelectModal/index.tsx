@@ -77,7 +77,7 @@ export function SelectModal({
                 {data.length == 0 ? <Loading type="spin" width={52} height={52} color="#5A63B1"/>
                   : data.map((item: any) => {
                       if(alreadyExists.some((alreadyExistsItem: any) => alreadyExistsItem?.id === item.id))
-                        return <div key={item.id}/>
+                        return <div style={{ display: "none" }} key={item.id}/>
 
                       return (
                         <SelectModalButton 
