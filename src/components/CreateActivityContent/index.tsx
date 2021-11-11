@@ -100,7 +100,7 @@ export function CreateActivityContent(){
     handleClearInputs()
     handleAddActivity(data)
   }
-  console.log(archives)
+  
   return(
     <div className={styles.container_CreateActivitContent}>
       <HeaderContent title="Criar Atividade"/>

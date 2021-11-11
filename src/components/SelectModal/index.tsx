@@ -37,7 +37,8 @@ export function SelectModal({
       const fetchData = await fetchFunction()
       setData(fetchData)
     })()
-  },[fetchFunction])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
 
   function handleSetSelectData(){
     if(selectData)
