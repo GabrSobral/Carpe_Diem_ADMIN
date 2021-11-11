@@ -1,0 +1,65 @@
+.input_container{
+  position: relative;
+  width: 100%;
+
+  &:focus-within{
+    span{
+      top: 0.1rem;
+      left: 0.7rem;
+      color: var(--text-gray);
+    }
+    input, textarea{
+      border: 2px solid var(--text-gray);
+    }
+  }
+
+  span{
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50% ;
+    left: 1.25rem;
+    transition: 0.2s ease;
+    pointer-events: none;
+    padding: 0 0.3rem;
+    font-weight: 700;
+    font-size: 1.15rem;
+    background-color: var(--white);
+    color: var(--gray-350);
+    border-radius: 7px;
+
+    &.filled{
+      top: 0.1rem;
+      left: 0.7rem; 
+      color: var(--blue-300);
+    }
+  }
+
+  input, textarea {
+    width: 100%;
+    height: 3rem;
+    background-color: transparent;
+    border: 2px solid var(--gray-350);
+    padding: 0;
+    border-radius: 7px;
+    transition: 0.2s ease;
+    font-size: 1rem;
+
+    padding: 1.5rem 1rem;
+
+    &.filled{
+      border: 2px solid var(--blue-300);
+    }
+  }
+  textarea {
+    min-width: 100%;
+    min-height: 10rem;
+    resize: vertical;
+    white-space: pre-wrap;
+  }
+  .icon {
+    position: absolute;
+    transform: translateY(-50%);
+    top: 60%;
+    right: 5%;
+  }
+}

@@ -1,0 +1,85 @@
+.container_updateActivityContent{
+  position: relative;
+  width: 100%;
+  background-color: var(--white);
+  padding: 0 2rem;
+  padding-bottom: 3rem;
+  max-height: 100vh;
+  overflow-y: scroll;
+  
+  .main_updateActivityContent{
+    display: flex;
+    flex-direction: column;
+    margin-top: 4rem;
+    
+    .created_at{
+      margin-bottom: 0.8rem;
+      text-align: right;
+      font-size: 0.8rem;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    form{
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .select_container{
+      margin-top: 1rem;
+      display: flex;
+      width: 100%;
+      min-width: 10rem;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      span{
+        font-weight: 600;
+        font-size: 1rem;
+      }
+    }
+    .active{
+      span{
+        color: var(--blue-300);
+      }
+    }
+
+    .archives_list{
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 1rem;
+
+      .add_file{
+        width: 30%;
+        height: 3.5rem;
+        background-color: transparent;
+        border: 2px dashed var(--green-300);
+        font-size: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img{
+          filter: brightness(0.3) invert(0.35) sepia(1) saturate(3) hue-rotate(100deg)
+        }
+      }
+    }
+
+    .submit_button{
+      width: 12rem;
+      height: 3rem;
+      background-color: var(--green-300);
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      gap: 0.5rem;
+      margin-left: auto;
+      margin-top: 0.5rem;
+    }
+  }
+}

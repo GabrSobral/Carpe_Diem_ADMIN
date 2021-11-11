@@ -1,0 +1,17 @@
+.container_archiveListContent{
+  position: relative;
+  width: 100%;
+  background-color: var(--white);
+  max-height: 100vh;
+  overflow-y: scroll;
+  padding: 0 2rem;
+  padding-bottom: 3rem;
+  
+  .main_archiveListContent{
+    display: grid;
+    width: 100%;
+    gap: 1rem;
+    grid-template-columns: repeat(3, auto) ;
+    margin-top: 4rem;
+  }
+}

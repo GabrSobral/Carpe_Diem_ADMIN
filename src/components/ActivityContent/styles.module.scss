@@ -1,0 +1,91 @@
+.container_ActivityContent{
+  position: relative;
+  width: 100%;
+  background-color: var(--white);
+  
+  padding: 0 2rem;
+  padding-bottom: 2rem;
+  max-height: 100vh;
+  overflow-y: scroll;
+
+  .activityContentMain{
+    display: flex;
+    flex-direction: column;
+
+    .title_subtitle{
+      position: relative;
+      margin: 2rem 0;
+      padding-bottom: 1rem;
+
+      h1{
+        font-weight: 600;
+        font-size: 2rem;
+      }
+
+      .subtitle{
+        line-height: 1.5rem;
+        color: var(--gray-700);
+      }
+      .created_at{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        font-size: 0.8rem;
+        pointer-events: none;
+        user-select: none;
+      }
+    }
+
+    .description{
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .chartContainer{
+      margin-top: 1rem;
+      width: 100%;
+    }
+
+    .files{
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-top: 2rem;
+
+      .video{
+        width: 32rem;
+        height: 18rem;
+        border-radius: 7px;
+        background-color: var(--gray-50);
+      }
+      .image{
+        width: 32rem;
+        height: 18rem;
+        border-radius: 7px;
+        background-color: var(--gray-50);
+      }
+
+      > span{
+        font-weight: 600;
+        pointer-events: none;
+        user-select: none;
+      }
+      .audio_files{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+    }
+  }
+
+  .no_activity_selected{
+    width: 100%;
+    height: calc(100vh - 13rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
