@@ -38,7 +38,7 @@ export function ConfigButton({ view = false }: ConfigButtonProps){
         closeModal={() => setIsModalVisible(false)}
         handleRemoveFromList={DeleteActivity}
         name={activity?.title || ''}
-        title="atividade"
+        title="a atividade"
         description="Ao excluir esta atividade, você estará excluindo permanentemente todas
         as suas dependências..."
         isVisible={isModalVisible}

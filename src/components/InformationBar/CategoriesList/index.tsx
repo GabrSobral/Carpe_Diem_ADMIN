@@ -59,7 +59,7 @@ export function CategoriesList({ search, reload }: CategoriesListProps){
         closeModal={handleCloseModal}
         handleRemoveFromList={() => deleteCategory(selectedCategory.category.id, selectedCategory.index || 0)}
         name={selectedCategory.category.name}
-        title="categoria"
+        title="a categoria"
         description="Ao excluir esta categoria, você estará excluindo todas
         as suas relações, como: atividades, perguntas, arquivos 
         relacionados, etc..."

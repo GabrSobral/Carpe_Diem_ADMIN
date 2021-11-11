@@ -14,7 +14,7 @@ interface WarningDeleteModal{
   name: string;
   handleRemoveFromList: () => void | Promise<void>;
   closeModal: () => void;
-  title: "atividade" | "categoria" | 'pergunta' | "arquivo";
+  title: "a atividade" | "a categoria" | 'a pergunta' | "o arquivo";
   description: string;
   isVisible: boolean;
 }
@@ -49,7 +49,7 @@ export function WarningDeleteModal(
                 height={226}
               />
               <h2>
-                Você tem certeza de que quer excluir a {title}: <span>{name}</span>?
+                Você tem certeza de que quer excluir {title}: <span>{name}</span>?
               </h2>
 
               <div className={styles.descriptionDeleteModal}>

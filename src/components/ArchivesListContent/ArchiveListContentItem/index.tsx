@@ -43,7 +43,7 @@ export function ArchiveListContentItem({ file, handleDelete, handleSelectArchive
           setIsLoading(true)
         }}
         name={file.name}
-        title="arquivo"
+        title="o arquivo"
         description="Ao excluir este arquivo, você não poderá recuperá-lo 
         novamente..."
         isVisible={isModalVisible}
