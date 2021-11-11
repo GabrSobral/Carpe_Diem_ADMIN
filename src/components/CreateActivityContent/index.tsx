@@ -95,10 +95,9 @@ export function CreateActivityContent(){
       })
     })
 
-    const { data } = await api.get(`/activity/show/${newActivity.data.id}`)
     setIsLoading(false)
     handleClearInputs()
-    handleAddActivity(data)
+    handleAddActivity(newActivity.data)
   }
   
   return(

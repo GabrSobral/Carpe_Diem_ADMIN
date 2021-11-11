@@ -36,17 +36,17 @@ export function ConfigButton({ view = false }: ConfigButtonProps){
 
   return(
     <div className={styles.container}>
+      <WarningDeleteModal
+        closeModal={() => setIsModalVisible(false)}
+        handleRemoveFromList={DeleteActivity}
+        name={activity?.title || ''}
+        title="atividade"
+        description="Ao excluir esta atividade, você estará excluindo permanentemente todas
+        as suas dependências..."
+        isVisible={isModalVisible}
+      />
       <div className={styles.relative}>
         <div className={styles.config_menu}>
-          <WarningDeleteModal
-            closeModal={() => setIsModalVisible(false)}
-            handleRemoveFromList={DeleteActivity}
-            name={activity?.title || ''}
-            title="atividade"
-            description="Ao excluir esta atividade, você estará excluindo permanentemente todas
-            as suas dependências..."
-            isVisible={isModalVisible}
-          />
           {
             !view ? (
               <button type="button" onClick={() => handleSetPage("ActivityUpdate")}>
