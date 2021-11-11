@@ -57,7 +57,7 @@ export function AnswersAndCategoriesContent(){
 					closeModal={handleCloseModal}
 					handleRemoveFromList={() => handleUpdateQuestionState(selectedQuestion?.id ||'')}
 					name={selectedQuestion?.body || ''}
-					title="pergunta"
+					title="a pergunta"
 					description="Ao excluir esta pergunta, você estará excluindo todas
 					as suas relações, como: atividades, respostas, arquivos 
 					relacionados, etc..."

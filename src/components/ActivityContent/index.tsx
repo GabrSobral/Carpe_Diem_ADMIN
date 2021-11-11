@@ -25,14 +25,7 @@ export function ActivityContent(){
       {
         activity ? (
           <>
-          <motion.main
-            key="Activities"
-            initial={{ opacity: 0, x: -100}}
-            animate={{ opacity: 1, x: 0}}
-            exit={{ opacity: 0, x: 100}}
-            transition={{ duration: 0.3 }}
-            className={styles.activityContentMain}
-          >
+          <main key="Activities" className={styles.activityContentMain}>
           <motion.div className={styles.title_subtitle}>
             <h1>{activity?.title}</h1>
             <span className={styles.subtitle}>{activity?.description}</span>
@@ -129,7 +122,7 @@ export function ActivityContent(){
               })}
     
             </div>      
-          </motion.main>
+          </main>
     
           <ConfigButton/>
         </>

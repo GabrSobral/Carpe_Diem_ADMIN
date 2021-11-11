@@ -77,7 +77,7 @@ export function CreateQuestionInput({ handleAddQuestionToList, isVisible }: Crea
           <div className={`${styles.select_container} ${ category?.id && styles.active}`}>
             <span>Categoria:</span>
             <SelectButton 
-              icon={category?.name || ''}
+              icon={category?.name || "Category"}
               isActive={category ? true : false} 
               title={category?.name || 'Selecione'} 
               onClick={() => setIsModalVisible(!isModalVisible)}
