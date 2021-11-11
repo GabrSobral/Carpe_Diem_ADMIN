@@ -9,7 +9,6 @@ import { UpdateActivityContent } from '../../components/UpdateActivityContent'
 import { usePage } from '../../hooks/usePage'
 import { ActivityProvider } from '../../contexts/ActivityContext'
 
-
 export default function Activities(){
   const { page } = usePage()
   

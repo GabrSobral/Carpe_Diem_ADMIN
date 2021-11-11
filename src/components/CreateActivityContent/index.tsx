@@ -116,6 +116,7 @@ export function CreateActivityContent(){
           title="Selecione a categoria"
           handleModalClose={() => setIsCategoryModalOpen(false)}
           fetchFunction={handleFetchCategories}
+          alreadyExists={[category]}
         /> 
 
         <SelectModal 
@@ -124,6 +125,7 @@ export function CreateActivityContent(){
           title="Selecione um arquivo"
           handleModalClose={() => setIsArchiveModalOpen(false)}
           fetchFunction={handleFetchArchives}
+          alreadyExists={archives}
         />
         
         <DetailArchiveModal
