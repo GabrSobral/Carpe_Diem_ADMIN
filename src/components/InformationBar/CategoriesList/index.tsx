@@ -11,6 +11,7 @@ import styles from './styles.module.scss'
 import { WarningDeleteModal } from '../../WarningDeleteModal'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Icons } from '../../Icons'
+import { useAnswersAndCategories } from '../../../hooks/useAnswersAndCategories'
 
 interface SelectedCategory{
   index?: number;
@@ -29,6 +30,8 @@ export function CategoriesList({ search, reload }: CategoriesListProps){
   const [ isModalVisible, setIsModalVisible ] = useState<boolean>(false)
   const [ selectedCategory, setSeletedCategory ] = useState<SelectedCategory>({index: 0, category: {}} as SelectedCategory)
 
+  const { deleteQuestionsAfterDeleteCategory } = useAnswersAndCategories()
+
   useEffect(() => {
     (async function(){
       setIsLoading(true)
@@ -39,24 +42,27 @@ export function CategoriesList({ search, reload }: CategoriesListProps){
   },[reload])
 
   async function createCategory(){
-    const { data } = await api.post('category/new', { name: newCategory })
+    try {
+      const { data } = await api.post('category/new', { name: newCategory })
+      setCategories(prevState => [...prevState, data])
+      setNewCategory('')
+    } catch(error: any) {
+      alert(error.response.data.error)
+    }
 
-    setCategories(prevState => [...prevState, data])
-    setNewCategory('')
   }
   async function deleteCategory(category_id: string, index: number){
     await api.delete(`category/delete/${category_id}`)
     categories.splice(index, 1)
     setCategories(categories)
+    deleteQuestionsAfterDeleteCategory(category_id)
     setIsModalVisible(false)
   }
-  function handleCloseModal(){ setIsModalVisible(!isModalVisible) }
- 
 
   return(
     <div className={`${styles.container} ${newCategory && styles.active}`}>
       <WarningDeleteModal
-        closeModal={handleCloseModal}
+        closeModal={() => setIsModalVisible(!isModalVisible)}
         handleRemoveFromList={() => deleteCategory(selectedCategory.category.id, selectedCategory.index || 0)}
         name={selectedCategory.category.name}
         title="a categoria"
