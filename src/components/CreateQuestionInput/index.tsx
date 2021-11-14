@@ -81,15 +81,16 @@ export function CreateQuestionInput({ handleAddQuestionToList, isVisible }: Crea
               isActive={category ? true : false} 
               title={category?.name || 'Selecione'} 
               onClick={() => setIsModalVisible(!isModalVisible)}
+              disabled={isLoading}
             />
           </div>
 
           <div className={styles.absolute}>
             <button 
-            onClick={createQuestion}
+              onClick={createQuestion}
               type="submit" 
               className={styles.submit_button}
-              disabled={isLoading || (!question && !category)}
+              disabled={isLoading || !(category && question)}
             >
               {isLoading ? <Loading type="spin" width={32} height={32} color="#fff"/>
                 : 

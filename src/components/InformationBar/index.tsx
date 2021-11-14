@@ -10,6 +10,7 @@ import reloadSVG from '../../images/reload.svg'
 import styles from './styles.module.scss'
 import { ArchivesList } from './ArchivesList'
 import { CategoriesList } from './CategoriesList'
+
 interface InformationBar{
   type?: "activities" | "archives" | "categories";
 }
@@ -17,8 +18,6 @@ interface InformationBar{
 export function InformationBar({ type = "activities" }: InformationBar){
   const [ reload, setReload] = useState(false)
   const [ search, setSearch ] = useState<string>('')
-
-  function handleSetSearch(value: string){ setSearch(value) }
 
   return(
     <aside className={styles.container}>
@@ -39,7 +38,7 @@ export function InformationBar({ type = "activities" }: InformationBar){
         
         <h4>
           {type === "activities" && "Todas as Atividades"}
-          {type === "archives" &&"Uploads"}
+          {type === "archives" && "Uploads"}
           {type === "categories" && "Todas as categorias"}
         </h4>
 
@@ -51,19 +50,20 @@ export function InformationBar({ type = "activities" }: InformationBar){
       </header>
 
       <main>
-          {type === "activities" &&(
-            <ActivitiesList
-              search={search}
-              handleSetSearch={handleSetSearch}
-              reload={reload}
-            /> 
-          )}
-          {type === "archives" &&(
-           <ArchivesList/>
-          )}
-          {type === "categories" &&(
-           <CategoriesList search={search} reload={reload}/>
-          )}
+        { type === "activities" &&
+          <ActivitiesList
+            search={search}
+            handleSetSearch={(value: string) => setSearch(value)}
+            reload={reload}
+          /> 
+        }
+        { type === "archives" && <ArchivesList/> }
+        { type === "categories" &&
+          <CategoriesList 
+            search={search} 
+            reload={reload}
+          />
+        }
         
       </main>
     </aside>

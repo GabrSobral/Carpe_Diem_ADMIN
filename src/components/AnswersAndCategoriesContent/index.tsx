@@ -12,33 +12,18 @@ import { QuestionItem } from "../QuestionItem";
 import styles from "./styles.module.scss" 
 import { CreateQuestionInput } from "../CreateQuestionInput";
 import { WarningDeleteModal } from "../WarningDeleteModal";
+import { useAnswersAndCategories } from "../../hooks/useAnswersAndCategories";
 
 export function AnswersAndCategoriesContent(){
 	const [ isModalVisible, setIsModalVisible ] = useState<boolean>(false)
-	const [ questions, setQuestions ] = useState<Question[]>([])
 	const [ selectedQuestion, setSelectedQuestion ] = useState<Question>()
 	const [ createQuestionIsVisible, setCreateQuestionIsVisible ] = useState(false)
+	const { questions, handleUpdateQuestionState, addQuestion } = useAnswersAndCategories()
 
-	useEffect(() => {
-		(async function(){
-			await api.get('/question/list').then(({data}) => { setQuestions(data) })
-		})()
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	},[])
-
-	function handleUpdateQuestionState(id: string){
-		(async function(){
-			await api.delete(`/question/delete/${id}`)
-		})()
-		const newList = questions.filter((item) => item.id !== id);
-
-		setQuestions(newList)
+	async function deleteQuestion(id: string){
+		handleUpdateQuestionState(id)
 		setIsModalVisible(!isModalVisible)
 	}
-	function handleAddQuestionToList(question: Question){
-		setQuestions(prevState => [...prevState, question])
-	}
-	function handleCloseModal(){ setIsModalVisible(!isModalVisible) }
 
 	function handleSetSelectedQuestionAndOpenModal(question: Question){ 
 		setSelectedQuestion(question)
@@ -54,8 +39,8 @@ export function AnswersAndCategoriesContent(){
 				</button>
 
 				<WarningDeleteModal
-					closeModal={handleCloseModal}
-					handleRemoveFromList={() => handleUpdateQuestionState(selectedQuestion?.id ||'')}
+					closeModal={() => setIsModalVisible(!isModalVisible)}
+					handleRemoveFromList={() => deleteQuestion(selectedQuestion?.id ||'')}
 					name={selectedQuestion?.body || ''}
 					title="a pergunta"
 					description="Ao excluir esta pergunta, você estará excluindo todas
@@ -65,8 +50,8 @@ export function AnswersAndCategoriesContent(){
 				/> 
 
 				<CreateQuestionInput 
-					handleAddQuestionToList={handleAddQuestionToList}
 					isVisible={createQuestionIsVisible}
+					handleAddQuestionToList={addQuestion}
 				/>
 
 				<main className={styles.main_content}>

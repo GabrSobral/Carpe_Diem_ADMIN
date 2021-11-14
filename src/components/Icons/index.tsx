@@ -48,6 +48,6 @@ export function Icons({ name }: IconsProps){
     case 'mp3':
       return <Image src={AudioSVG} height={32} width={32} alt={`icone de ${name}`}/>
 
-    default: return <div/>
+    default: return <Image src={CategorySVG} height={32} width={32} alt={`icone de ${name}`}/>
   }
 }

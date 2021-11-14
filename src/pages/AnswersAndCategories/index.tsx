@@ -2,14 +2,18 @@ import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
 import { AnswersAndCategoriesContent } from '../../components/AnswersAndCategoriesContent'
 import { InformationBar } from '../../components/InformationBar'
+import { AnswersAndCategoriesProvider } from '../../contexts/AnswersAndCategoriesContext'
+import { useAnswersAndCategories } from '../../hooks/useAnswersAndCategories'
 
 export default function AnswersAndCategories(){
   return(
     <div className="home_page" style={{ display: 'flex' }}>
-      <div className="content">
-        <AnswersAndCategoriesContent/>
-      </div>
-      <InformationBar type="categories"/>
+      <AnswersAndCategoriesProvider>
+        <div className="content">
+          <AnswersAndCategoriesContent/>
+        </div>
+        <InformationBar type="categories"/>
+      </AnswersAndCategoriesProvider>
     </div>
   )
 }

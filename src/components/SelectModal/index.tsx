@@ -34,8 +34,8 @@ export function SelectModal({
 
   useEffect(() => {
     (async function(){
-      const fetchData = await fetchFunction()
-      setData(fetchData)
+      const fetchData = await fetchFunction();
+      setData(fetchData);
     })()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
@@ -73,7 +73,7 @@ export function SelectModal({
                 <span>{title}</span>    
               </div>
 
-              <main className={styles.main}>
+              <section className={styles.main}>
                 {data.length == 0 ? <Loading type="spin" width={52} height={52} color="#5A63B1"/>
                   : data.map((item: any) => {
                       if(alreadyExists.some((alreadyExistsItem: any) => alreadyExistsItem?.id === item.id))
@@ -88,7 +88,7 @@ export function SelectModal({
                           onClick={() => setSelectData(item)}
                         />)
                   })}
-              </main>
+              </section>
 
               <nav className={styles.button_container}>
                 <button type="button" onClick={handleModalClose}>
