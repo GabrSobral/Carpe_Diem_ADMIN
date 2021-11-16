@@ -85,7 +85,7 @@ export function SelectModal({
                       return (
                         <SelectModalButton 
                           title={item.title || item.name}
-                          category={item.name || item.format}
+                          category={item.format || item.name}
                           key={item.id}
                           isActive={selectData?.id === item.id ? true : false}
                           onClick={() => setSelectData(item)}
