@@ -74,7 +74,10 @@ export function SelectModal({
               </div>
 
               <section className={styles.main}>
-                {data.length == 0 ? <Loading type="spin" width={52} height={52} color="#5A63B1"/>
+                {data.length == 0 ? 
+                  <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Loading type="spin" width={52} height={52} color="#5A63B1"/>
+                  </div>
                   : data.map((item: any) => {
                       if(alreadyExists.some((alreadyExistsItem: any) => alreadyExistsItem?.id === item.id))
                         return <div style={{ display: "none" }} key={item.id}/>
