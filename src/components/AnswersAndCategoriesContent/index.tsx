@@ -52,6 +52,7 @@ export function AnswersAndCategoriesContent(){
 				<CreateQuestionInput 
 					isVisible={createQuestionIsVisible}
 					handleAddQuestionToList={addQuestion}
+					turnVisibleToFalse={() => setCreateQuestionIsVisible(false)}
 				/>
 
 				<main className={styles.main_content}>

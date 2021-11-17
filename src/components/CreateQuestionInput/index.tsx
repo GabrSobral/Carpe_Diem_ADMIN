@@ -16,9 +16,10 @@ import styles from './styles.module.scss'
 interface CreateQuestionInputProps{
   handleAddQuestionToList: (question: Question) => void;
   isVisible: boolean;
+  turnVisibleToFalse: () => void;
 }
 
-export function CreateQuestionInput({ handleAddQuestionToList, isVisible }: CreateQuestionInputProps){
+export function CreateQuestionInput({ handleAddQuestionToList, isVisible, turnVisibleToFalse }: CreateQuestionInputProps){
   const [ isModalVisible, setIsModalVisible ] = useState<boolean>(false)
   const [ question, setQuestion ] = useState<string>("")
   const [ isLoading, setIsLoading ] = useState<boolean>(false)
@@ -46,6 +47,7 @@ export function CreateQuestionInput({ handleAddQuestionToList, isVisible }: Crea
     setIsLoading(false)
     setQuestion('')
     setCategory(undefined)
+    turnVisibleToFalse();
   }
 
   return(
