@@ -70,7 +70,6 @@ export function ArchiveProvider({ children }: ArchiveProviderProps){
       cancelToken: uploadedArchive.cancelToken.token,
       onUploadProgress: (event) => {
         let progress: number = Math.round((event.loaded * 100) / event.total)
-        console.log(progress)
         updateFile(uploadedArchive.id, { progress })
       }
     }).then(({data})=>{
@@ -87,6 +86,16 @@ export function ArchiveProvider({ children }: ArchiveProviderProps){
   },[updateFile])
 
   const upload = useCallback((files: File[]) => {
+//    files.forEach((item, index) => {
+//      if (uploadArchives.some(file => file.name == item.name))
+//        files.splice(index, 1);
+//    })
+
+//   if (files.length === 0 )
+//      return
+
+    console.log(files)
+
     const uploadedFile = files.map((file )=> ({
       file,
       id: uniqueId(),

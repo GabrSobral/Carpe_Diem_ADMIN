@@ -25,7 +25,7 @@ export function ActivitiesList(
   useEffect(() => {
     (async function(){
       setIsLoading(true)
-      await api.get('/activity/list').then(({ data }) => {
+      await api.get('/activity/list?cmd=count').then(({ data }) => {
       handleSetActivities(data)
       setIsLoading(false)
     })

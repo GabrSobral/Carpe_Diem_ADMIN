@@ -15,7 +15,7 @@ export function ArchivesListContent(){
 
   useEffect(() => {
     (async function(){
-      api.get('/archive/list')
+      api.get('/archive/list?cmd=count')
         .then(({ data }) => handleSetAllArchives(data)
       )
     })()
