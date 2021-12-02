@@ -35,13 +35,16 @@ export function ActivityProvider({ children }: ActivityProviderProps){
     setActivities(prevState => [...prevState, activity_data])
   }
   function handleRemoveActivityFromList(){
-    console.log(activity?.index, activities.length - 1)
-    activity?.index && activities.splice(activity?.index, 1)
-    setActivities(activities)
+    setActivities(prev => {
+      activity?.index && prev.splice(activity?.index, 1)
+      return prev
+    })
   }
   function handleUpdateActivityFromList(update_activity: Activity){
-    activity?.index && activities.splice(activity?.index, 1, update_activity)
-    setActivities(activities)
+    setActivities(prev => {
+      activity?.index && prev.splice(activity?.index, 1, update_activity)
+      return prev
+    })
   }
 
   return (
