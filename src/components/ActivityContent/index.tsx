@@ -114,11 +114,30 @@ export function ActivityContent(){
                           height={288}
                           objectFit="contain"
                       />
+                      
                       </div>
                       
                     )
                   }
-                  return <p key={item.id}>banana</p>
+
+                  if(item.format === "jpg"){
+                    return(
+                      <div className={styles.image} key={item.id}>
+                        <Image 
+                          key={item.id}
+                          src={item.url} 
+                          alt="Imagem do arquivo" 
+                          width={512}
+                          height={288}
+                          objectFit="contain"
+                      />
+
+                      
+                      </div>
+                      
+                    )
+                  }
+                  return 
               })}
     
             </div>      
