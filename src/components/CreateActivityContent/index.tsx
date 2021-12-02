@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
 import Loading from 'react-loading'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 import saveSVG from '../../images/save.svg'
 import plusSVG from '../../images/plus.svg'
@@ -98,12 +98,12 @@ export function CreateActivityContent(){
     })
 
     const activityOne = await api.get(`/activity/show/${newActivity.data.id}`)
-    newActivity.data.files = activityOne.data.files
+    activityOne.data.feedback = newActivity.data.feedback
 
     setIsLoading(false)
     handleClearInputs()
-    handleAddActivity(newActivity.data)
-    handleSelectActivity(newActivity.data, activities ? activities?.length - 1 : 0)
+    handleAddActivity(activityOne.data)
+    handleSelectActivity(activityOne.data, activities ? activities?.length : 0)
     handleSetPage("ActivityDetails")
   }
   
@@ -197,7 +197,7 @@ export function CreateActivityContent(){
             </button>
           </form>
         </main>
-        </motion.div>
+      </motion.div>
     </div>
   )
 }

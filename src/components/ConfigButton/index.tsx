@@ -11,14 +11,9 @@ import { api } from '../../services/api'
 import { useActivity } from '../../hooks/useActivity'
 import { useState } from 'react'
 import { usePage } from '../../hooks/usePage'
-import { AnimatePresence } from 'framer-motion'
 import { WarningDeleteModal } from '../WarningDeleteModal'
 
-interface ConfigButtonProps{
-  view?: boolean;
-}
-
-export function ConfigButton({ view = false }: ConfigButtonProps){
+export function ConfigButton(){
   const [ isLoading, setIsLoading ] = useState(false)
   const { handleSetPage } = usePage()
   const { activity, handleClearSelectActivity, handleRemoveActivityFromList } = useActivity()
@@ -27,16 +22,17 @@ export function ConfigButton({ view = false }: ConfigButtonProps){
   async function DeleteActivity(){
     setIsLoading(true)
     await api.delete(`/activity/delete/${activity?.id}`)
-    handleClearSelectActivity()
     handleRemoveActivityFromList()
     setIsLoading(false)
+    setIsModalVisible(false)
+    handleClearSelectActivity()
   }
 
   return(
     <div className={styles.container}>
       <WarningDeleteModal
         closeModal={() => setIsModalVisible(false)}
-        handleRemoveFromList={DeleteActivity}
+        handleRemoveFromList={async () => await DeleteActivity()}
         name={activity?.title || ''}
         title="a atividade"
         description="Ao excluir esta atividade, você estará excluindo permanentemente todas
@@ -46,19 +42,10 @@ export function ConfigButton({ view = false }: ConfigButtonProps){
       
       <div className={styles.relative}>
         <div className={styles.config_menu}>
-          {
-            !view ? (
-              <button type="button" onClick={() => handleSetPage("ActivityUpdate")}>
-                Alterar 
-                <Image src={changeSVG} alt="Botão de alterar atividade"/>
-              </button>
-            ) : (
-              <button type="button">
-                Visualizar
-                <Image src={ViewSVG} alt="Botão de alterar atividade"/>
-              </button>
-            )
-          }
+          <button type="button" onClick={() => handleSetPage("ActivityUpdate")}>
+            Alterar 
+            <Image src={changeSVG} alt="Botão de alterar atividade"/>
+          </button>
 
           <button type="button" className={styles.delete_button} onClick={() => setIsModalVisible(true)}>
             {
