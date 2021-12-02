@@ -27,8 +27,8 @@ export function ConfigButton({ view = false }: ConfigButtonProps){
   async function DeleteActivity(){
     setIsLoading(true)
     await api.delete(`/activity/delete/${activity?.id}`)
-    handleRemoveActivityFromList()
     handleClearSelectActivity()
+    handleRemoveActivityFromList()
     setIsLoading(false)
   }
 

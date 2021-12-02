@@ -19,6 +19,7 @@ import { useActivity } from '../../hooks/useActivity'
 
 import { FileProps } from '../../@types/Activity'
 import { SelectModal } from '../SelectModal'
+import { usePage } from '../../hooks/usePage'
 
 interface ArchiveSelected{
   file: FileProps;
@@ -31,10 +32,11 @@ export function CreateActivityContent(){
 
   const [ isFilled, setIsFilled ] = useState(false)
   const [ isLoading, setIsLoading ] = useState(false)
-  const { handleAddActivity } = useActivity()
+  const { handleAddActivity, handleSelectActivity, activities } = useActivity()
   const [ isDetailArchiveVisible, setIsDetailArchiveVisible ] = useState<boolean>(false)
   const [ archiveSelected, setArchiveSelected ] = useState<ArchiveSelected>()
   const { handleSetCategory, handleSetArchive } = useCreateActivity()
+  const { handleSetPage } = usePage()
   const { 
     category,
     archives,
@@ -95,9 +97,14 @@ export function CreateActivityContent(){
       })
     })
 
+    const activityOne = await api.get(`/activity/show/${newActivity.data.id}`)
+    newActivity.data.files = activityOne.data.files
+
     setIsLoading(false)
     handleClearInputs()
     handleAddActivity(newActivity.data)
+    handleSelectActivity(newActivity.data, activities ? activities?.length - 1 : 0)
+    handleSetPage("ActivityDetails")
   }
   
   return(
