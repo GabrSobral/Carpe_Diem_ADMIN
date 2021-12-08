@@ -1,13 +1,9 @@
-import { createContext, ReactNode, useCallback, useEffect, useState } from "react";
+import { createContext, ReactNode, useCallback, useState, useReducer } from "react";
 import axios, { CancelTokenSource } from "axios"
 
 import { uniqueId } from "lodash";
 import { api } from "../services/api";
 import { FileProps } from "../@types/Activity";
-
-interface ArchiveProviderProps{
-  children: ReactNode;
-}
 
 interface ArchiveProps {
   upload: (file: File[]) => void;
@@ -30,31 +26,48 @@ export interface UploadArchivesProps{
   cancelToken: CancelTokenSource;
 }
 
+type stateUploadFiles = { uploadFiles: UploadArchivesProps[] }
+type actionUploadFiles =
+   | { type: 'updateFile', payload: { data: any, id: string } }
+
+type stateAllFiles = { allFiles: FileProps[] }
+type actionAllFiles =
+  | { type: 'setAllFiles', payload: { data: FileProps[] } }
+  | { type: 'deleteFile', payload: { id: string, index: number } }
+
+function reducerUploadFiles(state: stateUploadFiles, action: actionUploadFiles): stateUploadFiles{
+  switch(action.type){
+    case 'updateFile': 
+      return { 
+        uploadFiles: state.uploadFiles.map( (file) => (file.id === action.payload.id ? { ...file, ...action.payload.data } : file)) }
+
+    default: 
+      return { uploadFiles: state.uploadFiles }
+  }
+}
+
+function reducerAllFiles(state: stateAllFiles, action: actionAllFiles): stateAllFiles{
+  switch(action.type){
+    case 'setAllFiles': 
+      return { allFiles: action.payload.data }
+    
+    case 'deleteFile': async () => {
+      state.allFiles.splice(action.payload.index, 1)
+      await api.delete(`archive/delete/${action.payload.id}`)
+      return { allFiles: state.allFiles }
+    }
+
+    default: 
+      return { allFiles: state.allFiles }
+  }
+}
+
 export const ArchiveContext = createContext({} as ArchiveProps)
 
-export function ArchiveProvider({ children }: ArchiveProviderProps){
-  const [ allArchives, setAllArchives ] = useState<FileProps[]>([])
-  const [ uploadArchives, setUploadArchives ] = useState<UploadArchivesProps[]>([])
+export function ArchiveProvider({ children }: { children: ReactNode; }){
+  const [ allFiles, allFilesDispatch ] = useReducer(reducerAllFiles, { allFiles: [] })
+  const [ uploadFiles, uploadFilesDispatch ] = useReducer(reducerUploadFiles, { uploadFiles: [] })
 
-  const handleSetAllArchives = useCallback((archives: FileProps[]) => {
-    setAllArchives(archives)
-  },[])
-
-  const deleteArchive = useCallback(async (id: string, index: number) => {
-    const allFiles = allArchives
-    allFiles.splice(index, 1)
-    await api.delete(`archive/delete/${id}`)
-
-    const newList = allArchives.filter((item) => item.id !== id);
-
-    setAllArchives(newList)
-  },[allArchives])
-
-  const updateFile = useCallback((id: string, data: any) => {
-    setUploadArchives((state) =>
-      state.map((file) => (file.id === id ? { ...file, ...data } : file))
-    );
-  }, []);
 
   const processUpload = useCallback((uploadedArchive: UploadArchivesProps) => {
     const data = new FormData()

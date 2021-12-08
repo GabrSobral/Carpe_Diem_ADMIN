@@ -18,7 +18,7 @@ interface ActivitiesListProps{
 
 export function ActivitiesList(
   {search, handleSetSearch, reload}: ActivitiesListProps){
-  const { activities, handleSelectActivity, handleSetActivities } = useActivity()
+  const { state, dispatch } = useActivity()
   const [ isLoading, setIsLoading ] = useState(false)
   const { handleSetPage } = usePage()
 
@@ -26,12 +26,11 @@ export function ActivitiesList(
     (async function(){
       setIsLoading(true)
       await api.get('/activity/list?cmd=count').then(({ data }) => {
-      handleSetActivities(data)
+      dispatch({ type: "setActivities", payload: { data }})
       setIsLoading(false)
     })
     })()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[reload])
+  },[reload, dispatch])
 
   return(
     <>
@@ -42,7 +41,7 @@ export function ActivitiesList(
         </div>
 
       :
-      activities?.filter(value => {
+      state.activities?.filter(value => {
         if(search === ''){
           return value
         }else if(value.title.toLowerCase().includes(search.toLowerCase())){
@@ -57,7 +56,7 @@ export function ActivitiesList(
             body={item.body}
             category={item.category.name}
             onClick={() => {
-              handleSelectActivity(item, index); 
+              dispatch({ type: "select", payload: { data: item, index } })
               handleSetSearch('');
               handleSetPage("ActivityDetails")
             }}

@@ -1,77 +1,90 @@
-import { createContext, ReactNode, useState } from "react";
-import { Category, FileProps } from "../@types/Activity";
-import { useArchive } from "../hooks/useArchive";
-
-interface CreateActivityProvider{
-  children: ReactNode;
-}
+import { createContext, ReactNode, Dispatch, useReducer } from "react";
+import { Category, FileProps, Activity } from "../@types/Activity";
 
 interface CreateActivityProps {
+ newActivity: state;
+ createActivityDispatch: Dispatch<action>
+}
+
+type state = {
   title: string;
-  subTitle: string;
+  subtitle: string;
   description: string;
-  category: Category | undefined;
-  archives: FileProps[] | [];
-  handleSetCategory: (value: Category) => void;
-  handleSetTitle: (value: string) => void;
-  handleSetSubTitle: (value: string) => void;
-  handleSetDescription: (value: string) => void;
-  handleSetArchive: (files: FileProps) => void;
-  handleRemoveArchive: (index: number) => void;
-  handleClearInputs: () => void;
+  category?: Category;
+  files: FileProps[];
+}
+
+type action = 
+  | { type: "setTitle", payload: { data: string } }
+  | { type: "setSubTitle", payload: { data: string } }
+  | { type: "setDescription", payload: { data: string } }
+  | { type: "setCategory", payload: { data: Category } }
+  | { type: "setArchives", payload: { data: FileProps } }
+  | { type: "removeArchive", payload: { index: number } }
+  | { type: "clearInputs" }
+  | { type: "setActivity", payload: { data: Activity } }
+
+
+function reducer(state: state, action: action): state{
+  switch(action.type){
+    case 'setTitle': 
+      return { ...state, title: action.payload.data }
+
+    case 'setSubTitle': 
+    return { ...state, subtitle: action.payload.data }
+
+    case 'setDescription': 
+    return { ...state, description: action.payload.data }
+    
+    case 'setCategory': 
+    return { ...state, category: action.payload.data }
+
+    case 'setArchives': 
+      return { ...state, files: [...state.files, action.payload.data] }
+
+    case 'removeArchive': 
+      state?.files.splice(action.payload.index, 1)
+      return state
+
+    case 'clearInputs': 
+      return { 
+        title: '', 
+        subtitle: '', 
+        description: '', 
+        files: [], 
+        category: undefined 
+      }
+    
+    case 'setActivity':
+      return { 
+        title: action.payload.data.title,
+        subtitle: action.payload.data.description,
+        description: action.payload.data.body,
+        files: action.payload.data.files,
+        category: action.payload.data.category
+      }
+    default: 
+      return state;
+  }
 }
 
 export const CreateActivityContext = createContext({} as CreateActivityProps)
 
-export function CreateActivityProvider({ children }: CreateActivityProvider){
-  const [ category, setCategory ] = useState<Category | undefined>()
-  const [ archives, setArchives ] = useState<FileProps[]>([])
-  const [ title, setTitle ] = useState<string>('')
-  const [ subTitle, setSubTitle ] = useState<string>('')
-  const [ description, setDescription ] = useState<string>('')
-
-  function handleSetTitle(value: string){ 
-    setTitle(value) 
+export function CreateActivityProvider({ children }: {  children: ReactNode; }){
+  const initialState = {
+    title: '',
+    subtitle: '',
+    description: '',
+    files: [],
+    category: undefined
   }
-  function handleSetSubTitle(value: string){ 
-    setSubTitle(value) 
-  }
-  function handleSetDescription(value: string){ 
-    setDescription(value) 
-  }
-  function handleSetCategory(value: Category){ 
-    setCategory(value) 
-  }
-  function handleSetArchive(file: FileProps){  
-    setArchives(prevState => [ ...prevState, file ]) 
-  }
-  function handleRemoveArchive(index: number){
-    archives?.splice(index, 1)
-    setArchives(archives)
-  }
-  function handleClearInputs(){
-    setTitle('')
-    setSubTitle('')
-    setDescription('')
-    setCategory(undefined)
-    setArchives([])
-  }
+  const [ newActivity, dispatch ] = useReducer(reducer, initialState)
 
   return(
     <CreateActivityContext.Provider
       value={{
-        category,
-        archives,
-        handleSetArchive,
-        handleClearInputs,
-        handleSetCategory,
-        title,
-        subTitle,
-        description,
-        handleSetTitle,
-        handleSetSubTitle,
-        handleRemoveArchive,
-        handleSetDescription,
+        newActivity,
+        createActivityDispatch: dispatch
       }}
     >
       {children}

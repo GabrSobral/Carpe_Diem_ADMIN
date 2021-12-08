@@ -30,55 +30,23 @@ export function UpdateActivityContent(){
   const [ isCategoryModalOpen, setIsCategoryModalOpen ] = useState(false)
   const [ isArchiveModalOpen, setIsArchiveModalOpen ] = useState(false)
 
-  const [ title, setTitle ] = useState<string | undefined>('')
-  const [ subTitle, setSubTitle ] = useState<string | undefined>('')
-  const [ description, setDescription ] = useState<string | undefined>('')
-
-  const [ isFilled, setIsFilled ] = useState(false)
   const [ isLoading, setIsLoading ] = useState(false)
   const [ archiveSelected, setArchiveSelected ] = useState<ArchiveSelected>()
   const [ isDetailArchiveVisible, setIsDetailArchiveVisible ] = useState<boolean>(false)
 
-  const { activity, handleUpdateActivityFromList, handleSelectActivity } = useActivity()
+  const { state, dispatch} = useActivity()
   const { handleSetPage } = usePage()
-  const { 
-    category,
-    archives,
-    handleClearInputs,
-    handleSetCategory,
-    handleSetArchive,
-    handleRemoveArchive
-  } = useCreateActivity()
+  const { newActivity, createActivityDispatch } = useCreateActivity()
 
-  const created_at = Date.parse(String(activity?.created_at)) || new Date()
-  const updated_at = Date.parse(String(activity?.created_at)) || new Date()
+  const created_at = Date.parse(String(state.activity?.created_at)) || new Date()
+  const updated_at = Date.parse(String(state.activity?.created_at)) || new Date()
   const formattedCreatedAt = format(created_at, "dd/MM/yyyy 'às' HH:mm")
   const formattedUpdatedAt = format(updated_at, "dd/MM/yyyy 'às' HH:mm")
 
   useEffect(() => {
-    handleClearInputs()
-    setTitle(activity?.title)
-    activity?.category && handleSetCategory(activity?.category)
-    setSubTitle(activity?.description)
-    setDescription(activity?.body)
-    handleSetArchives()
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[activity])
-
-  useEffect(() => {
-    title && subTitle && description && category ? setIsFilled(true) : setIsFilled(false)
-  },[ title, subTitle, description, category ])
-
-  function handleSetTitle(value: string){ setTitle(value) }
-  function handleSetSubTitle(value: string){ setSubTitle(value) }
-  function handleSetDescription(value: string){ setDescription(value) }
-
-  function handleSetArchives(){
-    activity?.files.forEach(item => {
-      handleSetArchive(item)
-    })
-  } 
+    createActivityDispatch({ type: 'clearInputs' })
+    createActivityDispatch({ type: 'setActivity', payload: { data: state.activity || {} as Activity} })
+  },[state.activity, createActivityDispatch])
 
   async function handleFetchCategories(){
     const { data } = await api.get('/category/list')
@@ -97,52 +65,47 @@ export function UpdateActivityContent(){
 
   async function handleSumbit(event: FormEvent){
     event.preventDefault()
-    if(!title || !subTitle || !description){ return }
+    if(!newActivity.title || !newActivity.subtitle || !newActivity.description){ return }
 
     setIsLoading(true)
 
-    title.trim()
-    subTitle.trim()
-    description.trim()
+    newActivity.title.trim()
+    newActivity.subtitle.trim()
+    newActivity. description.trim()
 
-    function breakLines(string: string){
-      return string.replace(/(?:\r\n|\r|\n)/g, '<hr>');
-    }
+    const descriptionFormatted = newActivity.description.replace(/(?:\r\n|\r|\n)/g, '<hr>') 
 
-    const descriptionFormatted = breakLines(description) 
-
-    const newActivity = await api.patch(`/activity/update/${activity?.id}`, {
-      title,
-      description: subTitle,
+    const newActivityData = await api.patch(`/activity/update/${state.activity?.id}`, {
+      title: newActivity.title,
+      description: newActivity.subtitle,
       body: descriptionFormatted,
-      category: category?.id
+      category:  newActivity.category?.id
     })
 
-    await api.delete(`/archive-activity/delete/${activity?.id}`)
+    await api.delete(`/archive-activity/delete/${state.activity?.id}`)
 
-    archives.forEach(async (file) => {
+    newActivity.files.forEach(async (file) => {
       await api.post('/archive-activity/new', {
-        activity: newActivity.data.id,
+        activity: newActivityData.data.id,
         archive: file.id
       })
     })
-    console.log(newActivity)
     const updated_activity: Activity = {
-      id: newActivity.data.id,
-      title: newActivity.data.title,
-      body: newActivity.data.body,
-      category: newActivity.data.category,
-      description: newActivity.data.description,
-      created_at: newActivity.data.created_at,
-      files: archives,
+      id: newActivityData.data.id,
+      title: newActivityData.data.title,
+      body: newActivityData.data.body,
+      category: newActivityData.data.category,
+      description: newActivityData.data.description,
+      created_at: newActivityData.data.created_at,
+      files: newActivity.files,
       updated_at: Date.now().toString(),
-      index: activity?.index || 0
+      index: state.activity?.index || 0
     }
-    handleUpdateActivityFromList(updated_activity)
-    handleSelectActivity(updated_activity, updated_activity.index)
+    dispatch({ type: 'updateActivities', payload: { data: updated_activity, index: updated_activity.index}})
+    dispatch({ type: 'select', payload: { data: updated_activity, index: updated_activity.index }})
     setIsLoading(false)
     handleSetPage('ActivityDetails')
-    handleClearInputs()
+    createActivityDispatch({ type: 'clearInputs' })
   }
 
   return(
@@ -157,18 +120,19 @@ export function UpdateActivityContent(){
       >
 
         <SelectModal
-          alreadyExists={[category]}
+          alreadyExists={[newActivity.category]}
           isVisible={isCategoryModalOpen}
-          handleSelectData={handleSetCategory}
+          handleSelectData={
+            (category) => createActivityDispatch({ type: 'setCategory', payload: { data: category } })}
           title="Selecione a categoria"
           handleModalClose={() => setIsCategoryModalOpen(false)}
           fetchFunction={handleFetchCategories}
         />
 
         <SelectModal 
-          alreadyExists={archives}
+          alreadyExists={newActivity.files}
           isVisible={isArchiveModalOpen}
-          handleSelectData={handleSetArchive}
+          handleSelectData={(file) => createActivityDispatch({ type: 'setArchives', payload: { data: file }})}
           title="Selecione a categoria"
           handleModalClose={() => setIsArchiveModalOpen(false)}
           fetchFunction={handleFetchArchives}
@@ -177,7 +141,8 @@ export function UpdateActivityContent(){
         <DetailArchiveModal 
           isVisible={isDetailArchiveVisible}
           handleCloseModal={() => setIsDetailArchiveVisible(false)}
-          handleRemoveArchive={handleRemoveArchive}
+          handleRemoveArchive={
+            (index) => createActivityDispatch({ type: 'removeArchive', payload: { index } })}
           file={archiveSelected}
         />
 
@@ -185,30 +150,47 @@ export function UpdateActivityContent(){
         <span className={styles.created_at}>Criado em: {formattedUpdatedAt}</span>
         <span className={styles.created_at}>Atualizado em: {formattedCreatedAt}</span>
         <form onSubmit={handleSumbit}>
-          <InputCreate title="Título:" type="text" setValue={handleSetTitle} value={title}/>
-          <InputCreate title="Subtítulo:" type="text" setValue={handleSetSubTitle} value={subTitle}/>
-          <InputCreate title="Descrição:" type="textarea" setValue={handleSetDescription} value={description}/>
+          <InputCreate 
+            title="Título:" 
+            type="text" 
+            setValue={(value) => createActivityDispatch({ type: 'setTitle', payload: { data: value } })} 
+            value={newActivity?.title || ''}
+          />
 
-          <div className={`${styles.select_container} ${ category && styles.active}`}>
+          <InputCreate 
+            title="Subtítulo:" 
+            type="text" 
+            setValue={(value) => createActivityDispatch({ type: 'setSubTitle', payload: { data: value } })} 
+            value={newActivity?.subtitle || ''}
+          />
+
+          <InputCreate 
+            title="Descrição:" 
+            type="textarea" 
+            setValue={(value) => createActivityDispatch({ type: 'setDescription', payload: { data: value } })} 
+            value={newActivity?.description || ''}
+          />
+
+          <div className={`${styles.select_container} ${ newActivity.category && styles.active}`}>
             <span>Categoria:</span>
             <SelectButton 
-              icon={category?.name || "Category"}
-              isActive={category ? true : false} 
-              title={category?.name || 'Selecione'} 
+              icon={newActivity.category?.name || "Category"}
+              isActive={newActivity.category ? true : false} 
+              title={newActivity.category?.name || 'Selecione'} 
               onClick={() => setIsCategoryModalOpen(true)}
             />
           </div>
 
-          <div className={`${styles.select_container} ${ archives.length !== 0  && styles.active}`}>
+          <div className={`${styles.select_container} ${ newActivity.files.length !== 0  && styles.active}`}>
             <span>Arquivos:</span>
 
             <div className={styles.archives_list}>
               {
-                archives.map((item, index) => (
+                newActivity.files.map((item, index) => (
                   <SelectButton 
                     icon={item.format}
                     key={item.id}
-                    isActive={archives ? true : false} 
+                    isActive={newActivity.files ? true : false} 
                     title={item.name || ''}
                     onClick={() => {handleDetailArchive(item, index); }}
                   />
@@ -228,7 +210,12 @@ export function UpdateActivityContent(){
           <button 
             type="submit" 
             className={styles.submit_button}
-            disabled={isLoading || !isFilled}
+            disabled={isLoading || !(
+              newActivity.title && 
+              newActivity.subtitle && 
+              newActivity. description && 
+              newActivity.category
+            )}
           >
             {
               isLoading ? (

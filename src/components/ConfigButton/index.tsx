@@ -16,16 +16,16 @@ import { WarningDeleteModal } from '../WarningDeleteModal'
 export function ConfigButton(){
   const [ isLoading, setIsLoading ] = useState(false)
   const { handleSetPage } = usePage()
-  const { activity, handleClearSelectActivity, handleRemoveActivityFromList } = useActivity()
+  const { state, dispatch } = useActivity()
   const [ isModalVisible, setIsModalVisible ] = useState(false)
 
   async function DeleteActivity(){
     setIsLoading(true)
-    await api.delete(`/activity/delete/${activity?.id}`)
-    handleRemoveActivityFromList()
+    await api.delete(`/activity/delete/${state.activity?.id}`)
+    dispatch({ type: 'removeActivity', payload: { index: state.activity?.index || 0 } })
     setIsLoading(false)
     setIsModalVisible(false)
-    handleClearSelectActivity()
+    dispatch({ type: 'clear' })
   }
 
   return(
@@ -33,7 +33,7 @@ export function ConfigButton(){
       <WarningDeleteModal
         closeModal={() => setIsModalVisible(false)}
         handleRemoveFromList={async () => await DeleteActivity()}
-        name={activity?.title || ''}
+        name={state.activity?.title || ''}
         title="a atividade"
         description="Ao excluir esta atividade, você estará excluindo permanentemente todas
         as suas dependências..."
