@@ -1,63 +1,66 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, Dispatch, useReducer } from "react";
 import { Activity } from "../@types/Activity";
 
-interface ActivityProviderProps{
-  children: ReactNode;
+interface ActivityContextProps {
+  state: state;
+  dispatch: Dispatch<action>
 }
 
-interface ActivityContextProps {
-  activities: Activity[] | undefined;
-  activity: Activity | undefined;
-  handleSelectActivity: (activity_data: Activity, index: number) => void;
-  handleSetActivities: (activitiesData: Activity[]) => void;
-  handleClearSelectActivity: () => void
-  handleAddActivity: (activity_data: Activity) => void;
-  handleRemoveActivityFromList: () => void;
-  handleUpdateActivityFromList: (activity_data: Activity) => void;
+type state = {
+  activities: Activity[],
+  activity?: Activity
+}
+
+type action = 
+| { type: "setActivities", payload: { data: Activity[] } }
+| { type: 'addActivity', payload: { data: Activity } }
+| { type: 'removeActivity', payload: { index: number } }
+| { type: 'updateActivities', payload: { data: Activity, index: number } }
+| { type: 'select', payload: { data: Activity, index: number } }
+| { type: 'clear' }
+
+function reducer(state: state, action: action): state{
+  switch(action.type){
+    case 'setActivities': 
+      return { ...state, activities: action.payload.data }
+
+    case 'addActivity' : 
+      return { ...state, activities: [...state.activities, action.payload.data] }
+
+    case "removeActivity": 
+      state.activities.splice(action.payload.index, 1)
+      return { ...state, activities: state.activities}
+
+    case "updateActivities" : 
+      state.activities.splice(action.payload.index, 1, action.payload.data)
+      return { ...state, activities: state.activities}
+
+    case "select" : 
+      action.payload.data.index = action.payload.index;
+      return { ...state, activity: action.payload.data }
+
+    case 'clear': 
+      return { ...state, activity: undefined}
+    
+    default: 
+      return { ...state, activities: state.activities }
+  }
 }
 
 export const ActivityContext = createContext({} as ActivityContextProps)
 
-export function ActivityProvider({ children }: ActivityProviderProps){
-  const [ activities, setActivities ] = useState<Activity[]>([])
-  const [ activity, setActivity ] = useState<Activity>()
-
-  function handleSetActivities(activitiesData: Activity[]){
-    setActivities(activitiesData)
+export function ActivityProvider({ children }: { children: ReactNode; }){
+  const initialState= {
+    activities: [],
+    activity: undefined
   }
-  function handleSelectActivity(activity_data: Activity, index: number){
-    activity_data.index = index
-    setActivity(activity_data)
-  }
-  function handleClearSelectActivity(){ setActivity(undefined) }
-
-  function handleAddActivity(activity_data: Activity){
-    setActivities(prevState => [...prevState, activity_data])
-  }
-  function handleRemoveActivityFromList(){
-    setActivities(prev => {
-      activity?.index && prev.splice(activity?.index, 1)
-      return prev
-    })
-  }
-  function handleUpdateActivityFromList(update_activity: Activity){
-    setActivities(prev => {
-      activity?.index && prev.splice(activity?.index, 1, update_activity)
-      return prev
-    })
-  }
+  const [ state, dispatch ] = useReducer(reducer, initialState)
 
   return (
     <ActivityContext.Provider
       value={{
-        activities,
-        handleSelectActivity,
-        activity,
-        handleSetActivities,
-        handleClearSelectActivity,
-        handleAddActivity,
-        handleRemoveActivityFromList,
-        handleUpdateActivityFromList
+        state,
+        dispatch
       }}
     >
       {children}

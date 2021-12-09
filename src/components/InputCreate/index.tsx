@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import styles from './styles.module.scss'
 
 interface InputCreateProps{
@@ -12,23 +13,21 @@ export function InputCreate({ value, setValue, type, title }: InputCreateProps){
     <div className={styles.input_container}>
       <span className={value ? styles.filled : ''}>{title}</span>
       {
-        type !== "textarea" ? (
+        type !== "textarea" ?
           <input 
             type={type} 
             onChange={event => setValue(event.target.value)}
             className={value ? styles.filled : ''}
             value={value}
           />
-        ) : (
+        : 
           <textarea
             onChange={event => setValue(event.target.value)}
             className={value ? styles.filled : ''}
             value={value}
           >
           </textarea>
-        )
       }
-      
     </div>
   )
 }

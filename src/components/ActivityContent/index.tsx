@@ -14,25 +14,25 @@ import ActivityAnim from '../../images/Activity.json'
 import styles from './styles.module.scss'
 
 export function ActivityContent(){
-  const { activity } = useActivity()
+  const { state } = useActivity()
 
-  const date = Date.parse(String(activity?.created_at)) || new Date()
+  const date = Date.parse(String(state.activity?.created_at)) || new Date()
   const formattedDate = format(date, "dd/MM/yyyy 'às' HH:mm")
 
   return(
     <div className={styles.container_ActivityContent}>
       <HeaderContent/>
       {
-        activity ? (
+        state.activity ? (
           <>
           <main key="Activities" className={styles.activityContentMain}>
           <motion.div className={styles.title_subtitle}>
-            <h1>{activity?.title}</h1>
-            <span className={styles.subtitle}>{activity?.description}</span>
+            <h1>{state.activity?.title}</h1>
+            <span className={styles.subtitle}>{state.activity?.description}</span>
             <span className={styles.created_at}>Criado em: {formattedDate}</span>
           </motion.div>
   
-            <div className={styles.description} dangerouslySetInnerHTML={{ __html: activity?.body as string}}>
+            <div className={styles.description} dangerouslySetInnerHTML={{ __html: state.activity?.body as string}}>
             </div>
 
             <div className={styles.chartContainer}>
@@ -50,9 +50,9 @@ export function ActivityContent(){
                   </div>}
                 data={[
                   ['Feedback', 'Gostaram', 'Não gostaram'],
-                  [ activity.title, 
-                    activity.feedback ? activity?.feedback.goodCount : 0, 
-                    activity.feedback ? activity?.feedback.badCount : 0 ],
+                  [ state.activity?.title, 
+                    state.activity?.feedback ? state.activity?.feedback.goodCount : 0, 
+                    state.activity?.feedback ? state.activity?.feedback.badCount : 0 ],
                 ]}
                 
                 options={{
@@ -78,9 +78,9 @@ export function ActivityContent(){
             
   
             <div className={styles.files}>
-              <span>Arquivos: {activity?.files.length}</span>
+              <span>Arquivos: {state.activity?.files.length}</span>
     
-              {activity?.files.map(item => {
+              {state.activity?.files.map(item => {
                   
                   if(item.format === "mp4"){
                     return(

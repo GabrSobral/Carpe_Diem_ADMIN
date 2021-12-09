@@ -25,11 +25,11 @@ const icons = {
 }
 
 export function ActivityItem({ title, category, description, id, ...rest }: ActivityItemProps){
-  const { activity } = useActivity()
+  const { state } = useActivity()
   return(
     <button
       type="button" 
-      className={`${styles.container} ${id === activity?.id ? styles.active : ''}`}
+      className={`${styles.container} ${id === state.activity?.id ? styles.active : ''}`}
       {...rest}
     >
       <div className={styles.icon_container}>
