@@ -30,7 +30,7 @@ export function CategoriesList({ search, reload }: CategoriesListProps){
   const [ isModalVisible, setIsModalVisible ] = useState<boolean>(false)
   const [ selectedCategory, setSeletedCategory ] = useState<SelectedCategory>({index: 0, category: {}} as SelectedCategory)
 
-  const { deleteQuestionsAfterDeleteCategory } = useAnswersAndCategories()
+  const { questionDispatch } = useAnswersAndCategories()
 
   useEffect(() => {
     (async function(){
@@ -55,7 +55,7 @@ export function CategoriesList({ search, reload }: CategoriesListProps){
     await api.delete(`category/delete/${category_id}`)
     categories.splice(index, 1)
     setCategories(categories)
-    deleteQuestionsAfterDeleteCategory(category_id)
+    questionDispatch({ type: 'deleteQuestionsAfterCategory', payload: { category_id }})
     setIsModalVisible(false)
   }
 
@@ -92,11 +92,10 @@ export function CategoriesList({ search, reload }: CategoriesListProps){
             </div> : 
           
           categories.filter(value => {
-            if(search === ''){
+            if(search === '')
               return value
-            }else if(value.name.toLowerCase().includes(search.toLowerCase())){
-                return value
-            }
+            else if(value.name.toLowerCase().includes(search.toLowerCase()))
+              return value
           }).map((item, index) => (
             <AnimatePresence exitBeforeEnter key={item.id}>
               <motion.div  

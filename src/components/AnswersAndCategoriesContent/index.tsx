@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from 'next/image'
 import { AnimatePresence } from 'framer-motion'
 
 import { Question } from "../../@types/Activity";
-import { api } from "../../services/api";
 import plusSVG from '../../images/plus.svg'
 
 import { HeaderContent } from "../HeaderContent";
@@ -18,10 +17,10 @@ export function AnswersAndCategoriesContent(){
 	const [ isModalVisible, setIsModalVisible ] = useState<boolean>(false)
 	const [ selectedQuestion, setSelectedQuestion ] = useState<Question>()
 	const [ createQuestionIsVisible, setCreateQuestionIsVisible ] = useState(false)
-	const { questions, handleUpdateQuestionState, addQuestion } = useAnswersAndCategories()
+	const { questions, questionDispatch } = useAnswersAndCategories()
 
 	async function deleteQuestion(id: string){
-		handleUpdateQuestionState(id)
+		questionDispatch({ type: 'deleteQuestion', payload: { id } })
 		setIsModalVisible(!isModalVisible)
 	}
 
@@ -51,7 +50,7 @@ export function AnswersAndCategoriesContent(){
 
 				<CreateQuestionInput 
 					isVisible={createQuestionIsVisible}
-					handleAddQuestionToList={addQuestion}
+					handleAddQuestionToList={(data) => questionDispatch({ type: 'addQuestion', payload: { data }})}
 				/>
 
 				<main className={styles.main_content}>

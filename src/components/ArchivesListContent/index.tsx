@@ -9,17 +9,14 @@ import { ArchiveListContentItem } from "./ArchiveListContentItem";
 import styles from "./styles.module.scss" 
 
 export function ArchivesListContent(){
-  const { handleSetAllArchives, allArchives, deleteArchive } = useArchive()
+  const { allArchives, allFilesDispatch } = useArchive()
   const [ selectedArchive, setSelectedArchive ] = useState<FileProps>({} as FileProps)
   const [ isModalVisible, setIsModalVisible] = useState<boolean>(false)
 
   useEffect(() => {
-    (async function(){
       api.get('/archive/list?cmd=count')
-        .then(({ data }) => handleSetAllArchives(data)
-      )
-    })()
-  },[handleSetAllArchives])
+        .then(({ data }) => allFilesDispatch({ type: 'setAllFiles', payload: { data } }))
+  },[allFilesDispatch])
 
   return(
     <div className={styles.container_archiveListContent}>
@@ -36,7 +33,7 @@ export function ArchivesListContent(){
             <ArchiveListContentItem
               key={item.id}
               file={item}
-              handleDelete={() => deleteArchive(item.id, index)}
+              handleDelete={() => allFilesDispatch({ type: 'deleteFile', payload: { id: item.id, index } })}
               handleSelectArchive={()=> setSelectedArchive(item)}
               handleOpenModal={() => setIsModalVisible(prev => !prev)}
             />
