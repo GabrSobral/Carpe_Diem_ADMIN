@@ -1,10 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import { useActivity } from "../hooks/useActivity";
 
-interface PageProviderProps{
-  children: ReactNode;
-}
-
 interface PageProps {
   page: string;
   handleSetPage: (name: string) => void;
@@ -13,7 +9,7 @@ interface PageProps {
 
 export const PageContext = createContext({} as PageProps)
 
-export function PageProvider({ children }: PageProviderProps){
+export function PageProvider({ children }: { children: ReactNode; }){
   const [ page, setPage ] = useState<string>('ActivityDetails')
   const { dispatch } = useActivity()
 
