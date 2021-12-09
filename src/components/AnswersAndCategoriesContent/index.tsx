@@ -49,6 +49,7 @@ export function AnswersAndCategoriesContent(){
 				/> 
 
 				<CreateQuestionInput 
+					turnVisibleToFalse={() => setCreateQuestionIsVisible(false)}
 					isVisible={createQuestionIsVisible}
 					handleAddQuestionToList={(data) => questionDispatch({ type: 'addQuestion', payload: { data }})}
 				/>
